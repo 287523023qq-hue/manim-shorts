@@ -69,6 +69,7 @@ def main():
         print("  python run.py snapshot <SceneName>    - 导出单帧高清封面 (PNG)")
         print("\n全链路创作与 AI 编排命令：")
         print("  python run.py create <Topic>          - 一键生成分镜、Manim代码与ComfyUI工作流")
+        print("  python run.py generate '<Prompt>'     - 对话式生成：输入一句话直接编译并触发视频生成")
         print("  python run.py composite <bg> <fg>     - 合成 ComfyUI 电影背景 + Manim 前景几何")
         print("  python run.py comfy-check             - 探测本地 ComfyUI API (127.0.0.1:8188)")
         print("\n当前已发现的场景：")
@@ -84,6 +85,27 @@ def main():
         for i, (name, path) in enumerate(scenes.items(), 1):
             print(f"  [{i}] {name:<25} -> {path.relative_to(BASE_DIR)}")
         print()
+        return
+
+    elif action == "generate":
+        if len(sys.argv) < 3:
+            print("❌ 请输入提示词，例如: python run.py generate '雪山之巅剑修拔剑出鞘，镜头慢速推近，5秒'")
+            return
+        prompt_text = sys.argv[2]
+        image_arg = None
+        if "--image" in sys.argv:
+            idx = sys.argv.index("--image")
+            if idx + 1 < len(sys.argv):
+                image_arg = sys.argv[idx + 1]
+
+        from manim_shorts.pipeline.prompt_to_video import ChatToVideoEngine
+        engine = ChatToVideoEngine(str(BASE_DIR))
+        print(f"\n⚡ 正在处理自然语言提示词: \"{prompt_text}\"...")
+        res = engine.generate_video(prompt_text, input_image=image_arg)
+        print("✅ 语义推演与 15 模块编译完成！")
+        print(f"  🎬 镜头机制: {res['parsed_params']['mechanism']} ({res['parsed_params']['duration']}s, {res['parsed_params']['aspect_ratio']})")
+        print(f"  🎨 生成载荷: {res['payload_path']}")
+        print(f"  📡 ComfyUI 状态: {res['status']}")
         return
 
     elif action == "create":

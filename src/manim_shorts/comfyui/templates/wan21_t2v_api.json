@@ -1,0 +1,98 @@
+{
+  "1": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "[[ MODULE SCENE_CONTEXT ]]\nSingle continuous take. Container duration: 5.0s. Vertical 9:16.\n\n[[ MODULE ACTIVE_REFERENCES ]]\n@subject — cinematic high aesthetic realism.\n\n[[ MODULE OPTICS ]]\n85mm prime lens, shallow depth of field, f/1.8.\n\n[[ MODULE CAMERA ]]\nSmooth dolly push-in along optical axis, continuous tracking.\n\n[[ MODULE LIGHTING ]]\nCold ambient dawn light, volumetric cinematic atmosphere.\n\n[[ MODULE STYLE ]]\nMasterpiece cinematic realism, teal and amber color grading, film grain.",
+      "clip": ["5", 0]
+    }
+  },
+  "2": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "blurry, low quality, jitter, flickering, deformed hands, duplicate limbs, distorted face, erratic camera, watermark, text logo, worst quality",
+      "clip": ["5", 0]
+    }
+  },
+  "3": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "wan2.1_t2v_1.3B_bf16.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "4": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "wan_2.1_vae.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "wan"
+    }
+  },
+  "6": {
+    "class_type": "EmptyHunyuanLatentVideo",
+    "inputs": {
+      "width": 540,
+      "height": 960,
+      "length": 81,
+      "batch_size": 1
+    }
+  },
+  "7": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 42,
+      "steps": 30,
+      "cfg": 6.0,
+      "sampler_name": "uni_pc",
+      "scheduler": "normal",
+      "denoise": 1.0,
+      "model": ["3", 0],
+      "positive": ["1", 0],
+      "negative": ["2", 0],
+      "latent_image": ["6", 0]
+    }
+  },
+  "8": {
+    "class_type": "VAEDecodeTiled",
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 64,
+      "temporal_size": 64,
+      "temporal_overlap": 8,
+      "samples": ["7", 0],
+      "vae": ["4", 0]
+    }
+  },
+  "9": {
+    "class_type": "RIFE VFI",
+    "inputs": {
+      "ckpt_name": "rife47.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "fast_mode": true,
+      "ensemble": true,
+      "scale_factor": 1.0,
+      "frames": ["8", 0]
+    }
+  },
+  "10": {
+    "class_type": "VHS_VideoCombine",
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "manim_shorts_wan21",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": true,
+      "images": ["9", 0]
+    }
+  }
+}
