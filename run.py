@@ -37,10 +37,7 @@ def discover_scenes():
             content = f.read()
         for line in content.splitlines():
             line = line.strip()
-            if line.startswith("class ") and "(ShortsScene)" in line:
-                class_name = line.split("class ")[1].split("(")[0].strip()
-                scenes[class_name] = py_file
-            elif line.startswith("class ") and "(Scene)" in line:
+            if line.startswith("class ") and "Scene)" in line:
                 class_name = line.split("class ")[1].split("(")[0].strip()
                 scenes[class_name] = py_file
     return scenes
