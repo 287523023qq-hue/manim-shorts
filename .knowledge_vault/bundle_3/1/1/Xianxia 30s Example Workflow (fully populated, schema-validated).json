@@ -1,0 +1,499 @@
+{
+  "$schema_ref": "../schema/film-dsl-v2.1.schema.json",
+  "workflow_id": "film-generation-v2.1",
+  "version": "2.1.0",
+  "description": "Example: single 30-second container, classical xianxia, five-shot sequence. Shows lock inheritance, delta encoding, three-tier output, and provenance.",
+
+  "genre_lock": {
+    "primary": "classical_xianxia",
+    "secondary": [],
+    "medium": "short",
+    "cinematography_preset_ref": "@preset_classical_xianxia_v1",
+    "preset_override": {
+      "cinematography.lens.focal_length_mm.default": 100
+    }
+  },
+
+  "narrative_proportion": {
+    "visual":   0.55,
+    "silence":  0.25,
+    "sound":    0.12,
+    "action":   0.05,
+    "dialogue": 0.03
+  },
+
+  "pacing_lock": {
+    "avg_shot_length_sec":     6.0,
+    "longest_take_cap_sec":    14.0,
+    "shortest_shot_floor_sec": 1.5,
+    "silence_ratio_min":       0.25,
+    "hard_cut_ratio_target":   0.40,
+    "container_duration_sec":  30.0,
+    "shots_per_container":     5
+  },
+
+  "direction_lock": {
+    "default_motion_grammar": "hold_and_reveal",
+    "default_cut_grammar":    "cut_on_qi_shift",
+    "tension_arc_shape":      "long_tail_late_break",
+    "silence_policy":         "silence_is_content"
+  },
+
+  "performance_lock": {
+    "default_micro_life": [
+      "sleeve_movement_before_hand",
+      "breath_visible_in_cold",
+      "eyes_before_head"
+    ],
+    "breath_rule":     "visible white plume in cold dawn air; chest rise silent",
+    "breakdown_rule":  "release of grip on hilt, sleeve lowers slowly — never facial contortion",
+    "hand_task_rule":  "hand rests on sword hilt in formal placement",
+    "gaze_rule":       "gaze lands on the fallen leaf one full second before it lifts to the horizon",
+    "transfer_rules_when_impossible": []
+  },
+
+  "style_lock": {
+    "lighting_base_modern":  null,
+    "lighting_base_ancient": "dawn amber (2400K) angling in from frame-left, one hard source; ambient sky cool teal (6500K) at two stops under",
+    "lighting_threshold":    "single beam of amber light through pine branches, mist visible in beam",
+    "lighting_superimposed": null,
+    "color_grade":           "teal_and_amber, saturation -22, skin preserved",
+    "grain":                 "35mm 5219 500T medium mono",
+    "world_transition_style":"silk dissolve",
+    "style_prefix_verbatim": "Style: 8K IMAX. Photorealistic. Cinematography: telephoto compression from 100mm; painterly composed frames with strong negative space; silhouette against contre-jour backlight. Lighting: motivated dawn sun only, one hard source from frame-left, camera on shadow side, mist reads in the beam. Color: teal and amber, low saturation, skin preserved. Camera: cine lens with 1/8 diffusion and 2mm gold streak. 180° shutter motion blur. Skin: pore-level realism. Acting: sleeve moves before hand; breath visible as white plume. Physics: silk falls as silk; blade weight visible. Composition: golden ratio, negative space 60%. Continuity: identity holds across every cut. Technical: 24fps, 8K, no jitter. Audio: environmental SFX only. No music."
+  },
+
+  "character_lock": {
+    "modern_identity": null,
+    "ancient_identity": {
+      "name": "Ling Xu",
+      "wardrobe": "dark indigo robe with pale silver embroidery at collar and cuffs; wide sash tied left; long straight black hair tied high with a jade pin; leather-wrapped hilt visible at left hip",
+      "features": [
+        "androgynous fine features",
+        "one small mole below left corner of mouth",
+        "left ear-tip pierced with single silver stud",
+        "narrow calloused hands"
+      ],
+      "world": "ancient"
+    },
+    "continuity_anchor": "jade pin in hair — never removed, never repositioned, catches amber light in every shot",
+    "dual_body_sync_rules": []
+  },
+
+  "prop_lock": {
+    "sword_qingyun": "3.2ft straight jian, dark iron blade, jade pommel — resonates faintly when unsheathed; never drawn in this container",
+    "fallen_pine_leaf": "single amber-brown pine needle cluster on wet stone — rotates one full turn during the shot; never multiplied",
+    "jade_pin": "translucent pale green jade hairpin — catches amber rim light in every shot"
+  },
+
+  "sound_design_lock": {
+    "modern_signature": null,
+    "ancient_signature": "wind through bamboo at 0.5Hz, distant water drip on stone every 3-4s, silk sleeve friction on movement, breath work close mic",
+    "cross_world_marker": null,
+    "theme_motif": "guqin single pluck — POST ONLY, not in prompt",
+    "post_only_music": true
+  },
+
+  "libraries": {
+    "mise_en_scene_library": {
+      "@mes_bamboo_forest_dawn": {
+        "text": "vertical bamboo trunks in dawn mist; wet stone path underfoot; one shaft of amber light angling in from frame-left; a single fallen pine-needle cluster rotating slowly on still water in a stone basin at frame-right; negative space fills upper 60% of frame",
+        "world": "ancient",
+        "time_of_day": "dawn"
+      }
+    },
+    "sound_library": {
+      "@sound_ancient_bamboo_dawn": {
+        "diegetic": [
+          "bamboo trunks knocking hollowly at ~0.5Hz",
+          "distant water drip on stone every 3-4s",
+          "single crow call once at 22-24s",
+          "silk sleeve friction on Ling Xu's turn",
+          "breath work — visible plume in cold air"
+        ],
+        "non_diegetic": []
+      }
+    },
+    "location_library": {
+      "@loc_bamboo_grove_dawn": {
+        "descriptor_block": "bamboo grove at dawn: dense vertical trunks 3-5m spacing; wet flagstone path bisecting frame-center-to-back; stone basin at frame-right 1.2m from center; mist layer at knee height and again at 3m; hard amber key from frame-left 30° elevation; no fill from camera side; shadows fall frame-right",
+        "geo_map": "LOCATION MAP\nGEO SPATIAL LAYOUT (locked):\n— BAMBOO TRUNKS: vertical, spacing 3-5m, frame-fill both sides\n— STONE PATH: bisecting frame-center to back, wet flagstone\n— STONE BASIN: frame-RIGHT, 1.2m from center, holds the rotating pine needle\n— LING XU: standing on path, CENTER, facing frame-back (camera behind-shoulder)\n— 180° AXIS: camera stays on the path's LEFT side, never crosses\n— KEY LIGHT: hard amber sun from frame-LEFT at 30° elevation; mist reads in beam\n— SHADOWS: fall frame-RIGHT; no fill from camera side"
+      }
+    }
+  },
+
+  "stages": [
+    { "stage_id": "S1-MUS",    "name": "Meta Unit Segmentation",     "input": { "type": "story" }, "output": { "type": "MUS" },    "downstream": "S2-MSSS" },
+    { "stage_id": "S2-MSSS",   "name": "Meta Scene-Sequence Spec",   "input": { "type": "MUS" }, "output": { "type": "MSSS" },  "downstream": "S2.5-DIR" },
+    { "stage_id": "S2.5-DIR",  "name": "Director Intent",            "input": { "type": "MSSS" },"output": { "type": "DirectionIntentList" }, "downstream": "S2.7-PERF" },
+    { "stage_id": "S2.7-PERF", "name": "Performance Intent",         "input": { "type": ["MUS", "DirectionIntentList"] }, "output": { "type": "PerformanceIntentList" }, "downstream": "S3-IR" },
+    { "stage_id": "S3-IR",     "name": "Typed IR",                   "input": { "type": ["MSSS","DirectionIntentList","PerformanceIntentList"] }, "output": { "type": "Typed-IR-v2.1" }, "downstream": "S4-VERIFY" },
+    { "stage_id": "S4-VERIFY", "name": "Verification",               "input": { "type": "Typed-IR-v2.1" }, "output": { "type": "VERIFY-Report" }, "downstream": "S5-OUT" },
+    { "stage_id": "S5-OUT",    "name": "Canonical Output",           "input": { "type": "Typed-IR-v2.1" }, "output": { "type": "Canonical-DSL-v2.1" }, "downstream": "video_generation_engine + editor_timeline + post_color_pipeline" }
+  ],
+
+  "stage_products": {
+
+    "S1_MUS": {
+      "mus_id": "MUS_lingxu_dawn_001",
+      "source_story_ref": "story/ling_xu_ch01.md",
+      "meta_units": [
+        {
+          "mu_id": "MU_01",
+          "function": "arrival_stillness",
+          "emotion_intensity": 0.30,
+          "entities": ["ling_xu"],
+          "core_action": "Ling Xu stands motionless on wet stone path at dawn, facing away from camera",
+          "time_marker": "T+0.0s",
+          "world": "ancient",
+          "_provenance": { "kind": "explicit", "span": "L0:para_02:sent_1" }
+        },
+        {
+          "mu_id": "MU_02",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.25,
+          "entities": ["fallen_pine_leaf", "stone_basin"],
+          "core_action": "fallen pine-needle cluster rotates one full turn on still water in the stone basin",
+          "time_marker": "T+7.0s",
+          "world": "ancient",
+          "_provenance": { "kind": "inferred", "span": "L0:para_02:sent_3", "evidence": ["basin mentioned", "leaf mentioned separately"] }
+        },
+        {
+          "mu_id": "MU_03",
+          "function": "silence_beat",
+          "emotion_intensity": 0.20,
+          "entities": ["ling_xu"],
+          "core_action": "held silence — no movement, breath visible as white plume, sleeve settles",
+          "time_marker": "T+14.0s",
+          "world": "ancient",
+          "_provenance": { "kind": "decision", "d_id": "D-004", "evidence": ["narrative_proportion.silence >= 0.15 requires silence_beat MU per scene"] }
+        },
+        {
+          "mu_id": "MU_04",
+          "function": "attention_shift",
+          "emotion_intensity": 0.45,
+          "entities": ["ling_xu", "fallen_pine_leaf"],
+          "core_action": "Ling Xu's gaze finds the rotating leaf; head does not turn",
+          "time_marker": "T+20.5s",
+          "world": "ancient",
+          "_provenance": { "kind": "explicit", "span": "L0:para_02:sent_4" }
+        },
+        {
+          "mu_id": "MU_05",
+          "function": "realization_release",
+          "emotion_intensity": 0.60,
+          "entities": ["ling_xu"],
+          "core_action": "Ling Xu exhales long white plume; sleeve on sword hilt lowers by one centimeter; the leaf comes to rest",
+          "time_marker": "T+26.5s",
+          "world": "ancient",
+          "_provenance": { "kind": "explicit", "span": "L0:para_02:sent_5" }
+        }
+      ]
+    },
+
+    "S2_MSSS": {
+      "msss_id": "MSSS_lingxu_dawn_001",
+      "derived_from": "MUS_lingxu_dawn_001",
+      "aspect_ratio": "2.39:1",
+      "total_duration_budget_sec": 30.0,
+      "scenes": [
+        {
+          "scene_id": "SCN_bamboo_dawn",
+          "location": "@loc_bamboo_grove_dawn",
+          "time": "dawn, spring",
+          "world": "ancient",
+          "continuity_tags": ["jade_pin_visible", "sword_sheathed", "mist_layer_low"],
+          "sequences": [
+            { "seq_id": "SEQ_01", "maps_to_mu": ["MU_01"],         "seq_type": "arrival_wide",    "duration_budget_sec": 7.0,  "transition_hint": null,             "montage_mark": false, "container_ref": "CT_01" },
+            { "seq_id": "SEQ_02", "maps_to_mu": ["MU_02"],         "seq_type": "environmental_cu","duration_budget_sec": 7.0,  "transition_hint": "match_cut",      "montage_mark": false, "container_ref": "CT_01" },
+            { "seq_id": "SEQ_03", "maps_to_mu": ["MU_03"],         "seq_type": "held_silence_ms", "duration_budget_sec": 6.5,  "transition_hint": null,             "montage_mark": false, "container_ref": "CT_01" },
+            { "seq_id": "SEQ_04", "maps_to_mu": ["MU_04"],         "seq_type": "rack_focus_beat", "duration_budget_sec": 4.0,  "transition_hint": null,             "montage_mark": false, "container_ref": "CT_01" },
+            { "seq_id": "SEQ_05", "maps_to_mu": ["MU_05"],         "seq_type": "release_pullback","duration_budget_sec": 5.5,  "transition_hint": "silk_dissolve",  "montage_mark": false, "container_ref": "CT_01" }
+          ]
+        }
+      ]
+    },
+
+    "S2_5_DIR": {
+      "direction_intents": [
+        { "seq_ref": "SEQ_01", "motion_reason": "hold_and_reveal",       "cut_reason": "cut_on_qi_shift",       "tension_arc_role": "setup",     "reveal_beat_frame": null, "silence_beats": [] },
+        { "seq_ref": "SEQ_02", "motion_reason": "hold_on_silence",       "cut_reason": "match_cut_on_form",     "tension_arc_role": "setup",     "reveal_beat_frame": null, "silence_beats": [{ "start_sec": 0.0, "length_sec": 7.0 }] },
+        { "seq_ref": "SEQ_03", "motion_reason": "hold_on_silence",       "cut_reason": "cut_on_qi_shift",       "tension_arc_role": "false_peak","reveal_beat_frame": null, "silence_beats": [{ "start_sec": 0.0, "length_sec": 6.5 }] },
+        { "seq_ref": "SEQ_04", "motion_reason": "rack_on_shift_of_attention","cut_reason": "cut_on_gaze_landing","tension_arc_role": "reveal",    "reveal_beat_frame": 48,   "silence_beats": [] },
+        { "seq_ref": "SEQ_05", "motion_reason": "pull_out_on_isolation", "cut_reason": "silk_dissolve_on_world_shift","tension_arc_role": "coda", "reveal_beat_frame": null, "silence_beats": [] }
+      ]
+    },
+
+    "S2_7_PERF": {
+      "performance_intents": [
+        {
+          "mu_ref": "MU_01",
+          "actor_ref": "ancient_identity",
+          "inner_want": "hold the ground of a decision already made",
+          "hidden": "the decision was made against a teacher's wish",
+          "breakdown_moment": null,
+          "micro_life_anchors": ["breath_visible_in_cold", "sleeve_movement_before_hand"],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_03",
+          "actor_ref": "ancient_identity",
+          "inner_want": "let the silence do the work of speech",
+          "hidden": "afraid the silence will crack her resolve",
+          "breakdown_moment": null,
+          "micro_life_anchors": ["breath_visible_in_cold", "long_exhale_jaw_set_release"],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_04",
+          "actor_ref": "ancient_identity",
+          "inner_want": "let the leaf be the reason to stay still one second longer",
+          "hidden": "using the leaf to postpone the turn toward the road",
+          "breakdown_moment": null,
+          "micro_life_anchors": ["eyes_before_head"],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_05",
+          "actor_ref": "ancient_identity",
+          "inner_want": "release the grip and accept the leaving",
+          "hidden": "the release is the actual grief",
+          "breakdown_moment": "sleeve lowers 1cm on the hilt at T+27.5s",
+          "micro_life_anchors": ["long_exhale_jaw_set_release", "sleeve_movement_before_hand"],
+          "reaction_before": false
+        }
+      ]
+    },
+
+    "S3_IR": {
+      "ir_version": "typed-ir-v2.1",
+      "derived_from": "MSSS_lingxu_dawn_001",
+      "aspect_ratio": "2.39:1",
+      "fps": 24,
+
+      "shots": [
+        {
+          "shot_id": "SH_01",
+          "seq_ref": "SEQ_01",
+          "shot_type": "FS_static",
+          "cinematography": {
+            "lens":          { "focal_length_mm": 100, "aperture_f": 2.0, "lens_type": "spherical", "anamorphic_squeeze": null, "near_focus_m": 1.2, "filter_stack": ["soft_diffusion_1/8","gold_streak_2mm","black_promist_1/4"] },
+            "framing":       { "shot_size": "FS", "subject_height_in_frame": 0.55, "headroom_ratio": 0.35, "looking_space": "center", "composition_rule": "golden_spiral", "frame_within_frame": "bamboo trunks flanking Ling Xu at 1/3 and 2/3" },
+            "camera_motion": { "type": "static", "start_position": { "x": 0, "y": 1.6, "z": -6.5 }, "end_position": { "x": 0, "y": 1.6, "z": -6.5 }, "trajectory": "linear", "speed_profile": { "peak_speed_m_s": 0, "acceleration_curve": "linear", "ease_in_frames": 0, "ease_out_frames": 0 }, "vibration": { "enabled": false, "spectrum": [], "random_seed": 0, "sync_to": "none" } },
+            "focus":         { "mode": "single", "distance_m": 6.5, "rack_to_m": null, "rack_trigger_frame": null, "duration_frames": null, "bokeh_shape": "circular", "bokeh_character": "creamy", "breathing_compensation": true },
+            "exposure":      { "shutter_angle_degrees": 180, "iso": 800, "motion_blur_samples": 32, "temporal_noise_profile": "film_grain_35mm" },
+            "depth_composition": {
+              "foreground": { "element": "single out-of-focus bamboo trunk at frame-right", "distance_m": 1.5, "blur_stops": 2.5, "opacity": 0.7 },
+              "midground":  { "element": "Ling Xu standing on stone path, back to camera", "distance_m": 6.5 },
+              "background": { "element": "layered bamboo receding into mist", "distance_m": 15.0, "haze_density": 0.40, "color_shift": "teal", "atmospheric_perspective": true }
+            }
+          },
+          "temporal":       { "duration_sec": 7.0, "duration_frames": 168, "fps": 24, "cut_in_point": "first_frame", "cut_out_point": "last_frame", "speed_ramp": [] },
+          "rhythm_profile": { "tension_curve": [{ "frame": 0, "value": 0.20, "marker": "hold" },{ "frame": 168, "value": 0.25, "marker": "hold_end" }], "cut_triggers": [{ "frame": 168, "type": "match_cut", "alignment": "shape:rotating_leaf" }], "speed_correlation": { "high_tension": { "shutter_angle": 180, "vibration_amplitude": 0 }, "low_tension": { "shutter_angle": 180, "vibration_amplitude": 0 } } },
+          "mise_en_scene_ref": "@mes_bamboo_forest_dawn",
+          "sound_design_ref":  "@sound_ancient_bamboo_dawn",
+          "talent_action":     "Ling Xu stands motionless, back to camera; one breath cycle visible as white plume; sleeve hangs from left wrist to knee, no sway",
+          "editing_style":     "long-take stillness",
+          "clip_transition":   null,
+          "match_cut_ref":     "SH_02",
+          "match_cut_element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "montage_member":    false,
+          "_direction_intent_ref":   "SEQ_01",
+          "_performance_intent_ref": "MU_01",
+          "_provenance": {
+            "cinematography.lens.focal_length_mm": { "kind": "decision", "d_id": "D-001", "evidence": ["genre_lock.preset_override sets 100mm"] },
+            "temporal.duration_sec":               { "kind": "explicit", "span": "MSSS:SEQ_01.duration_budget_sec" },
+            "talent_action":                       { "kind": "inferred", "span": "MU_01.core_action + PERF_MU_01.inner_want" }
+          }
+        },
+
+        { "shot_id": "SH_02", "seq_ref": "SEQ_02", "inherits": "SH_01", "delta": {
+            "shot_type": "ECU_static",
+            "cinematography.framing.shot_size": "ECU",
+            "cinematography.framing.frame_within_frame": null,
+            "cinematography.framing.composition_rule": "center",
+            "cinematography.focus.distance_m": 1.4,
+            "cinematography.depth_composition.foreground.element": "surface of still water in stone basin",
+            "cinematography.depth_composition.midground.element":  "rotating pine-needle cluster on water",
+            "cinematography.depth_composition.background.element": "dark stone basin wall",
+            "cinematography.depth_composition.background.haze_density": 0.10,
+            "temporal.duration_sec": 7.0,
+            "temporal.duration_frames": 168,
+            "rhythm_profile.cut_triggers": [{ "frame": 168, "type": "hard_cut", "alignment": "beat:leaf_completes_full_rotation" }],
+            "talent_action": "no actor in frame — only the leaf rotating one full turn on still water; final frame shows leaf at start orientation",
+            "match_cut_ref": null,
+            "match_cut_element": null,
+            "_direction_intent_ref": "SEQ_02",
+            "_performance_intent_ref": null
+        }},
+
+        { "shot_id": "SH_03", "seq_ref": "SEQ_03", "inherits": "SH_01", "delta": {
+            "shot_type": "MS_static",
+            "cinematography.framing.shot_size": "MS",
+            "cinematography.framing.subject_height_in_frame": 0.75,
+            "cinematography.camera_motion.start_position": { "x": 1.2, "y": 1.55, "z": -3.2 },
+            "cinematography.camera_motion.end_position":   { "x": 1.2, "y": 1.55, "z": -3.2 },
+            "cinematography.focus.distance_m": 3.2,
+            "cinematography.depth_composition.midground.element": "Ling Xu in 3/4 profile, jade pin catching amber rim light",
+            "temporal.duration_sec": 6.5,
+            "temporal.duration_frames": 156,
+            "rhythm_profile.tension_curve": [{ "frame": 0, "value": 0.25, "marker": "hold" },{ "frame": 156, "value": 0.35, "marker": "hold_late" }],
+            "rhythm_profile.cut_triggers": [{ "frame": 156, "type": "hard_cut", "alignment": "beat:end_of_held_silence" }],
+            "talent_action": "Ling Xu holds 3/4 profile; two breath cycles visible as white plumes; sleeve settles once at T+3.0s and does not move again; jaw sets and releases once at T+5.5s",
+            "_direction_intent_ref": "SEQ_03",
+            "_performance_intent_ref": "MU_03"
+        }},
+
+        { "shot_id": "SH_04", "seq_ref": "SEQ_04", "inherits": "SH_03", "delta": {
+            "shot_type": "MCU_static_rack",
+            "cinematography.framing.shot_size": "MCU",
+            "cinematography.framing.subject_height_in_frame": 0.90,
+            "cinematography.focus.mode": "rack",
+            "cinematography.focus.distance_m": 1.6,
+            "cinematography.focus.rack_to_m": 4.5,
+            "cinematography.focus.rack_trigger_frame": 48,
+            "cinematography.focus.duration_frames": 24,
+            "cinematography.depth_composition.foreground.element": "Ling Xu's eyes and jade pin, sharp",
+            "cinematography.depth_composition.midground.element":  "stone basin edge, going sharp after rack",
+            "cinematography.depth_composition.background.element": "leaf on water, sharp after rack",
+            "temporal.duration_sec": 4.0,
+            "temporal.duration_frames": 96,
+            "rhythm_profile.tension_curve": [{ "frame": 0, "value": 0.35, "marker": "hold" },{ "frame": 48, "value": 0.55, "marker": "gaze_lands" },{ "frame": 96, "value": 0.50, "marker": "reveal_end" }],
+            "rhythm_profile.cut_triggers": [{ "frame": 96, "type": "hard_cut", "alignment": "beat:gaze_settled" }],
+            "talent_action": "Ling Xu's eyes shift frame-right toward the basin; head does not turn; the rack follows the eye at T+2.0s; jade pin catches one extra rim highlight as the eyes move",
+            "_direction_intent_ref": "SEQ_04",
+            "_performance_intent_ref": "MU_04"
+        }},
+
+        { "shot_id": "SH_05", "seq_ref": "SEQ_05", "inherits": "SH_01", "delta": {
+            "shot_type": "ELS_pullback",
+            "cinematography.framing.shot_size": "ELS",
+            "cinematography.framing.subject_height_in_frame": 0.20,
+            "cinematography.camera_motion.type": "crane",
+            "cinematography.camera_motion.start_position": { "x": 0, "y": 1.6,  "z": -6.5 },
+            "cinematography.camera_motion.end_position":   { "x": 0, "y": 12.0, "z": -22.0 },
+            "cinematography.camera_motion.trajectory": "bezier",
+            "cinematography.camera_motion.speed_profile.acceleration_curve": "ease_out",
+            "cinematography.camera_motion.speed_profile.ease_out_frames": 96,
+            "cinematography.focus.distance_m": 22.0,
+            "cinematography.depth_composition.background.haze_density": 0.55,
+            "temporal.duration_sec": 5.5,
+            "temporal.duration_frames": 132,
+            "rhythm_profile.tension_curve": [{ "frame": 0, "value": 0.50, "marker": "release_start" },{ "frame": 132, "value": 0.25, "marker": "coda" }],
+            "rhythm_profile.cut_triggers": [{ "frame": 132, "type": "silk_dissolve", "alignment": "world_shift" }],
+            "talent_action": "Ling Xu shrinks into the vertical composition as the camera lifts and pulls; one long exhale white plume at T+1.5s; sleeve on hilt lowers 1cm at T+3.5s; leaf comes fully to rest at T+4.5s",
+            "clip_transition": "silk_dissolve",
+            "_direction_intent_ref": "SEQ_05",
+            "_performance_intent_ref": "MU_05"
+        }}
+      ]
+    },
+
+    "S4_VERIFY": {
+      "verify_id": "VER_lingxu_dawn_001",
+      "target_ir": "S3_IR:lingxu_dawn_001",
+      "checks": [
+        { "check": "duration.total",                "result": "pass",    "detail": "7.0 + 7.0 + 6.5 + 4.0 + 5.5 = 30.0" },
+        { "check": "duration.container",            "result": "pass",    "detail": "CT_01 = 30.0" },
+        { "check": "duration.shots_per_container",  "result": "pass",    "detail": "CT_01 has 5 shots" },
+        { "check": "aspect_ratio.consistent",       "result": "pass" },
+        { "check": "narrative.proportion_realized", "result": "pass",    "detail": "visual 0.55 / silence 0.25 measured within tolerance" },
+        { "check": "pacing.asl",                    "result": "pass",    "detail": "ASL 6.0s == pacing_lock target" },
+        { "check": "pacing.silence_ratio",          "result": "pass",    "detail": "silence beats total 13.5s / 30s = 0.45 >= 0.25 min" },
+        { "check": "cinematography.lens_jump",      "result": "warning", "detail": "SH_05 crane vs SH_04 100mm static — same focal length, no jump" },
+        { "check": "sound.no_music_in_prompt",      "result": "pass",    "detail": "L2 scan clean; theme_motif marked post_only" },
+        { "check": "direction.intent_applied",      "result": "pass" },
+        { "check": "performance.intent_applied",    "result": "pass" },
+        { "check": "provenance.witness_present",    "result": "pass" },
+        { "check": "render_hint_leak",              "result": "pass",    "detail": "L2 omits vibration.spectrum, motion_blur_samples, bezier positions" }
+      ],
+      "verdict": "PASS",
+      "repair_needed": false,
+      "repair_instructions": []
+    },
+
+    "S5_OUT": {
+      "canonical_id": "DSL_lingxu_dawn_001",
+      "format": "film-dsl-v2.1",
+      "title": "Bamboo Grove, Dawn — Departure Beat",
+      "aspect_ratio": "2.39:1",
+      "total_duration_sec": 30.0,
+      "total_frames": 720,
+      "fps": 24,
+      "shot_count": 5,
+      "world_timeline": [
+        { "shot": "SH_01", "world": "ancient" },
+        { "shot": "SH_02", "world": "ancient" },
+        { "shot": "SH_03", "world": "ancient" },
+        { "shot": "SH_04", "world": "ancient" },
+        { "shot": "SH_05", "world": "ancient" }
+      ],
+      "match_cut_pairs": [
+        { "from": "SH_01", "to": "SH_02", "element": "rotational form (Ling Xu's stillness → the leaf's slow turn)", "function": "carry the container of stillness across the cut" }
+      ],
+      "montage_groups": [],
+      "world_transition_map": [
+        { "at_shot": "SH_05", "method": "silk_dissolve", "target_world": "ancient (next container)" }
+      ],
+      "cinematography_summary": {
+        "lens_range_mm": [100, 100],
+        "motion_types_used": ["static", "crane"],
+        "longest_take_frames": 168,
+        "shortest_shot_frames": 96,
+        "average_shutter_angle": 180,
+        "depth_layers_max": 3
+      },
+      "execution_order": ["SH_01", "SH_02", "SH_03", "SH_04", "SH_05"],
+      "downstream_target": "video_generation_engine (L2) + editor_timeline (L1+L3) + post_color_pipeline (L3)",
+
+      "shots_dsl": [
+        {
+          "shot_id": "SH_01",
+          "L1_human_readable": { "shot_no": "1/5", "shot_size": "FS", "motion": "static", "duration_s": 7.0, "beat": "Ling Xu stands motionless, back to camera; one visible breath plume" },
+          "L2_render_prompt": {
+            "modules": {
+              "SCENE_CONTEXT": "EXACT 1 CHARACTER — NO DUPLICATES. Bamboo grove, dawn. Ling Xu stands motionless on wet stone path, back to camera. One continuous 7-second shot. No cuts.",
+              "ACTIVE_REFERENCES": "@ling_xu — dark indigo robe with pale silver embroidery at collar and cuffs; wide sash tied left; long straight black hair tied high with jade pin; leather-wrapped hilt at left hip; androgynous fine features; mole below left corner of mouth; silver stud left ear-tip; narrow calloused hands. @loc_bamboo_grove_dawn — bamboo grove at dawn (see LOCATION MAP). Take only space and texture. Do not use as starting frame. Do not inherit composition, angle, or grade.",
+              "LOCATION_MAP": "LOCATION MAP\nGEO SPATIAL LAYOUT (locked):\n— BAMBOO TRUNKS: vertical, spacing 3-5m, frame-fill both sides\n— STONE PATH: bisecting frame-center to back, wet flagstone\n— STONE BASIN: frame-RIGHT, 1.2m from center\n— LING XU: standing on path, CENTER, facing frame-back\n— 180° AXIS: camera stays on the path's LEFT side, never crosses\n— KEY LIGHT: hard amber sun from frame-LEFT at 30° elevation; mist reads in beam\n— SHADOWS: fall frame-RIGHT; no fill from camera side",
+              "FIRST_FRAME_AND_SPATIAL_BLOCKING": "SHOT 1 (~1.0s) — a wide that FIXES THE POSITIONS and does nothing else: Ling Xu planted at center of the stone path, back to camera, sleeves hanging still, left hand resting on the sword hilt. Stone basin at frame-right holding the fallen pine-needle cluster on still water. Bamboo trunks receding into mist on both sides. No camera move on frame one. No action beat.",
+              "FORMAT_MODE": "Single continuous take. Total duration: 7 seconds. Real time. No cuts. No speed ramps.",
+              "OPTICS": "100mm telephoto. Camera height 1.6m at chest height of the subject seen from behind. Camera distance to subject: 6.5m. Deep enough to hold Ling Xu and one out-of-focus foreground bamboo trunk; background bamboo falls into mist.",
+              "CAMERA": "Locked-off tripod. Zero motion — no drift, no shake, no breathing, no stabilization float. Angle, elevation, distance frozen. All motion comes from the scene itself. Constraints: No pan. No tilt. No push. No handheld drift.",
+              "ACTION_TIMING": "0.0–2.0s — Room holds. Ling Xu perfectly still, back to camera. Mist drifts slowly across the beam of amber light from frame-left.\n2.0–4.0s — One breath cycle: white plume rises from Ling Xu's mouth over ~1.5s, drifts frame-right, dissipates.\n4.0–5.5s — Sleeve on left arm settles imperceptibly; the hilt hand relaxes one fingertip and returns.\n5.5–7.0s — Held stillness resumes; final frame identical to opening frame.",
+              "PHYSICS": "Silk sleeve hangs with real weight, no wind sway; the breath plume respects the amber beam (white becomes gold in the beam, disperses in the shade); mist drifts at a walking pace not a wind pace; the fallen pine leaf floats without submerging.",
+              "LIGHTING": "One hard source: dawn amber sun from frame-LEFT at 30° elevation. Ling Xu backlit and rim-lit — jade pin catches an amber highlight, cheekbone edge visible. Camera side is in shadow — no fill. Path in front two stops darker than the beam. Mist reads in the beam.",
+              "AUDIO": "Diegetic only — bamboo trunks knocking hollowly at ~0.5Hz, distant water drip on stone every 3-4s, silk sleeve friction on the sleeve settle at ~4.5s, breath work close mic during the exhale plume 2.0-3.5s. Ling Xu does not speak. Mix: ambient underneath breath. No music.",
+              "CHARACTER_ACTING": "LING XU — Emotional state: holding the ground of a decision already made. What they want in this moment: to make the standing itself into the answer. What they are hiding: the decision was made against a teacher's wish. Dominant body rhythm: planted, vertical, no sway. Visible habits: breath visible as white plume; sleeve moves before hand; gaze reads objects before people. What changes across the shot: nothing changes — the stillness is the point. INNER (unspoken): I have already left.",
+              "STYLE": "Style: 8K IMAX. Photorealistic. Cinematography: telephoto compression from 100mm; painterly composed frames with strong negative space; silhouette against contre-jour backlight. Lighting: motivated dawn sun only, one hard source from frame-left, camera on shadow side, mist reads in the beam. Color: teal and amber, low saturation, skin preserved. Camera: cine lens with 1/8 diffusion and 2mm gold streak. 180° shutter motion blur. Skin: pore-level realism. Acting: sleeve moves before hand; breath visible as white plume. Physics: silk falls as silk. Composition: golden ratio, negative space 60%. Continuity: identity holds across every cut. Technical: 24fps, 8K, no jitter. Audio: environmental SFX only. No music.",
+              "QUALITY": "8K detail. Pore-level skin. No jitter. No flicker. 1 face remains exactly Ling Xu's reference. Sharpness anchors: jade pin edge stable; sword hilt leather grain holds; wet stone specular stable under amber beam.",
+              "POSITIVE_CONSTRAINTS": "Exactly 1 person in the bamboo grove — no one else, no birds, no visible wildlife. Exactly 1 jade pin in the hair — never removed, never repositioned, catches amber rim light. Exactly 1 sword at left hip, sheathed — never drawn. Exactly 1 fallen pine-needle cluster on the basin water — never multiplied. Camera stays on the path's LEFT side for all seven seconds. Photoreal. NON-IP. 2.39:1. 7s. SFX only. NO CGI. Cinematic."
+            }
+          },
+          "L3_full_ir_ref": "S3_IR.shots[0]"
+        },
+        { "shot_id": "SH_02", "L1_human_readable": { "shot_no": "2/5", "shot_size": "ECU", "motion": "static", "duration_s": 7.0, "beat": "match cut — leaf rotates one full turn on still water" }, "L2_render_prompt": { "modules": { "_ref_notice": "expanded from delta over SH_01 by S5 exporter" } }, "L3_full_ir_ref": "S3_IR.shots[1]" },
+        { "shot_id": "SH_03", "L1_human_readable": { "shot_no": "3/5", "shot_size": "MS",  "motion": "static", "duration_s": 6.5, "beat": "held silence — two breath plumes, sleeve settles, jaw releases" }, "L2_render_prompt": { "modules": { "_ref_notice": "expanded from delta over SH_01 by S5 exporter" } }, "L3_full_ir_ref": "S3_IR.shots[2]" },
+        { "shot_id": "SH_04", "L1_human_readable": { "shot_no": "4/5", "shot_size": "MCU", "motion": "static rack", "duration_s": 4.0, "beat": "eyes shift, head does not turn; rack from face to leaf at 2.0s" }, "L2_render_prompt": { "modules": { "_ref_notice": "expanded from delta over SH_03 by S5 exporter" } }, "L3_full_ir_ref": "S3_IR.shots[3]" },
+        { "shot_id": "SH_05", "L1_human_readable": { "shot_no": "5/5", "shot_size": "ELS", "motion": "crane pullback", "duration_s": 5.5, "beat": "camera lifts and pulls; long exhale; sleeve lowers 1cm on hilt; silk dissolve out" }, "L2_render_prompt": { "modules": { "_ref_notice": "expanded from delta over SH_01 by S5 exporter" } }, "L3_full_ir_ref": "S3_IR.shots[4]" }
+      ]
+    }
+  },
+
+  "error_handling": {
+    "S1-MUS_fail":    "return story for rewrite with narrative_proportion hint",
+    "S2-MSSS_fail":   "return MUS for re-partition with container_ref constraint",
+    "S2.5-DIR_fail":  "return MSSS to human — vocabulary mismatch cannot be auto-repaired",
+    "S2.7-PERF_fail": "return MUS + preset to fall back to default_micro_life",
+    "S3-IR_fail":     "return MSSS + intents for re-shotting or supplement cinematography parameters",
+    "S4-VERIFY_fail": {
+      "if_repairable_via_mus":   "auto-rewrite decision atoms, re-verify in memory, emit repair with requires_signoff=true",
+      "if_all_explicit_mus":     "escalate to ambiguity_registry, do NOT relax explicit atoms",
+      "if_not_repairable":       "return S3-IR for human sign-off"
+    }
+  },
+
+  "version_history": {
+    "v2.0.0": "initial CSCA + v2 schema with cinematography, temporal, rhythm_profile",
+    "v2.1.0": "add genre_lock structured + preset registry, narrative_proportion (5-axis), pacing_lock, direction_lock, performance_lock, S2.5-DIR and S2.7-PERF stages, three-tier output (L1/L2/L3), delta-encoded shots, library refs, provenance per hard field, render_hint_only fields"
+  }
+}

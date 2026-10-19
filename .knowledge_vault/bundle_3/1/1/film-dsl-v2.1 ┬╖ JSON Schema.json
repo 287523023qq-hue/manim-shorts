@@ -1,0 +1,839 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://perplexity.local/film-dsl/v2.1.schema.json",
+  "title": "Film Generation Workflow v2.1",
+  "description": "Cinematic Semantic Compilation — 7 layers (SOURCE → NSA → CSCA-MSSS → DIR-Intent → PERF-Intent → Typed-IR → VERIFY → Canonical DSL). This document specifies the full workflow schema. All heavy defaults are pushed to top-level *_lock objects; per-shot payload is a delta over the locks.",
+  "type": "object",
+  "required": [
+    "workflow_id",
+    "version",
+    "genre_lock",
+    "narrative_proportion",
+    "pacing_lock",
+    "direction_lock",
+    "performance_lock",
+    "style_lock",
+    "character_lock",
+    "stages"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema_ref": { "type": "string", "description": "Relative pointer to this schema for editor tooling; not semantically load-bearing." },
+    "workflow_id": { "const": "film-generation-v2.1" },
+    "version": { "const": "2.1.0" },
+    "description": { "type": "string" },
+    "stage_products": { "type": "object", "description": "Optional embedded outputs of each stage for round-trip round-trip storage or examples. Freeform — validate against per-stage $defs at consumer discretion." },
+
+    "genre_lock": { "$ref": "#/$defs/GenreLock" },
+    "narrative_proportion": { "$ref": "#/$defs/NarrativeProportion" },
+    "pacing_lock": { "$ref": "#/$defs/PacingLock" },
+    "direction_lock": { "$ref": "#/$defs/DirectionLock" },
+    "performance_lock": { "$ref": "#/$defs/PerformanceLock" },
+    "style_lock": { "$ref": "#/$defs/StyleLock" },
+    "character_lock": { "$ref": "#/$defs/CharacterLock" },
+    "prop_lock": { "$ref": "#/$defs/PropLock" },
+    "supporting_characters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "role": { "type": "string" },
+          "trait": { "type": "string" }
+        }
+      }
+    },
+    "sound_design_lock": { "$ref": "#/$defs/SoundDesignLock" },
+
+    "libraries": { "$ref": "#/$defs/Libraries" },
+
+    "stages": {
+      "type": "array",
+      "description": "Ordered pipeline stages. See docs/pipeline-stages.md for authoritative process rules per stage.",
+      "items": { "$ref": "#/$defs/Stage" },
+      "minItems": 7
+    },
+
+    "error_handling": { "$ref": "#/$defs/ErrorHandling" },
+    "version_history": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+
+  "$defs": {
+
+    "GenreLock": {
+      "type": "object",
+      "description": "Structured genre binding. `cinematography_preset_ref` MUST resolve to an entry in presets/genre-preset-registry.json.",
+      "required": ["primary", "medium", "cinematography_preset_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "primary": {
+          "type": "string",
+          "enum": [
+            "classical_xianxia",
+            "wuxia",
+            "modern_urban",
+            "cyberpunk",
+            "noir",
+            "period_drama",
+            "documentary",
+            "commercial",
+            "music_video",
+            "sci_fi",
+            "fantasy"
+          ]
+        },
+        "secondary": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional overlay genres (e.g. `suspense`, `romance`, `war`). Order matters: later entries override earlier."
+        },
+        "medium": {
+          "type": "string",
+          "enum": ["film", "short", "series_ep", "commercial", "music_video", "trailer"]
+        },
+        "cinematography_preset_ref": {
+          "type": "string",
+          "pattern": "^@preset_[a-z0-9_]+_v[0-9]+$"
+        },
+        "preset_override": {
+          "type": "object",
+          "description": "Per-project overrides applied on top of the resolved preset. Keys are dot-paths into IR fields (e.g. `cinematography.lens.focal_length_mm.default`). Values REPLACE, not merge."
+        }
+      }
+    },
+
+    "NarrativeProportion": {
+      "type": "object",
+      "description": "Five-axis narrative weight distribution. All values in [0,1] and MUST sum to 1.0 ± 0.01. Enforced at S4-VERIFY (see check `narrative.proportion_realized`).",
+      "required": ["visual", "dialogue", "action", "sound", "silence"],
+      "additionalProperties": false,
+      "properties": {
+        "visual":   { "type": "number", "minimum": 0, "maximum": 1 },
+        "dialogue": { "type": "number", "minimum": 0, "maximum": 1 },
+        "action":   { "type": "number", "minimum": 0, "maximum": 1 },
+        "sound":    { "type": "number", "minimum": 0, "maximum": 1 },
+        "silence":  { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+
+    "PacingLock": {
+      "type": "object",
+      "description": "Global rhythm budget. Enforced at S4-VERIFY.",
+      "required": ["avg_shot_length_sec", "longest_take_cap_sec", "shortest_shot_floor_sec"],
+      "additionalProperties": false,
+      "properties": {
+        "avg_shot_length_sec":     { "type": "number", "exclusiveMinimum": 0 },
+        "longest_take_cap_sec":    { "type": "number", "exclusiveMinimum": 0 },
+        "shortest_shot_floor_sec": { "type": "number", "exclusiveMinimum": 0 },
+        "silence_ratio_min":       { "type": "number", "minimum": 0, "maximum": 1 },
+        "hard_cut_ratio_target":   { "type": "number", "minimum": 0, "maximum": 1 },
+        "container_duration_sec":  { "type": "number", "const": 30.0, "description": "CSCA container size — locked at 30s per spec." },
+        "shots_per_container":     { "type": "integer", "const": 5 }
+      }
+    },
+
+    "DirectionLock": {
+      "type": "object",
+      "description": "Director's intent defaults. Per-shot `direction_intent` deltas override these.",
+      "required": ["default_motion_grammar", "default_cut_grammar"],
+      "additionalProperties": false,
+      "properties": {
+        "default_motion_grammar": { "$ref": "#/$defs/MotionGrammar" },
+        "default_cut_grammar":    { "$ref": "#/$defs/CutGrammar" },
+        "tension_arc_shape": {
+          "type": "string",
+          "enum": [
+            "long_tail_late_break",
+            "steady_climb",
+            "double_peak",
+            "front_loaded",
+            "flat_burst_flat",
+            "spiral_inward"
+          ]
+        },
+        "silence_policy": {
+          "type": "string",
+          "enum": ["silence_is_content", "silence_as_breath", "silence_avoided"]
+        }
+      }
+    },
+
+    "MotionGrammar": {
+      "type": "string",
+      "description": "Enum of camera motion × narrative function pairings. See docs/direction-vocabulary.md for full definitions.",
+      "enum": [
+        "push_in_on_realization",
+        "push_in_on_admission",
+        "pull_out_on_isolation",
+        "hold_and_reveal",
+        "hold_on_silence",
+        "orbit_on_isolation",
+        "orbit_on_obsession",
+        "rack_on_shift_of_attention",
+        "handheld_on_disintegration",
+        "static_on_authority",
+        "crane_up_on_release",
+        "dolly_zoom_on_realization",
+        "match_move_on_pursuit"
+      ]
+    },
+
+    "CutGrammar": {
+      "type": "string",
+      "enum": [
+        "cut_on_reversal",
+        "cut_on_qi_shift",
+        "cut_on_gaze_landing",
+        "cut_on_sound_cue",
+        "cut_on_beat_drop",
+        "match_cut_on_form",
+        "match_cut_on_motion",
+        "dissolve_on_time_pass",
+        "silk_dissolve_on_world_shift",
+        "hard_cut_on_impact",
+        "smash_cut_on_denial"
+      ]
+    },
+
+    "PerformanceLock": {
+      "type": "object",
+      "description": "Actor micro-life defaults. Per-shot `performance_intent` deltas override.",
+      "required": ["default_micro_life", "breath_rule"],
+      "additionalProperties": false,
+      "properties": {
+        "default_micro_life": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/MicroLifeAtom" },
+          "minItems": 1
+        },
+        "breath_rule":     { "type": "string" },
+        "breakdown_rule":  { "type": "string" },
+        "hand_task_rule":  { "type": "string" },
+        "gaze_rule":       { "type": "string" },
+        "transfer_rules_when_impossible": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "MicroLifeAtom": {
+      "type": "string",
+      "description": "Atomic performance primitive. Extend the enum via presets, not per-shot.",
+      "enum": [
+        "eyes_before_head",
+        "breath_before_word",
+        "hand_stops_on_accent",
+        "re_arm_the_face",
+        "long_exhale_jaw_set_release",
+        "sleeve_movement_before_hand",
+        "breath_visible_in_cold",
+        "blink_double_reset",
+        "chest_rise_shallow_pulls",
+        "listener_reaction_before_speaker_finishes"
+      ]
+    },
+
+    "StyleLock": {
+      "type": "object",
+      "description": "Visual style anchors resolved from genre preset unless overridden.",
+      "required": ["color_grade", "grain", "world_transition_style"],
+      "additionalProperties": false,
+      "properties": {
+        "lighting_base_modern":     { "type": ["string", "null"] },
+        "lighting_base_ancient":    { "type": ["string", "null"] },
+        "lighting_threshold":       { "type": ["string", "null"] },
+        "lighting_superimposed":    { "type": ["string", "null"] },
+        "color_grade":              { "type": "string" },
+        "grain":                    { "type": "string" },
+        "world_transition_style":   { "type": "string" },
+        "style_prefix_verbatim":    { "type": "string", "description": "Hell Grind Style Prefix, pasted unchanged into every render prompt." }
+      }
+    },
+
+    "CharacterLock": {
+      "type": "object",
+      "description": "Cross-world identity anchor. See ai-filmmaking-pipeline/references/modules.md § Character Descriptor Block.",
+      "additionalProperties": false,
+      "properties": {
+        "modern_identity": {
+          "type": ["object", "null"],
+          "properties": {
+            "name":     { "type": "string" },
+            "age":      { "type": ["number", "null"] },
+            "wardrobe": { "type": "string" },
+            "features": { "type": "array", "items": { "type": "string" } },
+            "world":    { "const": "modern" }
+          }
+        },
+        "ancient_identity": {
+          "type": ["object", "null"],
+          "properties": {
+            "name":     { "type": "string" },
+            "wardrobe": { "type": "string" },
+            "features": { "type": "array", "items": { "type": "string" } },
+            "world":    { "const": "ancient" }
+          }
+        },
+        "continuity_anchor":   { "type": "string" },
+        "dual_body_sync_rules":{ "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "PropLock": {
+      "type": "object",
+      "description": "Map: prop_name → description — function. Cross-world props MUST appear here.",
+      "additionalProperties": { "type": "string" }
+    },
+
+    "SoundDesignLock": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "modern_signature":   { "type": ["string", "null"] },
+        "ancient_signature":  { "type": ["string", "null"] },
+        "cross_world_marker": { "type": ["string", "null"] },
+        "theme_motif":        { "type": ["string", "null"] },
+        "post_only_music":    { "type": "boolean", "const": true, "description": "Music NEVER enters prompts; added only in post." }
+      }
+    },
+
+    "Libraries": {
+      "type": "object",
+      "description": "Content libraries referenced by @ref from shots to avoid duplication.",
+      "additionalProperties": false,
+      "properties": {
+        "mise_en_scene_library": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "text":        { "type": "string" },
+              "world":       { "type": "string" },
+              "time_of_day": { "type": "string" }
+            }
+          }
+        },
+        "sound_library": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "diegetic":     { "type": "array", "items": { "type": "string" } },
+              "non_diegetic": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "location_library": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "descriptor_block": { "type": "string" },
+              "geo_map":          { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "Stage": {
+      "type": "object",
+      "required": ["stage_id", "name", "input", "output"],
+      "additionalProperties": true,
+      "properties": {
+        "stage_id": {
+          "type": "string",
+          "enum": [
+            "S1-MUS",
+            "S2-MSSS",
+            "S2.5-DIR",
+            "S2.7-PERF",
+            "S3-IR",
+            "S4-VERIFY",
+            "S5-OUT"
+          ]
+        },
+        "name":       { "type": "string" },
+        "input":      { "type": "object" },
+        "process":    { "type": "object" },
+        "output":     { "type": "object" },
+        "downstream": { "type": ["string", "array"] }
+      }
+    },
+
+    "MUS": {
+      "type": "object",
+      "description": "S1 output. Every meta_unit carries provenance (from NSA layer).",
+      "required": ["mus_id", "source_story_ref", "meta_units"],
+      "properties": {
+        "mus_id":            { "type": "string" },
+        "source_story_ref":  { "type": "string" },
+        "meta_units": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/MetaUnit" }
+        }
+      }
+    },
+
+    "MetaUnit": {
+      "type": "object",
+      "required": ["mu_id", "function", "emotion_intensity", "entities", "core_action", "time_marker", "world", "_provenance"],
+      "properties": {
+        "mu_id":             { "type": "string" },
+        "function":          { "type": "string" },
+        "emotion_intensity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "entities":          { "type": "array", "items": { "type": "string" } },
+        "core_action":       { "type": "string" },
+        "time_marker":       { "type": "string" },
+        "world": {
+          "type": "string",
+          "enum": ["modern", "ancient", "threshold", "superimposed", "both"]
+        },
+        "_provenance":       { "$ref": "#/$defs/Provenance" }
+      }
+    },
+
+    "Provenance": {
+      "type": "object",
+      "description": "NSA-layer three-state provenance.",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["explicit", "inferred", "decision"]
+        },
+        "span":     { "type": "string", "description": "Text span reference, e.g. `L0:para_12:sent_3`." },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "d_id":     { "type": "string", "description": "Decision ledger ID, e.g. `D-017`." },
+        "witness":  { "type": "string", "description": "Feasibility witness ref (used at Gate 3 lint)." }
+      }
+    },
+
+    "MSSS": {
+      "type": "object",
+      "required": ["msss_id", "derived_from", "total_duration_budget_sec", "scenes"],
+      "properties": {
+        "msss_id":                   { "type": "string" },
+        "derived_from":              { "type": "string" },
+        "aspect_ratio":              { "type": "string" },
+        "total_duration_budget_sec": { "type": "number" },
+        "scenes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scene_id", "location", "time", "world", "sequences"],
+            "properties": {
+              "scene_id":        { "type": "string" },
+              "location":        { "type": "string" },
+              "time":            { "type": "string" },
+              "world":           { "type": "string" },
+              "continuity_tags": { "type": "array", "items": { "type": "string" } },
+              "sequences": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["seq_id", "maps_to_mu", "seq_type", "duration_budget_sec"],
+                  "properties": {
+                    "seq_id":              { "type": "string" },
+                    "maps_to_mu":          { "type": "array", "items": { "type": "string" } },
+                    "seq_type":            { "type": "string" },
+                    "duration_budget_sec": { "type": "number" },
+                    "transition_hint":     { "type": ["string", "null"] },
+                    "montage_mark":        { "type": ["boolean", "null"] },
+                    "container_ref":       { "type": "string", "description": "Which 30s container this sequence belongs to." }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "DirectionIntent": {
+      "type": "object",
+      "description": "S2.5 output. Per-sequence director's rationale that DRIVES S3-IR choices — does NOT appear in the video model prompt itself.",
+      "required": ["seq_ref", "motion_reason", "cut_reason"],
+      "additionalProperties": false,
+      "properties": {
+        "seq_ref":            { "type": "string" },
+        "motion_reason":      { "$ref": "#/$defs/MotionGrammar" },
+        "cut_reason":         { "$ref": "#/$defs/CutGrammar" },
+        "tension_arc_role":   {
+          "type": "string",
+          "enum": ["setup", "climb", "break", "aftermath", "coda", "false_peak", "reveal"]
+        },
+        "reveal_beat_frame":  { "type": ["integer", "null"] },
+        "silence_beats":      {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start_sec":  { "type": "number" },
+              "length_sec": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+
+    "PerformanceIntent": {
+      "type": "object",
+      "description": "S2.7 output. Per-MU actor intent that DRIVES Module 12 CHARACTER ACTING and IR talent_action — does NOT appear in the render prompt.",
+      "required": ["mu_ref", "actor_ref", "inner_want", "hidden"],
+      "additionalProperties": false,
+      "properties": {
+        "mu_ref":            { "type": "string" },
+        "actor_ref":         { "type": "string" },
+        "inner_want":        { "type": "string" },
+        "hidden":            { "type": "string" },
+        "breakdown_moment":  { "type": ["string", "null"] },
+        "micro_life_anchors":{
+          "type": "array",
+          "items": { "$ref": "#/$defs/MicroLifeAtom" }
+        },
+        "reaction_before":   { "type": "boolean", "description": "Listener reaction begins before speaker finishes." }
+      }
+    },
+
+    "TypedIR": {
+      "type": "object",
+      "required": ["ir_version", "derived_from", "aspect_ratio", "fps", "shots"],
+      "properties": {
+        "ir_version":   { "const": "typed-ir-v2.1" },
+        "derived_from": { "type": "string" },
+        "aspect_ratio": { "type": "string" },
+        "fps":          { "type": "integer", "enum": [24, 25, 30, 48, 60] },
+        "shots": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Shot" }
+        }
+      }
+    },
+
+    "Shot": {
+      "type": "object",
+      "description": "Either FULL or DELTA. When `inherits` is set, only `delta` fields override the referenced shot. First shot of every sequence MUST be FULL.",
+      "oneOf": [
+        {
+          "required": ["shot_id", "seq_ref", "shot_type", "cinematography", "temporal", "mise_en_scene_ref", "sound_design_ref"],
+          "properties": { "inherits": false }
+        },
+        {
+          "required": ["shot_id", "inherits", "delta"]
+        }
+      ],
+      "properties": {
+        "shot_id":  { "type": "string" },
+        "seq_ref":  { "type": "string" },
+        "inherits": { "type": "string" },
+        "delta":    { "type": "object" },
+
+        "shot_type": { "type": "string" },
+
+        "cinematography":   { "$ref": "#/$defs/Cinematography" },
+        "temporal":         { "$ref": "#/$defs/Temporal" },
+        "rhythm_profile":   { "$ref": "#/$defs/RhythmProfile" },
+
+        "mise_en_scene_ref": { "type": "string", "pattern": "^@mes_[a-z0-9_]+$" },
+        "sound_design_ref":  { "type": "string", "pattern": "^@sound_[a-z0-9_]+$" },
+        "talent_action":     { "type": "string" },
+        "editing_style":     { "type": "string" },
+        "clip_transition":   { "type": ["string", "null"] },
+        "match_cut_ref":     { "type": ["string", "null"] },
+        "match_cut_element": { "type": ["string", "null"] },
+        "montage_member":    { "type": ["boolean", "null"] },
+
+        "_direction_intent_ref":   { "type": "string" },
+        "_performance_intent_ref": { "type": "string" },
+        "_provenance": {
+          "type": "object",
+          "description": "Per-hard-field provenance map. Key = dot-path (e.g. `cinematography.lens.focal_length_mm`), value = Provenance object.",
+          "additionalProperties": { "$ref": "#/$defs/Provenance" }
+        }
+      }
+    },
+
+    "Cinematography": {
+      "type": "object",
+      "description": "Machine-audit layer. Fields marked `render_hint_only` do NOT appear in the L2 render prompt — they exist to feed post tools (DaVinci nodes, AE expressions).",
+      "properties": {
+        "lens": {
+          "type": "object",
+          "properties": {
+            "focal_length_mm":    { "type": "number" },
+            "aperture_f":         { "type": "number" },
+            "lens_type":          { "type": "string", "enum": ["spherical", "anamorphic", "vintage", "macro"] },
+            "anamorphic_squeeze": { "type": ["number", "null"] },
+            "near_focus_m":       { "type": "number" },
+            "filter_stack":       { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "framing": {
+          "type": "object",
+          "properties": {
+            "shot_size":               { "type": "string", "enum": ["ECU","CU","MCU","MS","MLS","FS","ELS"] },
+            "subject_height_in_frame": { "type": "number", "minimum": 0, "maximum": 1 },
+            "headroom_ratio":          { "type": "number", "minimum": 0, "maximum": 1 },
+            "looking_space":           { "type": "string", "enum": ["left","right","center","none"] },
+            "composition_rule":        { "type": "string", "enum": ["thirds","golden_spiral","symmetry","dynamic_diagonal","center"] },
+            "frame_within_frame":      { "type": ["string", "null"] }
+          }
+        },
+        "camera_motion": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["static","pan","tilt","dolly","truck","crane","handheld","gimbal","drone","steadicam"] },
+            "start_position": { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } } },
+            "end_position":   { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } } },
+            "trajectory": { "type": "string", "enum": ["linear","bezier","arc","spiral"] },
+            "speed_profile": {
+              "type": "object",
+              "properties": {
+                "peak_speed_m_s":      { "type": "number" },
+                "acceleration_curve":  { "type": "string", "enum": ["linear","ease_in","ease_out","ease_in_out","S_curve","exponential"] },
+                "ease_in_frames":      { "type": "number" },
+                "ease_out_frames":     { "type": "number" }
+              }
+            },
+            "vibration": {
+              "type": "object",
+              "description": "render_hint_only — for post-stage stabilization/destabilization, NOT for video model.",
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "spectrum": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "frequency_hz": { "type": "number" },
+                      "amplitude_mm": { "type": "number" },
+                      "axis": { "type": "string", "enum": ["x","y","z","roll","pitch","yaw"] }
+                    }
+                  }
+                },
+                "random_seed": { "type": "number" },
+                "sync_to":     { "type": "string", "enum": ["heartbeat","breath","music_bpm","none"] }
+              }
+            }
+          }
+        },
+        "focus": {
+          "type": "object",
+          "properties": {
+            "mode":            { "type": "string", "enum": ["single","rack","follow","deep"] },
+            "distance_m":      { "type": "number" },
+            "rack_to_m":       { "type": ["number", "null"] },
+            "rack_trigger_frame": { "type": ["number", "null"] },
+            "duration_frames": { "type": ["number", "null"] },
+            "bokeh_shape":     { "type": "string", "enum": ["circular","hexagonal","cat_eye","custom"] },
+            "bokeh_character": { "type": "string", "enum": ["creamy","nervous","swirly","neutral"] },
+            "breathing_compensation": { "type": "boolean" }
+          }
+        },
+        "exposure": {
+          "type": "object",
+          "properties": {
+            "shutter_angle_degrees":   { "type": "number" },
+            "iso":                     { "type": "number" },
+            "motion_blur_samples":     { "type": "number", "description": "render_hint_only — used only if the target model or post pipeline supports it." },
+            "temporal_noise_profile":  { "type": "string", "enum": ["clean","film_grain_35mm","digital_sensor","vintage"] }
+          }
+        },
+        "depth_composition": {
+          "type": "object",
+          "properties": {
+            "foreground": {
+              "type": "object",
+              "properties": {
+                "element":    { "type": "string" },
+                "distance_m": { "type": "number" },
+                "blur_stops": { "type": "number" },
+                "opacity":    { "type": "number", "minimum": 0, "maximum": 1 }
+              }
+            },
+            "midground":  { "type": "object", "properties": { "element": { "type": "string" }, "distance_m": { "type": "number" } } },
+            "background": {
+              "type": "object",
+              "properties": {
+                "element":                { "type": "string" },
+                "distance_m":             { "type": "number" },
+                "haze_density":           { "type": "number", "minimum": 0, "maximum": 1 },
+                "color_shift":            { "type": "string" },
+                "atmospheric_perspective":{ "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "Temporal": {
+      "type": "object",
+      "required": ["duration_sec", "duration_frames", "fps"],
+      "properties": {
+        "duration_sec":    { "type": "number" },
+        "duration_frames": { "type": "integer" },
+        "fps":             { "type": "integer" },
+        "cut_in_point":    { "type": "string", "enum": ["first_frame","action_start","sound_cue","manual_frame"] },
+        "cut_out_point":   { "type": "string", "enum": ["last_frame","action_complete","sound_cue","manual_frame"] },
+        "speed_ramp": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "frame":            { "type": "integer" },
+              "speed_multiplier": { "type": "number" },
+              "curve":            { "type": "string", "enum": ["linear","smooth"] }
+            }
+          }
+        }
+      }
+    },
+
+    "RhythmProfile": {
+      "type": "object",
+      "properties": {
+        "tension_curve": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "frame":  { "type": "integer" },
+              "value":  { "type": "number", "minimum": 0, "maximum": 1 },
+              "marker": { "type": "string" }
+            }
+          }
+        },
+        "cut_triggers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "frame":     { "type": "integer" },
+              "type":      { "type": "string", "enum": ["hard_cut","match_cut","dissolve","wipe","smash_cut","fade_to_black","silk_dissolve"] },
+              "alignment": { "type": "string" }
+            }
+          }
+        },
+        "speed_correlation": {
+          "type": "object",
+          "properties": {
+            "high_tension": { "type": "object", "properties": { "shutter_angle": { "type": "number" }, "vibration_amplitude": { "type": "number" } } },
+            "low_tension":  { "type": "object", "properties": { "shutter_angle": { "type": "number" }, "vibration_amplitude": { "type": "number" } } }
+          }
+        }
+      }
+    },
+
+    "VerifyReport": {
+      "type": "object",
+      "required": ["verify_id", "target_ir", "checks", "verdict", "repair_needed"],
+      "properties": {
+        "verify_id":       { "type": "string" },
+        "target_ir":       { "type": "string" },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["check", "result"],
+            "properties": {
+              "check":  { "type": "string" },
+              "result": { "type": "string", "enum": ["pass", "fail", "warning"] },
+              "detail": { "type": "string" },
+              "mus":    { "type": "array", "items": { "type": "string" }, "description": "Minimal Unsatisfiable Subset — decision atoms attributed to the failure." }
+            }
+          }
+        },
+        "verdict":              { "type": "string", "enum": ["PASS", "FAIL"] },
+        "repair_needed":        { "type": "boolean" },
+        "repair_instructions":  { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "CanonicalDSL": {
+      "type": "object",
+      "description": "S5 output. THREE output tiers packed together — L1/L2/L3 selectable at export time.",
+      "required": ["canonical_id", "format", "total_duration_sec", "shots_dsl"],
+      "properties": {
+        "canonical_id":       { "type": "string" },
+        "format":             { "const": "film-dsl-v2.1" },
+        "title":              { "type": "string" },
+        "aspect_ratio":       { "type": "string" },
+        "total_duration_sec": { "type": "number" },
+        "total_frames":       { "type": "integer" },
+        "fps":                { "type": "integer" },
+        "shot_count":         { "type": "integer" },
+
+        "montage_groups":      { "type": "array", "items": { "type": "object" } },
+        "match_cut_pairs":     { "type": "array", "items": { "type": "object" } },
+        "world_transition_map":{ "type": "array", "items": { "type": "object" } },
+        "world_timeline":      { "type": "array", "items": { "type": "object" } },
+        "execution_order":     { "type": "array", "items": { "type": "string" } },
+        "cinematography_summary": { "type": "object" },
+        "downstream_target":   { "type": "string" },
+
+        "shots_dsl": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["shot_id", "L1_human_readable", "L2_render_prompt", "L3_full_ir_ref"],
+            "properties": {
+              "shot_id": { "type": "string" },
+              "L1_human_readable": {
+                "type": "object",
+                "description": "~200 bytes. For director review.",
+                "properties": {
+                  "shot_no":     { "type": "string" },
+                  "shot_size":   { "type": "string" },
+                  "motion":      { "type": "string" },
+                  "duration_s":  { "type": "number" },
+                  "beat":        { "type": "string" }
+                }
+              },
+              "L2_render_prompt": {
+                "type": "object",
+                "description": "~2KB. Hell Grind 15 modules, natural language, fed to video model.",
+                "required": ["modules"],
+                "properties": {
+                  "modules": {
+                    "type": "object",
+                    "description": "Keys are the 15 module names (SCENE_CONTEXT ... POSITIVE_CONSTRAINTS).",
+                    "additionalProperties": { "type": "string" }
+                  }
+                }
+              },
+              "L3_full_ir_ref": {
+                "type": "string",
+                "description": "Pointer into TypedIR.shots[], not duplicated inline."
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "ErrorHandling": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "S1-MUS_fail":        { "type": "string" },
+        "S2-MSSS_fail":       { "type": "string" },
+        "S2.5-DIR_fail":      { "type": "string" },
+        "S2.7-PERF_fail":     { "type": "string" },
+        "S3-IR_fail":         { "type": "string" },
+        "S4-VERIFY_fail": {
+          "type": "object",
+          "properties": {
+            "if_repairable_via_mus":    { "type": "string" },
+            "if_all_explicit_mus":      { "type": "string" },
+            "if_not_repairable":        { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

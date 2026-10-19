@@ -1,0 +1,195 @@
+{
+  "$schema_ref": "../schema/film-dsl-v2.1.schema.json",
+  "registry_id": "genre_preset_registry_v1",
+  "version": "1.0.0",
+  "description": "Genre-aware default resolvers. Each preset provides a merge tree of default values keyed by dot-paths into film-dsl-v2.1. Resolution rule: genre_lock.cinematography_preset_ref → lookup here → deep-merge into workflow defaults → then apply genre_lock.preset_override (which replaces, not merges).",
+
+  "@preset_classical_xianxia_v1": {
+    "preset_id": "@preset_classical_xianxia_v1",
+    "extends": null,
+    "narrative_proportion_defaults": {
+      "visual":   0.50,
+      "silence":  0.20,
+      "sound":    0.15,
+      "action":   0.10,
+      "dialogue": 0.05
+    },
+    "pacing_lock_defaults": {
+      "avg_shot_length_sec":     5.0,
+      "longest_take_cap_sec":    14.0,
+      "shortest_shot_floor_sec": 0.8,
+      "silence_ratio_min":       0.20,
+      "hard_cut_ratio_target":   0.55
+    },
+    "direction_lock_defaults": {
+      "default_motion_grammar": "hold_and_reveal",
+      "default_cut_grammar":    "cut_on_qi_shift",
+      "tension_arc_shape":      "long_tail_late_break",
+      "silence_policy":         "silence_is_content"
+    },
+    "performance_lock_defaults": {
+      "default_micro_life": [
+        "sleeve_movement_before_hand",
+        "breath_visible_in_cold",
+        "eyes_before_head",
+        "long_exhale_jaw_set_release"
+      ],
+      "breath_rule":     "breath is a visible physical event: white plume in cold, subtle chest rise otherwise — never decorative",
+      "breakdown_rule":  "the moment of internal break is externalized as a slow-lowered sleeve, a released grip on a hilt, or a single blink that lasts one extra frame — never as a facial contortion",
+      "hand_task_rule":  "hands are almost always engaged with an object (sword hilt, teacup, brush, sleeve fold); rest position is not empty — it holds a formal placement (礼)",
+      "gaze_rule":       "gaze lands on the object of contemplation for one full second before moving to the person — objects are read before people",
+      "transfer_rules_when_impossible": [
+        "sleeve movement replaces hand gesture when hand is occupied",
+        "shoulder set replaces head turn when speaker is off-camera",
+        "breath plume replaces facial tell in low-light"
+      ]
+    },
+    "style_lock_defaults": {
+      "lighting_base_modern":   null,
+      "lighting_base_ancient":  "candlelight warm gold (2200K), single practical source per scene, hard shadow direction fixed; moonlight silver-blue (5600K) supplementary for exterior night; overcast diffuse (6500K) for exterior day, one-stop under key",
+      "lighting_threshold":     "single beam of light through translucent silk or lattice window, dust motes visible in the beam",
+      "lighting_superimposed":  "double exposure treatment reserved for post — never in IR",
+      "color_grade":            "teal_and_amber with low overall saturation (target Sat -20 in DaVinci Resolve wheels), skin tones preserved with vector qualifier; ancient scenes shifted +5 warm, exterior scenes shifted +3 cool",
+      "grain":                  "35mm Kodak 5219 500T grain plate, medium intensity, monochrome grain only (no chroma grain)",
+      "world_transition_style": "silk dissolve — a slow fabric-like wipe of one image over another, sync to sound of silk unfurling",
+      "style_prefix_verbatim":  "Style: 8K IMAX. Photorealistic — no 3D render, no game engine, no game-cutscene aesthetic. Cinematography: telephoto compression from 85mm; painterly composed frames with strong negative space; silhouettes against contre-jour backlight. Lighting: Motivated natural or candle only — one hard source per scene, camera on shadow side; atmospheric mist reads in the beam. Color: teal and amber, low saturation, skin preserved. Camera: cine lens with 1/8 diffusion filter and 2mm gold streak. 180° shutter motion blur. Skin: pore-level realism — vellus hair, capillary flush, catch-lights in wet living eyes. Acting: micro-pauses before reactions; sleeve moves before hand; breath visible in cold. Physics: gravity respected — silk falls as silk, blade weight visible in wrist. Composition: golden ratio, negative space at 60%; every person moving from frame one. Continuity: identity holds across every cut. Technical: 24fps smooth motion, 8K detail, no jitter. Audio: environmental SFX only — wind, silk, breath, distant bell. No music."
+    },
+    "sound_design_lock_defaults": {
+      "ancient_signature": "wind across paper doors, silk friction, distant temple bell every 90s, tea pouring, wooden floorboards under bare feet, breath in cold air",
+      "modern_signature":  null,
+      "cross_world_marker":"single stroke of a bronze bell decayed to 4-second reverb tail",
+      "theme_motif":       "guqin single-string pluck at moments of realization (post only — never in prompt)",
+      "post_only_music":   true
+    },
+    "cinematography_defaults": {
+      "cinematography.lens.focal_length_mm":       85,
+      "cinematography.lens.aperture_f":            2.0,
+      "cinematography.lens.lens_type":             "spherical",
+      "cinematography.lens.near_focus_m":          1.2,
+      "cinematography.lens.filter_stack":          ["soft_diffusion_1/8", "gold_streak_2mm", "black_promist_1/4"],
+      "cinematography.framing.composition_rule":   "golden_spiral",
+      "cinematography.framing.headroom_ratio":     0.15,
+      "cinematography.framing.looking_space":      "center",
+      "cinematography.camera_motion.type":         "static",
+      "cinematography.camera_motion.trajectory":   "linear",
+      "cinematography.camera_motion.speed_profile.acceleration_curve": "ease_in_out",
+      "cinematography.camera_motion.vibration.enabled": false,
+      "cinematography.focus.mode":                 "single",
+      "cinematography.focus.bokeh_shape":          "circular",
+      "cinematography.focus.bokeh_character":      "creamy",
+      "cinematography.focus.breathing_compensation": true,
+      "cinematography.exposure.shutter_angle_degrees": 180,
+      "cinematography.exposure.iso":               800,
+      "cinematography.exposure.motion_blur_samples": 32,
+      "cinematography.exposure.temporal_noise_profile": "film_grain_35mm",
+      "cinematography.depth_composition.background.haze_density": 0.35,
+      "cinematography.depth_composition.background.atmospheric_perspective": true
+    },
+    "motion_grammar_defaults_by_beat": {
+      "setup":     "hold_and_reveal",
+      "climb":     "push_in_on_realization",
+      "break":     "hold_on_silence",
+      "aftermath": "pull_out_on_isolation",
+      "coda":      "crane_up_on_release",
+      "reveal":    "rack_on_shift_of_attention",
+      "false_peak":"hold_and_reveal"
+    },
+    "cut_grammar_defaults_by_beat": {
+      "setup":     "match_cut_on_form",
+      "climb":     "cut_on_qi_shift",
+      "break":     "hard_cut_on_impact",
+      "aftermath": "dissolve_on_time_pass",
+      "coda":      "silk_dissolve_on_world_shift",
+      "reveal":    "cut_on_gaze_landing",
+      "false_peak":"cut_on_qi_shift"
+    },
+    "xianxia_specific_rules": {
+      "flying_wire_motion_blur_samples":       48,
+      "sword_qi_frame_persistence_frames":     3,
+      "silk_ribbon_secondary_motion_frames":   6,
+      "candle_flame_flicker_hz":               [4, 7],
+      "mist_layer_count_min":                  2,
+      "negative_space_ratio_target":           0.60,
+      "vertical_composition_preferred_for":    ["waterfall", "cliff", "temple_pillar", "hanging_scroll"],
+      "horizontal_composition_preferred_for":  ["mountain_range", "river", "battlefield", "meditation_hall"],
+      "forbidden": [
+        "handheld_documentary_shake",
+        "dutch_angle_over_5deg_unless_qi_disturbance",
+        "lens_flare_anamorphic_horizontal",
+        "wide_angle_below_35mm_unless_establishing",
+        "chroma_grain",
+        "digital_zoom",
+        "modern_pop_score_bleed_into_prompt"
+      ]
+    },
+    "mise_en_scene_library_seed": {
+      "@mes_bamboo_forest_dawn": {
+        "text": "morning mist between vertical bamboo trunks; wet stone path beneath; one shaft of amber light angling in from frame-left; a single fallen bamboo leaf rotating slowly on still water in a nearby stone basin",
+        "world": "ancient",
+        "time_of_day": "dawn"
+      },
+      "@mes_sword_chamber_night": {
+        "text": "black lacquer sword rack against a rice-paper wall; three swords in their sheaths; one candle in a bronze holder at frame-right, flame flickering at 5Hz; incense smoke rising in a thin vertical line and breaking into curl at ceiling; wooden floor with visible grain, one worn spot near the rack",
+        "world": "ancient",
+        "time_of_day": "night"
+      },
+      "@mes_mountain_cliff_dusk": {
+        "text": "sheer cliff face frame-left, mist boiling upward from unseen valley; a lone pine growing horizontally from the rock at frame-right; sky graded from teal (top) to amber (bottom); no wildlife; wind visible only in the pine needles",
+        "world": "ancient",
+        "time_of_day": "dusk"
+      }
+    },
+    "sound_library_seed": {
+      "@sound_ancient_bamboo_dawn": {
+        "diegetic": [
+          "bamboo trunks knocking hollowly in wind at ~0.5Hz",
+          "distant water drip on stone every 3-4s",
+          "single crow call once at second 8-10",
+          "breath work at close mic"
+        ],
+        "non_diegetic": []
+      },
+      "@sound_ancient_chamber_night": {
+        "diegetic": [
+          "candle flame hiss barely audible",
+          "wooden floor creak on weight shift",
+          "silk sleeve friction on sword hilt draw",
+          "one temple bell strike at second 12 with 4s decay tail"
+        ],
+        "non_diegetic": []
+      }
+    }
+  },
+
+  "@preset_wuxia_grounded_v1": {
+    "preset_id": "@preset_wuxia_grounded_v1",
+    "extends": "@preset_classical_xianxia_v1",
+    "description": "Wuxia (grounded martial). Inherits xianxia visual grammar but with faster ASL, more action weight, more handheld, less flying.",
+    "narrative_proportion_defaults": {
+      "visual":   0.40,
+      "silence":  0.10,
+      "sound":    0.15,
+      "action":   0.25,
+      "dialogue": 0.10
+    },
+    "pacing_lock_defaults": {
+      "avg_shot_length_sec":     2.8,
+      "longest_take_cap_sec":    8.0,
+      "shortest_shot_floor_sec": 0.4,
+      "silence_ratio_min":       0.10,
+      "hard_cut_ratio_target":   0.75
+    },
+    "cinematography_defaults": {
+      "cinematography.lens.focal_length_mm":       50,
+      "cinematography.lens.aperture_f":            2.8,
+      "cinematography.camera_motion.type":         "handheld",
+      "cinematography.exposure.motion_blur_samples": 24
+    },
+    "xianxia_specific_rules": {
+      "flying_wire_motion_blur_samples":     0,
+      "sword_qi_frame_persistence_frames":   0,
+      "silk_ribbon_secondary_motion_frames": 2,
+      "forbidden": ["flying_wire_flight", "sword_qi_projectiles", "impossible_body_lightness"]
+    }
+  }
+}

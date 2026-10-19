@@ -1,0 +1,606 @@
+{
+  "last_node_id": 16,
+  "last_link_id": 22,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CLIPTextEncode",
+      "pos": [
+        100,
+        200
+      ],
+      "size": [
+        420,
+        280
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "未来科技感与古典东方融合的研究室，流光溢彩",
+        true
+      ],
+      "title": "🟦 [1. 输入条件] L2 15-Module 正向提示词"
+    },
+    {
+      "id": 2,
+      "type": "CLIPTextEncode",
+      "pos": [
+        100,
+        530
+      ],
+      "size": [
+        420,
+        160
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "blurry, low quality, jitter, flickering, deformed hands, duplicate limbs, distorted face, erratic camera, watermark, text logo",
+        true
+      ],
+      "title": "🟦 [1. 输入条件] 负向通用抑制词"
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [
+        100,
+        740
+      ],
+      "size": [
+        320,
+        310
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "reference_character.png",
+        "image"
+      ],
+      "title": "🟦 [1. 输入条件] 人设基准垫图 / 首帧参考图"
+    },
+    {
+      "id": 4,
+      "type": "UNETLoader",
+      "pos": [
+        600,
+        200
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "wan2.1_t2v_1.3B_bf16.safetensors",
+        "default"
+      ],
+      "title": "🟩 [2. 模型加载] 视频扩散主模型 (Wan2.1 / 混元)"
+    },
+    {
+      "id": 5,
+      "type": "VAELoader",
+      "pos": [
+        600,
+        350
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            7,
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ],
+      "title": "🟩 [2. 模型加载] 3D 时空 VAE 模型"
+    },
+    {
+      "id": 6,
+      "type": "CLIPLoader",
+      "pos": [
+        600,
+        500
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            1,
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "wan"
+      ],
+      "title": "🟩 [2. 模型加载] 文本编码器 (UMT5 / LLaVA)"
+    },
+    {
+      "id": 7,
+      "type": "EmptyHunyuanLatentVideo",
+      "pos": [
+        1000,
+        200
+      ],
+      "size": [
+        320,
+        180
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyHunyuanLatentVideo"
+      },
+      "widgets_values": [
+        540,
+        960,
+        288,
+        1
+      ],
+      "title": "🟩 [3. 时空采样] 9:16 空潜空间 (540x960 49帧)"
+    },
+    {
+      "id": 8,
+      "type": "KSampler",
+      "pos": [
+        1400,
+        200
+      ],
+      "size": [
+        320,
+        470
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 6
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 2
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 4
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        42,
+        "fixed",
+        30,
+        6.0,
+        "uni_pc",
+        "normal",
+        1.0
+      ],
+      "title": "🟩 [3. 时空采样] 时空去噪核心 (FlowMatch/UniPC 30步)"
+    },
+    {
+      "id": 9,
+      "type": "VAEDecodeTiled",
+      "pos": [
+        1800,
+        200
+      ],
+      "size": [
+        300,
+        160
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 10
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecodeTiled"
+      },
+      "widgets_values": [
+        512,
+        64
+      ],
+      "title": "🟧 [4. 潜空间解码] VAE Tiling 分块解码 (防爆显存)"
+    },
+    {
+      "id": 10,
+      "type": "RIFE VFI",
+      "pos": [
+        2150,
+        200
+      ],
+      "size": [
+        320,
+        220
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RIFE VFI"
+      },
+      "widgets_values": [
+        "rife47.pth",
+        2,
+        true,
+        true,
+        1.0
+      ],
+      "title": "🟨 [5. 补帧平滑] RIFE 2x 帧率插值 (16fps ➔ 32fps 丝滑)"
+    },
+    {
+      "id": 11,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        2550,
+        200
+      ],
+      "size": [
+        340,
+        480
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 12
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_VideoCombine"
+      },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "shot_02_deduction",
+        "format": "video/h264-mp4",
+        "pingpong": false,
+        "save_output": true
+      },
+      "title": "🟥 [6. 视频封装导出] VHS 高清 MP4 合成导出"
+    }
+  ],
+  "links": [
+    [
+      1,
+      6,
+      0,
+      1,
+      0,
+      "CLIP"
+    ],
+    [
+      2,
+      1,
+      0,
+      8,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      3,
+      6,
+      0,
+      2,
+      0,
+      "CLIP"
+    ],
+    [
+      4,
+      2,
+      0,
+      8,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      3,
+      0,
+      8,
+      3,
+      "IMAGE"
+    ],
+    [
+      6,
+      4,
+      0,
+      8,
+      0,
+      "MODEL"
+    ],
+    [
+      7,
+      5,
+      0,
+      9,
+      1,
+      "VAE"
+    ],
+    [
+      8,
+      5,
+      0,
+      9,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      7,
+      0,
+      8,
+      3,
+      "LATENT"
+    ],
+    [
+      10,
+      8,
+      0,
+      9,
+      0,
+      "LATENT"
+    ],
+    [
+      11,
+      9,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      10,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "🟦 [1. 输入与条件岛] 15-Module 提示词与人设垫图",
+      "bounding": [
+        80,
+        120,
+        460,
+        960
+      ],
+      "color": "#1E3A8A"
+    },
+    {
+      "title": "🟩 [2. 模型加载岛] 视频扩散主模型与编码器",
+      "bounding": [
+        580,
+        120,
+        360,
+        520
+      ],
+      "color": "#065F46"
+    },
+    {
+      "title": "🟩 [3. 时空采样岛] 9:16 潜空间去噪核心",
+      "bounding": [
+        980,
+        120,
+        760,
+        580
+      ],
+      "color": "#047857"
+    },
+    {
+      "title": "🟧 [4. 潜空间解码岛] VAE Tiling 分块时序解码",
+      "bounding": [
+        1780,
+        120,
+        330,
+        280
+      ],
+      "color": "#B45309"
+    },
+    {
+      "title": "🟨 [5. 补帧与后期岛] RIFE 帧率平滑插值",
+      "bounding": [
+        2130,
+        120,
+        360,
+        340
+      ],
+      "color": "#A16207"
+    },
+    {
+      "title": "🟥 [6. 视频封装导出岛] VHS MP4 高清输出",
+      "bounding": [
+        2530,
+        120,
+        380,
+        600
+      ],
+      "color": "#991B1B"
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

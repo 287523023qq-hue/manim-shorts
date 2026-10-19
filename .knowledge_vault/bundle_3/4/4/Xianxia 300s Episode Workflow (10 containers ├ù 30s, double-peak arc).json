@@ -1,0 +1,4680 @@
+{
+  "$schema_ref": "../schema/film-dsl-v2.1.schema.json",
+  "workflow_id": "film-generation-v2.1.3",
+  "version": "2.1.3",
+  "description": "Xianxia 150s Episode — 5 containers × 30s, arc=long_tail_late_break. Standing figure at snow pavilion sees breath plume, feels off-screen chime, releases jaw, distant mountain roar, snow silence returns.",
+  "genre_lock": {
+    "primary": "classical_xianxia",
+    "secondary": [],
+    "medium": "short",
+    "cinematography_preset_ref": "@preset_classical_xianxia_v1",
+    "preset_override": {
+      "cinematography.lens.focal_length_mm.default": 100
+    }
+  },
+  "narrative_proportion": {
+    "visual": 0.55,
+    "silence": 0.25,
+    "sound": 0.12,
+    "action": 0.05,
+    "dialogue": 0.03
+  },
+  "pacing_lock": {
+    "avg_shot_length_sec": 6.0,
+    "longest_take_cap_sec": 14.0,
+    "shortest_shot_floor_sec": 1.5,
+    "silence_ratio_min": 0.25,
+    "hard_cut_ratio_target": 0.4,
+    "container_duration_sec": 30.0,
+    "shots_per_container": 5
+  },
+  "direction_lock": {
+    "default_motion_grammar": "hold_and_reveal",
+    "default_cut_grammar": "cut_on_qi_shift",
+    "tension_arc_shape": "long_tail_late_break",
+    "silence_policy": "silence_is_content"
+  },
+  "performance_lock": {
+    "default_micro_life": [
+      "sleeve_movement_before_hand",
+      "breath_visible_in_cold",
+      "eyes_before_head"
+    ],
+    "breath_rule": "visible white plume in cold dawn air; chest rise silent",
+    "breakdown_rule": "release of grip on hilt, sleeve lowers slowly — never facial contortion",
+    "hand_task_rule": "hand rests on sword hilt in formal placement",
+    "gaze_rule": "gaze lands on the fallen leaf one full second before it lifts to the horizon",
+    "transfer_rules_when_impossible": []
+  },
+  "style_lock": {
+    "lighting_base_modern": null,
+    "lighting_base_ancient": "dawn amber (2400K) angling in from frame-left, one hard source; ambient sky cool teal (6500K) at two stops under",
+    "lighting_threshold": "single beam of amber light through pine branches, mist visible in beam",
+    "lighting_superimposed": null,
+    "color_grade": "teal_and_amber, saturation -22, skin preserved",
+    "grain": "35mm 5219 500T medium mono",
+    "world_transition_style": "silk dissolve",
+    "style_prefix_verbatim": "Style: 8K IMAX. Photorealistic. Cinematography: telephoto compression from 100mm; painterly composed frames with strong negative space; silhouette against contre-jour backlight. Lighting: motivated dawn sun only, one hard source from frame-left, camera on shadow side, mist reads in the beam. Color: teal and amber, low saturation, skin preserved. Camera: cine lens with 1/8 diffusion and 2mm gold streak. 180° shutter motion blur. Skin: pore-level realism. Acting: sleeve moves before hand; breath visible as white plume. Physics: silk falls as silk; blade weight visible. Composition: golden ratio, negative space 60%. Continuity: identity holds across every cut. Technical: 24fps, 8K, no jitter. Audio: environmental SFX only. No music."
+  },
+  "character_lock": {
+    "modern_identity": null,
+    "ancient_identity": {
+      "name": "Ling Xu",
+      "wardrobe": "dark indigo robe with pale silver embroidery at collar and cuffs; wide sash tied left; long straight black hair tied high with a jade pin; leather-wrapped hilt visible at left hip",
+      "features": [
+        "androgynous fine features",
+        "one small mole below left corner of mouth",
+        "left ear-tip pierced with single silver stud",
+        "narrow calloused hands"
+      ],
+      "world": "ancient"
+    },
+    "continuity_anchor": "jade pin in hair — never removed, never repositioned, catches amber light in every shot",
+    "dual_body_sync_rules": []
+  },
+  "prop_lock": {
+    "sword_qingyun": "3.2ft straight jian, dark iron blade, jade pommel — resonates faintly when unsheathed; never drawn in this container",
+    "fallen_pine_leaf": "single amber-brown pine needle cluster on wet stone — rotates one full turn during the shot; never multiplied",
+    "jade_pin": "translucent pale green jade hairpin — catches amber rim light in every shot"
+  },
+  "sound_design_lock": {
+    "modern_signature": null,
+    "ancient_signature": "wind through bamboo at 0.5Hz, distant water drip on stone every 3-4s, silk sleeve friction on movement, breath work close mic",
+    "cross_world_marker": null,
+    "theme_motif": "guqin single pluck — POST ONLY, not in prompt",
+    "post_only_music": true
+  },
+  "libraries": {
+    "mise_en_scene_library": {
+      "@mes_bamboo_forest_dawn": {
+        "text": "vertical bamboo trunks in dawn mist; wet stone path underfoot; one shaft of amber light angling in from frame-left; a single fallen pine-needle cluster rotating slowly on still water in a stone basin at frame-right; negative space fills upper 60% of frame",
+        "world": "ancient",
+        "time_of_day": "dawn"
+      }
+    },
+    "sound_library": {
+      "@sound_ancient_bamboo_dawn": {
+        "diegetic": [
+          "bamboo trunks knocking hollowly at ~0.5Hz",
+          "distant water drip on stone every 3-4s",
+          "single crow call once at 22-24s",
+          "silk sleeve friction on Ling Xu's turn",
+          "breath work — visible plume in cold air"
+        ],
+        "non_diegetic": []
+      }
+    },
+    "location_library": {
+      "@loc_bamboo_grove_dawn": {
+        "descriptor_block": "bamboo grove at dawn: dense vertical trunks 3-5m spacing; wet flagstone path bisecting frame-center-to-back; stone basin at frame-right 1.2m from center; mist layer at knee height and again at 3m; hard amber key from frame-left 30° elevation; no fill from camera side; shadows fall frame-right",
+        "geo_map": "LOCATION MAP\nGEO SPATIAL LAYOUT (locked):\n— BAMBOO TRUNKS: vertical, spacing 3-5m, frame-fill both sides\n— STONE PATH: bisecting frame-center to back, wet flagstone\n— STONE BASIN: frame-RIGHT, 1.2m from center, holds the rotating pine needle\n— LING XU: standing on path, CENTER, facing frame-back (camera behind-shoulder)\n— 180° AXIS: camera stays on the path's LEFT side, never crosses\n— KEY LIGHT: hard amber sun from frame-LEFT at 30° elevation; mist reads in beam\n— SHADOWS: fall frame-RIGHT; no fill from camera side"
+      }
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "S1-MUS",
+      "name": "Meta Unit Segmentation",
+      "input": {
+        "type": "story"
+      },
+      "output": {
+        "type": "MUS"
+      },
+      "downstream": "S2-MSSS"
+    },
+    {
+      "stage_id": "S2-MSSS",
+      "name": "Meta Scene-Sequence Spec",
+      "input": {
+        "type": "MUS"
+      },
+      "output": {
+        "type": "MSSS"
+      },
+      "downstream": "S2.5-DIR"
+    },
+    {
+      "stage_id": "S2.5-DIR",
+      "name": "Director Intent",
+      "input": {
+        "type": "MSSS"
+      },
+      "output": {
+        "type": "DirectionIntentList"
+      },
+      "downstream": "S2.7-PERF"
+    },
+    {
+      "stage_id": "S2.7-PERF",
+      "name": "Performance Intent",
+      "input": {
+        "type": [
+          "MUS",
+          "DirectionIntentList"
+        ]
+      },
+      "output": {
+        "type": "PerformanceIntentList"
+      },
+      "downstream": "S3-IR"
+    },
+    {
+      "stage_id": "S3-IR",
+      "name": "Typed IR",
+      "input": {
+        "type": [
+          "MSSS",
+          "DirectionIntentList",
+          "PerformanceIntentList"
+        ]
+      },
+      "output": {
+        "type": "Typed-IR-v2.1"
+      },
+      "downstream": "S4-VERIFY"
+    },
+    {
+      "stage_id": "S4-VERIFY",
+      "name": "Verification",
+      "input": {
+        "type": "Typed-IR-v2.1"
+      },
+      "output": {
+        "type": "VERIFY-Report"
+      },
+      "downstream": "S5-OUT"
+    },
+    {
+      "stage_id": "S5-OUT",
+      "name": "Canonical Output",
+      "input": {
+        "type": "Typed-IR-v2.1"
+      },
+      "output": {
+        "type": "Canonical-DSL-v2.1"
+      },
+      "downstream": "video_generation_engine + editor_timeline + post_color_pipeline"
+    }
+  ],
+  "episode": {
+    "episode_id": "ep_cold_snow_ridge_10c_v1",
+    "title": "冷雪见气 · 第一集(10 容器版)",
+    "total_duration_sec": 300.0,
+    "container_count": 10,
+    "fps": 24,
+    "tension_arc_shape": "double_peak",
+    "apex_container_ref": "@C05",
+    "cold_open": true,
+    "tag_out": true
+  },
+  "containers": [
+    {
+      "container_id": "@C01",
+      "index": 0,
+      "time_start_sec": 0.0,
+      "duration_sec": 30.0,
+      "role": "cold_open",
+      "tension_peak": 0.1,
+      "asl_target_sec": 7.0,
+      "beat_range": {
+        "first_beat_id": "@beat_c01_open",
+        "last_beat_id": "@beat_c01_close"
+      },
+      "entry_transition": null,
+      "bridge_to_next": {
+        "mode": "beat_anchored",
+        "beat_ref": "@beat_c01_bridge"
+      }
+    },
+    {
+      "container_id": "@C02",
+      "index": 1,
+      "time_start_sec": 30.0,
+      "duration_sec": 30.0,
+      "role": "setup",
+      "tension_peak": 0.2,
+      "asl_target_sec": 5.5,
+      "beat_range": {
+        "first_beat_id": "@beat_c02_open",
+        "last_beat_id": "@beat_c02_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "beat_anchored",
+        "beat_ref": "@beat_c02_bridge"
+      }
+    },
+    {
+      "container_id": "@C03",
+      "index": 2,
+      "time_start_sec": 60.0,
+      "duration_sec": 30.0,
+      "role": "escalation",
+      "tension_peak": 0.42,
+      "asl_target_sec": 4.5,
+      "beat_range": {
+        "first_beat_id": "@beat_c03_open",
+        "last_beat_id": "@beat_c03_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "emotion_carry",
+        "beat_ref": "@beat_c03_bridge"
+      }
+    },
+    {
+      "container_id": "@C04",
+      "index": 3,
+      "time_start_sec": 90.0,
+      "duration_sec": 30.0,
+      "role": "turn",
+      "tension_peak": 0.55,
+      "asl_target_sec": 5.0,
+      "beat_range": {
+        "first_beat_id": "@beat_c04_open",
+        "last_beat_id": "@beat_c04_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "match_action",
+        "beat_ref": "@beat_c04_bridge"
+      }
+    },
+    {
+      "container_id": "@C05",
+      "index": 4,
+      "time_start_sec": 120.0,
+      "duration_sec": 30.0,
+      "role": "apex",
+      "tension_peak": 0.78,
+      "asl_target_sec": 3.8,
+      "beat_range": {
+        "first_beat_id": "@beat_c05_open",
+        "last_beat_id": "@beat_c05_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "silence_pocket",
+        "beat_ref": "@beat_c05_bridge"
+      }
+    },
+    {
+      "container_id": "@C06",
+      "index": 5,
+      "time_start_sec": 150.0,
+      "duration_sec": 30.0,
+      "role": "aftermath",
+      "tension_peak": 0.3,
+      "asl_target_sec": 6.0,
+      "beat_range": {
+        "first_beat_id": "@beat_c06_open",
+        "last_beat_id": "@beat_c06_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "beat_anchored",
+        "beat_ref": "@beat_c06_bridge"
+      }
+    },
+    {
+      "container_id": "@C07",
+      "index": 6,
+      "time_start_sec": 180.0,
+      "duration_sec": 30.0,
+      "role": "escalation",
+      "tension_peak": 0.48,
+      "asl_target_sec": 4.5,
+      "beat_range": {
+        "first_beat_id": "@beat_c07_open",
+        "last_beat_id": "@beat_c07_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "emotion_carry",
+        "beat_ref": "@beat_c07_bridge"
+      }
+    },
+    {
+      "container_id": "@C08",
+      "index": 7,
+      "time_start_sec": 210.0,
+      "duration_sec": 30.0,
+      "role": "turn",
+      "tension_peak": 0.6,
+      "asl_target_sec": 5.0,
+      "beat_range": {
+        "first_beat_id": "@beat_c08_open",
+        "last_beat_id": "@beat_c08_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "match_action",
+        "beat_ref": "@beat_c08_bridge"
+      }
+    },
+    {
+      "container_id": "@C09",
+      "index": 8,
+      "time_start_sec": 240.0,
+      "duration_sec": 30.0,
+      "role": "apex",
+      "tension_peak": 0.92,
+      "asl_target_sec": 3.2,
+      "beat_range": {
+        "first_beat_id": "@beat_c09_open",
+        "last_beat_id": "@beat_c09_close"
+      },
+      "entry_transition": "match_cut",
+      "bridge_to_next": {
+        "mode": "silence_pocket",
+        "beat_ref": "@beat_c09_bridge"
+      }
+    },
+    {
+      "container_id": "@C10",
+      "index": 9,
+      "time_start_sec": 270.0,
+      "duration_sec": 30.0,
+      "role": "coda",
+      "tension_peak": 0.18,
+      "asl_target_sec": 7.0,
+      "beat_range": {
+        "first_beat_id": "@beat_c10_open",
+        "last_beat_id": "@beat_c10_close"
+      },
+      "entry_transition": "match_cut"
+    }
+  ],
+  "audio_beat_track": {
+    "total_length_sec": 300.0,
+    "beats": [
+      {
+        "beat_id": "@beat_c01_open",
+        "time_sec": 0.5,
+        "strength": 0.3,
+        "container_ref": "@C01",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c01_peak",
+        "time_sec": 15.0,
+        "strength": 0.1,
+        "container_ref": "@C01",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c01_bridge",
+        "time_sec": 27.0,
+        "strength": 0.35,
+        "container_ref": "@C01",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c01_close",
+        "time_sec": 29.5,
+        "strength": 0.3,
+        "container_ref": "@C01",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c02_open",
+        "time_sec": 30.5,
+        "strength": 0.3,
+        "container_ref": "@C02",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c02_peak",
+        "time_sec": 45.0,
+        "strength": 0.2,
+        "container_ref": "@C02",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c02_bridge",
+        "time_sec": 57.0,
+        "strength": 0.35,
+        "container_ref": "@C02",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c02_close",
+        "time_sec": 59.5,
+        "strength": 0.3,
+        "container_ref": "@C02",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c03_open",
+        "time_sec": 60.5,
+        "strength": 0.3,
+        "container_ref": "@C03",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c03_peak",
+        "time_sec": 75.0,
+        "strength": 0.42,
+        "container_ref": "@C03",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c03_bridge",
+        "time_sec": 87.0,
+        "strength": 0.35,
+        "container_ref": "@C03",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c03_close",
+        "time_sec": 89.5,
+        "strength": 0.3,
+        "container_ref": "@C03",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c04_open",
+        "time_sec": 90.5,
+        "strength": 0.3,
+        "container_ref": "@C04",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c04_peak",
+        "time_sec": 105.0,
+        "strength": 0.55,
+        "container_ref": "@C04",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c04_bridge",
+        "time_sec": 117.0,
+        "strength": 0.35,
+        "container_ref": "@C04",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c04_close",
+        "time_sec": 119.5,
+        "strength": 0.3,
+        "container_ref": "@C04",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c05_open",
+        "time_sec": 120.5,
+        "strength": 0.3,
+        "container_ref": "@C05",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_first_apex_marker",
+        "time_sec": 134.0,
+        "strength": 0.78,
+        "container_ref": "@C05",
+        "role": "internal"
+      },
+      {
+        "beat_id": "@beat_c05_peak",
+        "time_sec": 135.0,
+        "strength": 0.78,
+        "container_ref": "@C05",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c05_bridge",
+        "time_sec": 147.0,
+        "strength": 0.35,
+        "container_ref": "@C05",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c05_close",
+        "time_sec": 149.5,
+        "strength": 0.3,
+        "container_ref": "@C05",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c06_open",
+        "time_sec": 150.5,
+        "strength": 0.3,
+        "container_ref": "@C06",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c06_peak",
+        "time_sec": 165.0,
+        "strength": 0.3,
+        "container_ref": "@C06",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c06_bridge",
+        "time_sec": 177.0,
+        "strength": 0.35,
+        "container_ref": "@C06",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c06_close",
+        "time_sec": 179.5,
+        "strength": 0.3,
+        "container_ref": "@C06",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c07_open",
+        "time_sec": 180.5,
+        "strength": 0.3,
+        "container_ref": "@C07",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c07_peak",
+        "time_sec": 195.0,
+        "strength": 0.48,
+        "container_ref": "@C07",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c07_bridge",
+        "time_sec": 207.0,
+        "strength": 0.35,
+        "container_ref": "@C07",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c07_close",
+        "time_sec": 209.5,
+        "strength": 0.3,
+        "container_ref": "@C07",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c08_open",
+        "time_sec": 210.5,
+        "strength": 0.3,
+        "container_ref": "@C08",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c08_peak",
+        "time_sec": 225.0,
+        "strength": 0.6,
+        "container_ref": "@C08",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c08_bridge",
+        "time_sec": 237.0,
+        "strength": 0.35,
+        "container_ref": "@C08",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c08_close",
+        "time_sec": 239.5,
+        "strength": 0.3,
+        "container_ref": "@C08",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c09_open",
+        "time_sec": 240.5,
+        "strength": 0.3,
+        "container_ref": "@C09",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c09_peak",
+        "time_sec": 255.0,
+        "strength": 0.92,
+        "container_ref": "@C09",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_episode_apex",
+        "time_sec": 255.0,
+        "strength": 0.95,
+        "container_ref": "@C09",
+        "role": "episode_apex"
+      },
+      {
+        "beat_id": "@beat_c09_bridge",
+        "time_sec": 267.0,
+        "strength": 0.35,
+        "container_ref": "@C09",
+        "role": "cross_container_bridge"
+      },
+      {
+        "beat_id": "@beat_c09_close",
+        "time_sec": 269.5,
+        "strength": 0.3,
+        "container_ref": "@C09",
+        "role": "container_close"
+      },
+      {
+        "beat_id": "@beat_c10_open",
+        "time_sec": 270.5,
+        "strength": 0.3,
+        "container_ref": "@C10",
+        "role": "container_open"
+      },
+      {
+        "beat_id": "@beat_c10_peak",
+        "time_sec": 285.0,
+        "strength": 0.18,
+        "container_ref": "@C10",
+        "role": "container_peak"
+      },
+      {
+        "beat_id": "@beat_c10_close",
+        "time_sec": 299.5,
+        "strength": 0.3,
+        "container_ref": "@C10",
+        "role": "container_close"
+      }
+    ],
+    "track_id": "main_episode_10c_v1",
+    "bpm": null,
+    "source_kind": "placeholder"
+  },
+  "stage_products": {
+    "S1_MUS": {
+      "meta_units": [
+        {
+          "mu_id": "@MU_001",
+          "function": "arrival_stillness",
+          "emotion_intensity": 0.1,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — arrival stillness — container @C01 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-01-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_002",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.1,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — environmental witness — container @C01 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-01-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_003",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.15,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — environmental witness — container @C01 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-01-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_004",
+          "function": "silence_beat",
+          "emotion_intensity": 0.1,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C01 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-01-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_005",
+          "function": "attention_shift",
+          "emotion_intensity": 0.1,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C01 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-01-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_006",
+          "function": "arrival_stillness",
+          "emotion_intensity": 0.2,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — arrival stillness — container @C02 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-02-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_007",
+          "function": "arrival_stillness",
+          "emotion_intensity": 0.2,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — arrival stillness — container @C02 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-02-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_008",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.25,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — environmental witness — container @C02 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-02-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_009",
+          "function": "silence_beat",
+          "emotion_intensity": 0.2,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C02 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-02-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_010",
+          "function": "silence_beat",
+          "emotion_intensity": 0.2,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C02 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-02-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_011",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.42,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — environmental witness — container @C03 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-03-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_012",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.42,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — environmental witness — container @C03 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-03-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_013",
+          "function": "silence_beat",
+          "emotion_intensity": 0.47,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C03 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-03-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_014",
+          "function": "attention_shift",
+          "emotion_intensity": 0.42,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C03 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-03-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_015",
+          "function": "attention_shift",
+          "emotion_intensity": 0.42,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C03 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-03-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_016",
+          "function": "attention_shift",
+          "emotion_intensity": 0.55,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C04 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-04-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_017",
+          "function": "attention_shift",
+          "emotion_intensity": 0.55,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C04 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-04-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_018",
+          "function": "attention_shift",
+          "emotion_intensity": 0.6,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C04 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-04-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_019",
+          "function": "silence_beat",
+          "emotion_intensity": 0.55,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C04 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-04-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_020",
+          "function": "silence_beat",
+          "emotion_intensity": 0.55,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C04 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-04-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_021",
+          "function": "silence_beat",
+          "emotion_intensity": 0.78,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C05 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-05-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_022",
+          "function": "realization_release",
+          "emotion_intensity": 0.78,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — realization release — container @C05 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-05-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_023",
+          "function": "realization_release",
+          "emotion_intensity": 0.83,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — realization release — container @C05 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-05-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_024",
+          "function": "aftermath",
+          "emotion_intensity": 0.78,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C05 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-05-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_025",
+          "function": "aftermath",
+          "emotion_intensity": 0.78,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C05 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-05-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_026",
+          "function": "aftermath",
+          "emotion_intensity": 0.3,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C06 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-06-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_027",
+          "function": "aftermath",
+          "emotion_intensity": 0.3,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C06 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-06-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_028",
+          "function": "silence_beat",
+          "emotion_intensity": 0.35,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C06 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-06-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_029",
+          "function": "silence_beat",
+          "emotion_intensity": 0.3,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C06 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-06-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_030",
+          "function": "attention_shift",
+          "emotion_intensity": 0.3,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C06 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-06-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_031",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.48,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — environmental witness — container @C07 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-07-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_032",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.48,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — environmental witness — container @C07 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-07-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_033",
+          "function": "silence_beat",
+          "emotion_intensity": 0.53,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C07 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-07-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_034",
+          "function": "attention_shift",
+          "emotion_intensity": 0.48,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C07 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-07-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_035",
+          "function": "attention_shift",
+          "emotion_intensity": 0.48,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C07 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-07-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_036",
+          "function": "attention_shift",
+          "emotion_intensity": 0.6,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C08 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-08-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_037",
+          "function": "attention_shift",
+          "emotion_intensity": 0.6,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C08 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-08-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_038",
+          "function": "attention_shift",
+          "emotion_intensity": 0.65,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — attention shift — container @C08 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-08-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_039",
+          "function": "silence_beat",
+          "emotion_intensity": 0.6,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C08 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-08-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_040",
+          "function": "silence_beat",
+          "emotion_intensity": 0.6,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C08 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-08-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_041",
+          "function": "silence_beat",
+          "emotion_intensity": 0.92,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C09 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-09-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_042",
+          "function": "realization_release",
+          "emotion_intensity": 0.92,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — realization release — container @C09 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-09-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_043",
+          "function": "realization_release",
+          "emotion_intensity": 0.97,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — realization release — container @C09 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-09-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_044",
+          "function": "aftermath",
+          "emotion_intensity": 0.92,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C09 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-09-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_045",
+          "function": "aftermath",
+          "emotion_intensity": 0.92,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C09 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-09-5",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_046",
+          "function": "aftermath",
+          "emotion_intensity": 0.18,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C10 shot 1/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-10-1",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_047",
+          "function": "aftermath",
+          "emotion_intensity": 0.18,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — aftermath — container @C10 shot 2/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-10-2",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_048",
+          "function": "silence_beat",
+          "emotion_intensity": 0.23,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C10 shot 3/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-10-3",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_049",
+          "function": "silence_beat",
+          "emotion_intensity": 0.18,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C10 shot 4/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-10-4",
+            "state": "explicit"
+          }
+        },
+        {
+          "mu_id": "@MU_050",
+          "function": "silence_beat",
+          "emotion_intensity": 0.18,
+          "entities": [
+            "@ling_xu"
+          ],
+          "core_action": "Ling Xu at pavilion — silence beat — container @C10 shot 5/5",
+          "time_marker": "dawn",
+          "world": "ancient",
+          "_provenance": {
+            "span": "D-10-5",
+            "state": "explicit"
+          }
+        }
+      ]
+    },
+    "S2_MSSS": {
+      "total_duration_budget_sec": 300.0,
+      "scenes": [
+        {
+          "scene_id": "@SC_01",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C01"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_001",
+              "seq_type": "visual",
+              "duration_budget_sec": 7.0,
+              "maps_to_mu": "@MU_001",
+              "container_ref": "@C01"
+            },
+            {
+              "seq_id": "@SEQ_002",
+              "seq_type": "visual",
+              "duration_budget_sec": 7.0,
+              "maps_to_mu": "@MU_002",
+              "container_ref": "@C01"
+            },
+            {
+              "seq_id": "@SEQ_003",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_003",
+              "container_ref": "@C01"
+            },
+            {
+              "seq_id": "@SEQ_004",
+              "seq_type": "silence",
+              "duration_budget_sec": 5.0,
+              "maps_to_mu": "@MU_004",
+              "container_ref": "@C01"
+            },
+            {
+              "seq_id": "@SEQ_005",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.0,
+              "maps_to_mu": "@MU_005",
+              "container_ref": "@C01"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_02",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C02"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_006",
+              "seq_type": "visual",
+              "duration_budget_sec": 7.0,
+              "maps_to_mu": "@MU_006",
+              "container_ref": "@C02"
+            },
+            {
+              "seq_id": "@SEQ_007",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.5,
+              "maps_to_mu": "@MU_007",
+              "container_ref": "@C02"
+            },
+            {
+              "seq_id": "@SEQ_008",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_008",
+              "container_ref": "@C02"
+            },
+            {
+              "seq_id": "@SEQ_009",
+              "seq_type": "silence",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_009",
+              "container_ref": "@C02"
+            },
+            {
+              "seq_id": "@SEQ_010",
+              "seq_type": "silence",
+              "duration_budget_sec": 5.0,
+              "maps_to_mu": "@MU_010",
+              "container_ref": "@C02"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_03",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C03"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_011",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.5,
+              "maps_to_mu": "@MU_011",
+              "container_ref": "@C03"
+            },
+            {
+              "seq_id": "@SEQ_012",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_012",
+              "container_ref": "@C03"
+            },
+            {
+              "seq_id": "@SEQ_013",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_013",
+              "container_ref": "@C03"
+            },
+            {
+              "seq_id": "@SEQ_014",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_014",
+              "container_ref": "@C03"
+            },
+            {
+              "seq_id": "@SEQ_015",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_015",
+              "container_ref": "@C03"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_04",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C04"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_016",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_016",
+              "container_ref": "@C04"
+            },
+            {
+              "seq_id": "@SEQ_017",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_017",
+              "container_ref": "@C04"
+            },
+            {
+              "seq_id": "@SEQ_018",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_018",
+              "container_ref": "@C04"
+            },
+            {
+              "seq_id": "@SEQ_019",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.5,
+              "maps_to_mu": "@MU_019",
+              "container_ref": "@C04"
+            },
+            {
+              "seq_id": "@SEQ_020",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_020",
+              "container_ref": "@C04"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_05",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C05"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_021",
+              "seq_type": "silence",
+              "duration_budget_sec": 7.5,
+              "maps_to_mu": "@MU_021",
+              "container_ref": "@C05"
+            },
+            {
+              "seq_id": "@SEQ_022",
+              "seq_type": "visual",
+              "duration_budget_sec": 4.0,
+              "maps_to_mu": "@MU_022",
+              "container_ref": "@C05"
+            },
+            {
+              "seq_id": "@SEQ_023",
+              "seq_type": "visual",
+              "duration_budget_sec": 3.5,
+              "maps_to_mu": "@MU_023",
+              "container_ref": "@C05"
+            },
+            {
+              "seq_id": "@SEQ_024",
+              "seq_type": "visual",
+              "duration_budget_sec": 8.0,
+              "maps_to_mu": "@MU_024",
+              "container_ref": "@C05"
+            },
+            {
+              "seq_id": "@SEQ_025",
+              "seq_type": "visual",
+              "duration_budget_sec": 7.0,
+              "maps_to_mu": "@MU_025",
+              "container_ref": "@C05"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_06",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C06"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_026",
+              "seq_type": "visual",
+              "duration_budget_sec": 7.0,
+              "maps_to_mu": "@MU_026",
+              "container_ref": "@C06"
+            },
+            {
+              "seq_id": "@SEQ_027",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_027",
+              "container_ref": "@C06"
+            },
+            {
+              "seq_id": "@SEQ_028",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_028",
+              "container_ref": "@C06"
+            },
+            {
+              "seq_id": "@SEQ_029",
+              "seq_type": "silence",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_029",
+              "container_ref": "@C06"
+            },
+            {
+              "seq_id": "@SEQ_030",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_030",
+              "container_ref": "@C06"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_07",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C07"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_031",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.5,
+              "maps_to_mu": "@MU_031",
+              "container_ref": "@C07"
+            },
+            {
+              "seq_id": "@SEQ_032",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_032",
+              "container_ref": "@C07"
+            },
+            {
+              "seq_id": "@SEQ_033",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_033",
+              "container_ref": "@C07"
+            },
+            {
+              "seq_id": "@SEQ_034",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_034",
+              "container_ref": "@C07"
+            },
+            {
+              "seq_id": "@SEQ_035",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_035",
+              "container_ref": "@C07"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_08",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C08"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_036",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_036",
+              "container_ref": "@C08"
+            },
+            {
+              "seq_id": "@SEQ_037",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_037",
+              "container_ref": "@C08"
+            },
+            {
+              "seq_id": "@SEQ_038",
+              "seq_type": "visual",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_038",
+              "container_ref": "@C08"
+            },
+            {
+              "seq_id": "@SEQ_039",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.5,
+              "maps_to_mu": "@MU_039",
+              "container_ref": "@C08"
+            },
+            {
+              "seq_id": "@SEQ_040",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_040",
+              "container_ref": "@C08"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_09",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C09"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_041",
+              "seq_type": "silence",
+              "duration_budget_sec": 7.5,
+              "maps_to_mu": "@MU_041",
+              "container_ref": "@C09"
+            },
+            {
+              "seq_id": "@SEQ_042",
+              "seq_type": "visual",
+              "duration_budget_sec": 4.0,
+              "maps_to_mu": "@MU_042",
+              "container_ref": "@C09"
+            },
+            {
+              "seq_id": "@SEQ_043",
+              "seq_type": "visual",
+              "duration_budget_sec": 3.5,
+              "maps_to_mu": "@MU_043",
+              "container_ref": "@C09"
+            },
+            {
+              "seq_id": "@SEQ_044",
+              "seq_type": "visual",
+              "duration_budget_sec": 8.0,
+              "maps_to_mu": "@MU_044",
+              "container_ref": "@C09"
+            },
+            {
+              "seq_id": "@SEQ_045",
+              "seq_type": "visual",
+              "duration_budget_sec": 7.0,
+              "maps_to_mu": "@MU_045",
+              "container_ref": "@C09"
+            }
+          ]
+        },
+        {
+          "scene_id": "@SC_10",
+          "location": "@loc_snow_pavilion",
+          "time": "dawn",
+          "world": "ancient",
+          "container_range": [
+            "@C10"
+          ],
+          "continuity_tags": [
+            "snow",
+            "amber_beam",
+            "stillness"
+          ],
+          "sequences": [
+            {
+              "seq_id": "@SEQ_046",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.0,
+              "maps_to_mu": "@MU_046",
+              "container_ref": "@C10"
+            },
+            {
+              "seq_id": "@SEQ_047",
+              "seq_type": "visual",
+              "duration_budget_sec": 5.5,
+              "maps_to_mu": "@MU_047",
+              "container_ref": "@C10"
+            },
+            {
+              "seq_id": "@SEQ_048",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "@MU_048",
+              "container_ref": "@C10"
+            },
+            {
+              "seq_id": "@SEQ_049",
+              "seq_type": "silence",
+              "duration_budget_sec": 6.5,
+              "maps_to_mu": "@MU_049",
+              "container_ref": "@C10"
+            },
+            {
+              "seq_id": "@SEQ_050",
+              "seq_type": "silence",
+              "duration_budget_sec": 7.0,
+              "maps_to_mu": "@MU_050",
+              "container_ref": "@C10"
+            }
+          ]
+        }
+      ]
+    },
+    "S2_5_DIR": {
+      "direction_intents": [
+        {
+          "seq_ref": "SEQ_01",
+          "motion_reason": "hold_and_reveal",
+          "cut_reason": "cut_on_qi_shift",
+          "tension_arc_role": "setup",
+          "reveal_beat_frame": null,
+          "silence_beats": []
+        },
+        {
+          "seq_ref": "SEQ_02",
+          "motion_reason": "hold_on_silence",
+          "cut_reason": "match_cut_on_form",
+          "tension_arc_role": "setup",
+          "reveal_beat_frame": null,
+          "silence_beats": [
+            {
+              "start_sec": 0.0,
+              "length_sec": 7.0
+            }
+          ]
+        },
+        {
+          "seq_ref": "SEQ_03",
+          "motion_reason": "hold_on_silence",
+          "cut_reason": "cut_on_qi_shift",
+          "tension_arc_role": "false_peak",
+          "reveal_beat_frame": null,
+          "silence_beats": [
+            {
+              "start_sec": 0.0,
+              "length_sec": 6.5
+            }
+          ]
+        },
+        {
+          "seq_ref": "SEQ_04",
+          "motion_reason": "rack_on_shift_of_attention",
+          "cut_reason": "cut_on_gaze_landing",
+          "tension_arc_role": "reveal",
+          "reveal_beat_frame": 48,
+          "silence_beats": []
+        },
+        {
+          "seq_ref": "SEQ_05",
+          "motion_reason": "pull_out_on_isolation",
+          "cut_reason": "silk_dissolve_on_world_shift",
+          "tension_arc_role": "coda",
+          "reveal_beat_frame": null,
+          "silence_beats": []
+        }
+      ]
+    },
+    "S2_7_PERF": {
+      "performance_intents": [
+        {
+          "mu_ref": "MU_01",
+          "actor_ref": "ancient_identity",
+          "inner_want": "hold the ground of a decision already made",
+          "hidden": "the decision was made against a teacher's wish",
+          "breakdown_moment": null,
+          "micro_life_anchors": [
+            "breath_visible_in_cold",
+            "sleeve_movement_before_hand"
+          ],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_03",
+          "actor_ref": "ancient_identity",
+          "inner_want": "let the silence do the work of speech",
+          "hidden": "afraid the silence will crack her resolve",
+          "breakdown_moment": null,
+          "micro_life_anchors": [
+            "breath_visible_in_cold",
+            "long_exhale_jaw_set_release"
+          ],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_04",
+          "actor_ref": "ancient_identity",
+          "inner_want": "let the leaf be the reason to stay still one second longer",
+          "hidden": "using the leaf to postpone the turn toward the road",
+          "breakdown_moment": null,
+          "micro_life_anchors": [
+            "eyes_before_head"
+          ],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_05",
+          "actor_ref": "ancient_identity",
+          "inner_want": "release the grip and accept the leaving",
+          "hidden": "the release is the actual grief",
+          "breakdown_moment": "sleeve lowers 1cm on the hilt at T+27.5s",
+          "micro_life_anchors": [
+            "long_exhale_jaw_set_release",
+            "sleeve_movement_before_hand"
+          ],
+          "reaction_before": false
+        }
+      ]
+    },
+    "S3_IR": {
+      "shots": [
+        {
+          "shot_id": "SH_01",
+          "seq_ref": "@SEQ_001",
+          "container_ref": "@C01",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c01_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c01_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c01_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_02",
+          "seq_ref": "@SEQ_002",
+          "container_ref": "@C01",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c01_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c01_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_03",
+          "seq_ref": "@SEQ_003",
+          "container_ref": "@C01",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c01_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c01_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_04",
+          "seq_ref": "@SEQ_004",
+          "container_ref": "@C01",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.0,
+            "duration_frames": 120,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c01_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c01_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_05",
+          "seq_ref": "@SEQ_005",
+          "container_ref": "@C01",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.0,
+            "duration_frames": 120,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c01_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c01_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c01_close"
+          }
+        },
+        {
+          "shot_id": "SH_06",
+          "seq_ref": "@SEQ_006",
+          "container_ref": "@C02",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c02_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c02_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c02_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_07",
+          "seq_ref": "@SEQ_007",
+          "container_ref": "@C02",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.5,
+            "duration_frames": 156,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c02_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c02_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_08",
+          "seq_ref": "@SEQ_008",
+          "container_ref": "@C02",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c02_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c02_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_09",
+          "seq_ref": "@SEQ_009",
+          "container_ref": "@C02",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c02_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c02_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_10",
+          "seq_ref": "@SEQ_010",
+          "container_ref": "@C02",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.0,
+            "duration_frames": 120,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c02_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c02_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c02_close"
+          }
+        },
+        {
+          "shot_id": "SH_11",
+          "seq_ref": "@SEQ_011",
+          "container_ref": "@C03",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.5,
+            "duration_frames": 156,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c03_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c03_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c03_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_12",
+          "seq_ref": "@SEQ_012",
+          "container_ref": "@C03",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c03_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c03_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_13",
+          "seq_ref": "@SEQ_013",
+          "container_ref": "@C03",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c03_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c03_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_14",
+          "seq_ref": "@SEQ_014",
+          "container_ref": "@C03",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c03_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c03_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_15",
+          "seq_ref": "@SEQ_015",
+          "container_ref": "@C03",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c03_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "silk_dissolve",
+                "transition_duration_frames": 24,
+                "anchor_beat_ref": "@beat_c03_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c03_close"
+          }
+        },
+        {
+          "shot_id": "SH_16",
+          "seq_ref": "@SEQ_016",
+          "container_ref": "@C04",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c04_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c04_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c04_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_17",
+          "seq_ref": "@SEQ_017",
+          "container_ref": "@C04",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c04_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c04_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_18",
+          "seq_ref": "@SEQ_018",
+          "container_ref": "@C04",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c04_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c04_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_19",
+          "seq_ref": "@SEQ_019",
+          "container_ref": "@C04",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.5,
+            "duration_frames": 156,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c04_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c04_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_20",
+          "seq_ref": "@SEQ_020",
+          "container_ref": "@C04",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c04_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c04_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c04_close"
+          }
+        },
+        {
+          "shot_id": "SH_21",
+          "seq_ref": "@SEQ_021",
+          "container_ref": "@C05",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.5,
+            "duration_frames": 180,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c05_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c05_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c05_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_22",
+          "seq_ref": "@SEQ_022",
+          "container_ref": "@C05",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 4.0,
+            "duration_frames": 96,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c05_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c05_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_23",
+          "seq_ref": "@SEQ_023",
+          "container_ref": "@C05",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 3.5,
+            "duration_frames": 84,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "smash_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c05_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c05_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_24",
+          "seq_ref": "@SEQ_024",
+          "container_ref": "@C05",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 8.0,
+            "duration_frames": 192,
+            "fps": 24,
+            "retime_method": "optical_flow",
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c05_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c05_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_25",
+          "seq_ref": "@SEQ_025",
+          "container_ref": "@C05",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "retime_method": "optical_flow",
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c05_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "silk_dissolve",
+                "transition_duration_frames": 36,
+                "anchor_beat_ref": "@beat_c05_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c05_close"
+          }
+        },
+        {
+          "shot_id": "SH_26",
+          "seq_ref": "@SEQ_026",
+          "container_ref": "@C06",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c06_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c06_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c06_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_27",
+          "seq_ref": "@SEQ_027",
+          "container_ref": "@C06",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c06_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c06_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_28",
+          "seq_ref": "@SEQ_028",
+          "container_ref": "@C06",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c06_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c06_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_29",
+          "seq_ref": "@SEQ_029",
+          "container_ref": "@C06",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c06_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c06_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_30",
+          "seq_ref": "@SEQ_030",
+          "container_ref": "@C06",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c06_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c06_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c06_close"
+          }
+        },
+        {
+          "shot_id": "SH_31",
+          "seq_ref": "@SEQ_031",
+          "container_ref": "@C07",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.5,
+            "duration_frames": 156,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c07_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c07_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c07_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_32",
+          "seq_ref": "@SEQ_032",
+          "container_ref": "@C07",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c07_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c07_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_33",
+          "seq_ref": "@SEQ_033",
+          "container_ref": "@C07",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c07_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c07_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_34",
+          "seq_ref": "@SEQ_034",
+          "container_ref": "@C07",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c07_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c07_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_35",
+          "seq_ref": "@SEQ_035",
+          "container_ref": "@C07",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c07_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "silk_dissolve",
+                "transition_duration_frames": 24,
+                "anchor_beat_ref": "@beat_c07_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c07_close"
+          }
+        },
+        {
+          "shot_id": "SH_36",
+          "seq_ref": "@SEQ_036",
+          "container_ref": "@C08",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c08_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c08_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c08_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_37",
+          "seq_ref": "@SEQ_037",
+          "container_ref": "@C08",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c08_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c08_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_38",
+          "seq_ref": "@SEQ_038",
+          "container_ref": "@C08",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c08_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c08_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_39",
+          "seq_ref": "@SEQ_039",
+          "container_ref": "@C08",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.5,
+            "duration_frames": 156,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c08_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c08_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_40",
+          "seq_ref": "@SEQ_040",
+          "container_ref": "@C08",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c08_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c08_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c08_close"
+          }
+        },
+        {
+          "shot_id": "SH_41",
+          "seq_ref": "@SEQ_041",
+          "container_ref": "@C09",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.5,
+            "duration_frames": 180,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c09_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c09_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c09_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_42",
+          "seq_ref": "@SEQ_042",
+          "container_ref": "@C09",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 4.0,
+            "duration_frames": 96,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c09_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c09_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_43",
+          "seq_ref": "@SEQ_043",
+          "container_ref": "@C09",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 3.5,
+            "duration_frames": 84,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "smash_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c09_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c09_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_44",
+          "seq_ref": "@SEQ_044",
+          "container_ref": "@C09",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 8.0,
+            "duration_frames": 192,
+            "fps": 24,
+            "retime_method": "optical_flow",
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c09_bridge"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c09_bridge"
+          }
+        },
+        {
+          "shot_id": "SH_45",
+          "seq_ref": "@SEQ_045",
+          "container_ref": "@C09",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "retime_method": "optical_flow",
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c09_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "silk_dissolve",
+                "transition_duration_frames": 36,
+                "anchor_beat_ref": "@beat_c09_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c09_close"
+          }
+        },
+        {
+          "shot_id": "SH_46",
+          "seq_ref": "@SEQ_046",
+          "container_ref": "@C10",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.0,
+            "duration_frames": 120,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": "@beat_c10_open",
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c10_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c10_close"
+          }
+        },
+        {
+          "shot_id": "SH_47",
+          "seq_ref": "@SEQ_047",
+          "container_ref": "@C10",
+          "shot_size": "MS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 5.5,
+            "duration_frames": 132,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c10_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c10_close"
+          }
+        },
+        {
+          "shot_id": "SH_48",
+          "seq_ref": "@SEQ_048",
+          "container_ref": "@C10",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c10_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c10_close"
+          }
+        },
+        {
+          "shot_id": "SH_49",
+          "seq_ref": "@SEQ_049",
+          "container_ref": "@C10",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 6.5,
+            "duration_frames": 156,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": null
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "match_cut",
+                "transition_duration_frames": 0,
+                "anchor_beat_ref": "@beat_c10_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_center",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c10_close"
+          }
+        },
+        {
+          "shot_id": "SH_50",
+          "seq_ref": "@SEQ_050",
+          "container_ref": "@C10",
+          "shot_size": "FS",
+          "motion": "static",
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "retime_method": null,
+            "cut_in_beat_ref": null,
+            "cut_out_beat_ref": "@beat_c10_close"
+          },
+          "rhythm_profile": {
+            "cut_triggers": [
+              {
+                "transition_type": "silk_dissolve",
+                "transition_duration_frames": 36,
+                "anchor_beat_ref": "@beat_c10_close"
+              }
+            ]
+          },
+          "post_intent": {
+            "trim_priority": "protect_edges",
+            "slip": 0,
+            "slide": 0,
+            "handle_frames": 6,
+            "preferred_anchor": "@beat_c10_close"
+          }
+        }
+      ]
+    },
+    "S4_VERIFY": {
+      "verdict": "PASS",
+      "failed_checks": [],
+      "passed_checks_count": 34
+    },
+    "S5_OUT": {
+      "canonical_id": "ep01_150s_canonical_v1",
+      "format": "film-dsl-v2.1",
+      "title": "冷雪见气 · 第一集",
+      "aspect_ratio": "2.39:1",
+      "total_duration_sec": 150.0,
+      "total_frames": 3600,
+      "fps": 24,
+      "shot_count": 25,
+      "world_timeline": [
+        {
+          "shot": "SH_01",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_02",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_03",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_04",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_05",
+          "world": "ancient"
+        }
+      ],
+      "match_cut_pairs": [
+        {
+          "from": "SH_01",
+          "to": "SH_02",
+          "element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "function": "carry the container of stillness across the cut"
+        }
+      ],
+      "montage_groups": [
+        {
+          "group_id": "MG_first_apex",
+          "container": "@C05",
+          "members": [
+            "SH_21",
+            "SH_22",
+            "SH_23",
+            "SH_24",
+            "SH_25"
+          ],
+          "total_duration_sec": 30.0,
+          "scale_lock": true,
+          "rhythm_signature": "silence → release → aftermath"
+        },
+        {
+          "group_id": "MG_second_apex",
+          "container": "@C09",
+          "members": [
+            "SH_41",
+            "SH_42",
+            "SH_43",
+            "SH_44",
+            "SH_45"
+          ],
+          "total_duration_sec": 30.0,
+          "scale_lock": true,
+          "rhythm_signature": "roar → recognition → held stillness"
+        },
+        {
+          "group_id": "MG_cross_setup_esc",
+          "container": null,
+          "members": [
+            "SH_06",
+            "SH_07",
+            "SH_08",
+            "SH_09",
+            "SH_10",
+            "SH_11",
+            "SH_12",
+            "SH_13",
+            "SH_14",
+            "SH_15"
+          ],
+          "total_duration_sec": 60.0,
+          "scale_lock": true,
+          "rhythm_signature": "setup extends into first escalation"
+        }
+      ],
+      "world_transition_map": [
+        {
+          "from_container": "C3",
+          "to_container": "C4",
+          "at_time_sec": 90.0,
+          "type": "silk_dissolve",
+          "beat_ref": "@beat_c4_open"
+        },
+        {
+          "from_container": "C4",
+          "to_container": "C5",
+          "at_time_sec": 120.0,
+          "type": "match_cut",
+          "beat_ref": "@beat_c5_open"
+        }
+      ],
+      "cinematography_summary": {
+        "lens_range_mm": [
+          100,
+          100
+        ],
+        "motion_types_used": [
+          "static",
+          "crane"
+        ],
+        "longest_take_frames": 168,
+        "shortest_shot_frames": 96,
+        "average_shutter_angle": 180,
+        "depth_layers_max": 3
+      },
+      "execution_order": [
+        "SH_01",
+        "SH_02",
+        "SH_03",
+        "SH_04",
+        "SH_05",
+        "SH_06",
+        "SH_07",
+        "SH_08",
+        "SH_09",
+        "SH_10",
+        "SH_11",
+        "SH_12",
+        "SH_13",
+        "SH_14",
+        "SH_15",
+        "SH_16",
+        "SH_17",
+        "SH_18",
+        "SH_19",
+        "SH_20",
+        "SH_21",
+        "SH_22",
+        "SH_23",
+        "SH_24",
+        "SH_25"
+      ],
+      "downstream_target": "video_generation_engine (L2) + editor_timeline (L1+L3) + post_color_pipeline (L3)",
+      "shots_dsl": [
+        {
+          "shot_id": "SH_01",
+          "L1_human_readable": {
+            "shot_no": "1/50",
+            "container": "@C01",
+            "container_role": "cold_open",
+            "mu_function": "arrival_stillness",
+            "duration_s": 7.0,
+            "beat": "cold_open container shot 1/5 — arrival stillness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_01]",
+            "container_ref": "@C01",
+            "mu_function": "arrival_stillness"
+          }
+        },
+        {
+          "shot_id": "SH_02",
+          "L1_human_readable": {
+            "shot_no": "2/50",
+            "container": "@C01",
+            "container_role": "cold_open",
+            "mu_function": "environmental_witness",
+            "duration_s": 7.0,
+            "beat": "cold_open container shot 2/5 — environmental witness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_02]",
+            "container_ref": "@C01",
+            "mu_function": "environmental_witness"
+          }
+        },
+        {
+          "shot_id": "SH_03",
+          "L1_human_readable": {
+            "shot_no": "3/50",
+            "container": "@C01",
+            "container_role": "cold_open",
+            "mu_function": "environmental_witness",
+            "duration_s": 6.0,
+            "beat": "cold_open container shot 3/5 — environmental witness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_03]",
+            "container_ref": "@C01",
+            "mu_function": "environmental_witness"
+          }
+        },
+        {
+          "shot_id": "SH_04",
+          "L1_human_readable": {
+            "shot_no": "4/50",
+            "container": "@C01",
+            "container_role": "cold_open",
+            "mu_function": "silence_beat",
+            "duration_s": 5.0,
+            "beat": "cold_open container shot 4/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_04]",
+            "container_ref": "@C01",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_05",
+          "L1_human_readable": {
+            "shot_no": "5/50",
+            "container": "@C01",
+            "container_role": "cold_open",
+            "mu_function": "attention_shift",
+            "duration_s": 5.0,
+            "beat": "cold_open container shot 5/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_05]",
+            "container_ref": "@C01",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_06",
+          "L1_human_readable": {
+            "shot_no": "6/50",
+            "container": "@C02",
+            "container_role": "setup",
+            "mu_function": "arrival_stillness",
+            "duration_s": 7.0,
+            "beat": "setup container shot 1/5 — arrival stillness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_06]",
+            "container_ref": "@C02",
+            "mu_function": "arrival_stillness"
+          }
+        },
+        {
+          "shot_id": "SH_07",
+          "L1_human_readable": {
+            "shot_no": "7/50",
+            "container": "@C02",
+            "container_role": "setup",
+            "mu_function": "arrival_stillness",
+            "duration_s": 6.5,
+            "beat": "setup container shot 2/5 — arrival stillness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_07]",
+            "container_ref": "@C02",
+            "mu_function": "arrival_stillness"
+          }
+        },
+        {
+          "shot_id": "SH_08",
+          "L1_human_readable": {
+            "shot_no": "8/50",
+            "container": "@C02",
+            "container_role": "setup",
+            "mu_function": "environmental_witness",
+            "duration_s": 6.0,
+            "beat": "setup container shot 3/5 — environmental witness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_08]",
+            "container_ref": "@C02",
+            "mu_function": "environmental_witness"
+          }
+        },
+        {
+          "shot_id": "SH_09",
+          "L1_human_readable": {
+            "shot_no": "9/50",
+            "container": "@C02",
+            "container_role": "setup",
+            "mu_function": "silence_beat",
+            "duration_s": 5.5,
+            "beat": "setup container shot 4/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_09]",
+            "container_ref": "@C02",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_10",
+          "L1_human_readable": {
+            "shot_no": "10/50",
+            "container": "@C02",
+            "container_role": "setup",
+            "mu_function": "silence_beat",
+            "duration_s": 5.0,
+            "beat": "setup container shot 5/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_10]",
+            "container_ref": "@C02",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_11",
+          "L1_human_readable": {
+            "shot_no": "11/50",
+            "container": "@C03",
+            "container_role": "escalation",
+            "mu_function": "environmental_witness",
+            "duration_s": 6.5,
+            "beat": "escalation container shot 1/5 — environmental witness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_11]",
+            "container_ref": "@C03",
+            "mu_function": "environmental_witness"
+          }
+        },
+        {
+          "shot_id": "SH_12",
+          "L1_human_readable": {
+            "shot_no": "12/50",
+            "container": "@C03",
+            "container_role": "escalation",
+            "mu_function": "environmental_witness",
+            "duration_s": 6.0,
+            "beat": "escalation container shot 2/5 — environmental witness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_12]",
+            "container_ref": "@C03",
+            "mu_function": "environmental_witness"
+          }
+        },
+        {
+          "shot_id": "SH_13",
+          "L1_human_readable": {
+            "shot_no": "13/50",
+            "container": "@C03",
+            "container_role": "escalation",
+            "mu_function": "silence_beat",
+            "duration_s": 6.0,
+            "beat": "escalation container shot 3/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_13]",
+            "container_ref": "@C03",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_14",
+          "L1_human_readable": {
+            "shot_no": "14/50",
+            "container": "@C03",
+            "container_role": "escalation",
+            "mu_function": "attention_shift",
+            "duration_s": 6.0,
+            "beat": "escalation container shot 4/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_14]",
+            "container_ref": "@C03",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_15",
+          "L1_human_readable": {
+            "shot_no": "15/50",
+            "container": "@C03",
+            "container_role": "escalation",
+            "mu_function": "attention_shift",
+            "duration_s": 5.5,
+            "beat": "escalation container shot 5/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_15]",
+            "container_ref": "@C03",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_16",
+          "L1_human_readable": {
+            "shot_no": "16/50",
+            "container": "@C04",
+            "container_role": "turn",
+            "mu_function": "attention_shift",
+            "duration_s": 6.0,
+            "beat": "turn container shot 1/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_16]",
+            "container_ref": "@C04",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_17",
+          "L1_human_readable": {
+            "shot_no": "17/50",
+            "container": "@C04",
+            "container_role": "turn",
+            "mu_function": "attention_shift",
+            "duration_s": 5.5,
+            "beat": "turn container shot 2/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_17]",
+            "container_ref": "@C04",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_18",
+          "L1_human_readable": {
+            "shot_no": "18/50",
+            "container": "@C04",
+            "container_role": "turn",
+            "mu_function": "attention_shift",
+            "duration_s": 6.0,
+            "beat": "turn container shot 3/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_18]",
+            "container_ref": "@C04",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_19",
+          "L1_human_readable": {
+            "shot_no": "19/50",
+            "container": "@C04",
+            "container_role": "turn",
+            "mu_function": "silence_beat",
+            "duration_s": 6.5,
+            "beat": "turn container shot 4/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_19]",
+            "container_ref": "@C04",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_20",
+          "L1_human_readable": {
+            "shot_no": "20/50",
+            "container": "@C04",
+            "container_role": "turn",
+            "mu_function": "silence_beat",
+            "duration_s": 6.0,
+            "beat": "turn container shot 5/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_20]",
+            "container_ref": "@C04",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_21",
+          "L1_human_readable": {
+            "shot_no": "21/50",
+            "container": "@C05",
+            "container_role": "apex",
+            "mu_function": "silence_beat",
+            "duration_s": 7.5,
+            "beat": "apex container shot 1/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_21]",
+            "container_ref": "@C05",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_22",
+          "L1_human_readable": {
+            "shot_no": "22/50",
+            "container": "@C05",
+            "container_role": "apex",
+            "mu_function": "realization_release",
+            "duration_s": 4.0,
+            "beat": "apex container shot 2/5 — realization release"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_22]",
+            "container_ref": "@C05",
+            "mu_function": "realization_release"
+          }
+        },
+        {
+          "shot_id": "SH_23",
+          "L1_human_readable": {
+            "shot_no": "23/50",
+            "container": "@C05",
+            "container_role": "apex",
+            "mu_function": "realization_release",
+            "duration_s": 3.5,
+            "beat": "apex container shot 3/5 — realization release"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_23]",
+            "container_ref": "@C05",
+            "mu_function": "realization_release"
+          }
+        },
+        {
+          "shot_id": "SH_24",
+          "L1_human_readable": {
+            "shot_no": "24/50",
+            "container": "@C05",
+            "container_role": "apex",
+            "mu_function": "aftermath",
+            "duration_s": 8.0,
+            "beat": "apex container shot 4/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_24]",
+            "container_ref": "@C05",
+            "mu_function": "aftermath"
+          }
+        },
+        {
+          "shot_id": "SH_25",
+          "L1_human_readable": {
+            "shot_no": "25/50",
+            "container": "@C05",
+            "container_role": "apex",
+            "mu_function": "aftermath",
+            "duration_s": 7.0,
+            "beat": "apex container shot 5/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_25]",
+            "container_ref": "@C05",
+            "mu_function": "aftermath"
+          }
+        },
+        {
+          "shot_id": "SH_26",
+          "L1_human_readable": {
+            "shot_no": "26/50",
+            "container": "@C06",
+            "container_role": "aftermath",
+            "mu_function": "aftermath",
+            "duration_s": 7.0,
+            "beat": "aftermath container shot 1/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_26]",
+            "container_ref": "@C06",
+            "mu_function": "aftermath"
+          }
+        },
+        {
+          "shot_id": "SH_27",
+          "L1_human_readable": {
+            "shot_no": "27/50",
+            "container": "@C06",
+            "container_role": "aftermath",
+            "mu_function": "aftermath",
+            "duration_s": 6.0,
+            "beat": "aftermath container shot 2/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_27]",
+            "container_ref": "@C06",
+            "mu_function": "aftermath"
+          }
+        },
+        {
+          "shot_id": "SH_28",
+          "L1_human_readable": {
+            "shot_no": "28/50",
+            "container": "@C06",
+            "container_role": "aftermath",
+            "mu_function": "silence_beat",
+            "duration_s": 6.0,
+            "beat": "aftermath container shot 3/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_28]",
+            "container_ref": "@C06",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_29",
+          "L1_human_readable": {
+            "shot_no": "29/50",
+            "container": "@C06",
+            "container_role": "aftermath",
+            "mu_function": "silence_beat",
+            "duration_s": 5.5,
+            "beat": "aftermath container shot 4/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_29]",
+            "container_ref": "@C06",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_30",
+          "L1_human_readable": {
+            "shot_no": "30/50",
+            "container": "@C06",
+            "container_role": "aftermath",
+            "mu_function": "attention_shift",
+            "duration_s": 5.5,
+            "beat": "aftermath container shot 5/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_30]",
+            "container_ref": "@C06",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_31",
+          "L1_human_readable": {
+            "shot_no": "31/50",
+            "container": "@C07",
+            "container_role": "escalation",
+            "mu_function": "environmental_witness",
+            "duration_s": 6.5,
+            "beat": "escalation container shot 1/5 — environmental witness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_31]",
+            "container_ref": "@C07",
+            "mu_function": "environmental_witness"
+          }
+        },
+        {
+          "shot_id": "SH_32",
+          "L1_human_readable": {
+            "shot_no": "32/50",
+            "container": "@C07",
+            "container_role": "escalation",
+            "mu_function": "environmental_witness",
+            "duration_s": 6.0,
+            "beat": "escalation container shot 2/5 — environmental witness"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_32]",
+            "container_ref": "@C07",
+            "mu_function": "environmental_witness"
+          }
+        },
+        {
+          "shot_id": "SH_33",
+          "L1_human_readable": {
+            "shot_no": "33/50",
+            "container": "@C07",
+            "container_role": "escalation",
+            "mu_function": "silence_beat",
+            "duration_s": 6.0,
+            "beat": "escalation container shot 3/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_33]",
+            "container_ref": "@C07",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_34",
+          "L1_human_readable": {
+            "shot_no": "34/50",
+            "container": "@C07",
+            "container_role": "escalation",
+            "mu_function": "attention_shift",
+            "duration_s": 6.0,
+            "beat": "escalation container shot 4/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_34]",
+            "container_ref": "@C07",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_35",
+          "L1_human_readable": {
+            "shot_no": "35/50",
+            "container": "@C07",
+            "container_role": "escalation",
+            "mu_function": "attention_shift",
+            "duration_s": 5.5,
+            "beat": "escalation container shot 5/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_35]",
+            "container_ref": "@C07",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_36",
+          "L1_human_readable": {
+            "shot_no": "36/50",
+            "container": "@C08",
+            "container_role": "turn",
+            "mu_function": "attention_shift",
+            "duration_s": 6.0,
+            "beat": "turn container shot 1/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_36]",
+            "container_ref": "@C08",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_37",
+          "L1_human_readable": {
+            "shot_no": "37/50",
+            "container": "@C08",
+            "container_role": "turn",
+            "mu_function": "attention_shift",
+            "duration_s": 5.5,
+            "beat": "turn container shot 2/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_37]",
+            "container_ref": "@C08",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_38",
+          "L1_human_readable": {
+            "shot_no": "38/50",
+            "container": "@C08",
+            "container_role": "turn",
+            "mu_function": "attention_shift",
+            "duration_s": 6.0,
+            "beat": "turn container shot 3/5 — attention shift"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_38]",
+            "container_ref": "@C08",
+            "mu_function": "attention_shift"
+          }
+        },
+        {
+          "shot_id": "SH_39",
+          "L1_human_readable": {
+            "shot_no": "39/50",
+            "container": "@C08",
+            "container_role": "turn",
+            "mu_function": "silence_beat",
+            "duration_s": 6.5,
+            "beat": "turn container shot 4/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_39]",
+            "container_ref": "@C08",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_40",
+          "L1_human_readable": {
+            "shot_no": "40/50",
+            "container": "@C08",
+            "container_role": "turn",
+            "mu_function": "silence_beat",
+            "duration_s": 6.0,
+            "beat": "turn container shot 5/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_40]",
+            "container_ref": "@C08",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_41",
+          "L1_human_readable": {
+            "shot_no": "41/50",
+            "container": "@C09",
+            "container_role": "apex",
+            "mu_function": "silence_beat",
+            "duration_s": 7.5,
+            "beat": "apex container shot 1/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_41]",
+            "container_ref": "@C09",
+            "mu_function": "silence_beat"
+          },
+          "L2_render_prompt": {
+            "modules": {
+              "SCENE_CONTEXT": "EXACT 1 CHARACTER — Ling Xu at snow pavilion. Container @C09 [apex] — shot 1/5 of a 300-second episode. Single continuous take. Total duration: 7.5 seconds. Real time. No cuts.",
+              "ACTIVE_REFERENCES": "@ling_xu — dark indigo robe, jade pin, hilt at left hip. @loc_snow_pavilion — cold ridge at dawn.",
+              "LOCATION_MAP": "LOCATION MAP — Snow pavilion, distant mountain ridge frame-BACK-CENTER, amber beam from frame-LEFT.",
+              "FIRST_FRAME_AND_SPATIAL_BLOCKING": "SHOT 41 (~1.0s) — Ling Xu at frame-center, profile visible from previous turn, held stillness.",
+              "FORMAT_MODE": "Single continuous take. 7.5 seconds. Real time. No cuts.",
+              "OPTICS": "100mm telephoto. Camera height 1.55m. Camera distance 8.0m.",
+              "CAMERA": "Locked-off tripod. Zero motion.",
+              "ACTION_TIMING": "Full apex sequence for C09 — the second, larger release: the mountain roar returns, the figure meets it.",
+              "PHYSICS": "Silk sleeve real-weight. Breath plume respects amber beam. Snow drift natural.",
+              "LIGHTING": "Cold amber sun frame-LEFT at 20° elevation. Rim light on jade pin.",
+              "AUDIO": "Diegetic only. Mountain roar sub-frequency at apex beats. No music.",
+              "CHARACTER_ACTING": "Ling Xu meets the roar this time — micro-tension, then release; no dialogue.",
+              "STYLE": "[STYLE] Classical xianxia. 100mm telephoto. Cold amber + cyan-teal shadow palette. No music.",
+              "QUALITY": "Photorealistic. 24fps. 2.39:1. Sharp silk detail. Rim light preserved.",
+              "POSITIVE_CONSTRAINTS": "No cuts. No music. No text. No modern elements."
+            }
+          }
+        },
+        {
+          "shot_id": "SH_42",
+          "L1_human_readable": {
+            "shot_no": "42/50",
+            "container": "@C09",
+            "container_role": "apex",
+            "mu_function": "realization_release",
+            "duration_s": 4.0,
+            "beat": "apex container shot 2/5 — realization release"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_42]",
+            "container_ref": "@C09",
+            "mu_function": "realization_release"
+          },
+          "L2_render_prompt": {
+            "modules": {
+              "SCENE_CONTEXT": "EXACT 1 CHARACTER — Ling Xu at snow pavilion. Container @C09 [apex] — shot 2/5 of a 300-second episode. Single continuous take. Total duration: 4.0 seconds. Real time. No cuts.",
+              "ACTIVE_REFERENCES": "@ling_xu — dark indigo robe, jade pin, hilt at left hip. @loc_snow_pavilion — cold ridge at dawn.",
+              "LOCATION_MAP": "LOCATION MAP — Snow pavilion, distant mountain ridge frame-BACK-CENTER, amber beam from frame-LEFT.",
+              "FIRST_FRAME_AND_SPATIAL_BLOCKING": "SHOT 42 (~1.0s) — Ling Xu at frame-center, profile visible from previous turn, held stillness.",
+              "FORMAT_MODE": "Single continuous take. 4.0 seconds. Real time. No cuts.",
+              "OPTICS": "100mm telephoto. Camera height 1.55m. Camera distance 8.0m.",
+              "CAMERA": "Locked-off tripod. Zero motion.",
+              "ACTION_TIMING": "Full apex sequence for C09 — the second, larger release: the mountain roar returns, the figure meets it.",
+              "PHYSICS": "Silk sleeve real-weight. Breath plume respects amber beam. Snow drift natural.",
+              "LIGHTING": "Cold amber sun frame-LEFT at 20° elevation. Rim light on jade pin.",
+              "AUDIO": "Diegetic only. Mountain roar sub-frequency at apex beats. No music.",
+              "CHARACTER_ACTING": "Ling Xu meets the roar this time — micro-tension, then release; no dialogue.",
+              "STYLE": "[STYLE] Classical xianxia. 100mm telephoto. Cold amber + cyan-teal shadow palette. No music.",
+              "QUALITY": "Photorealistic. 24fps. 2.39:1. Sharp silk detail. Rim light preserved.",
+              "POSITIVE_CONSTRAINTS": "No cuts. No music. No text. No modern elements."
+            }
+          }
+        },
+        {
+          "shot_id": "SH_43",
+          "L1_human_readable": {
+            "shot_no": "43/50",
+            "container": "@C09",
+            "container_role": "apex",
+            "mu_function": "realization_release",
+            "duration_s": 3.5,
+            "beat": "apex container shot 3/5 — realization release"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_43]",
+            "container_ref": "@C09",
+            "mu_function": "realization_release"
+          },
+          "L2_render_prompt": {
+            "modules": {
+              "SCENE_CONTEXT": "EXACT 1 CHARACTER — Ling Xu at snow pavilion. Container @C09 [apex] — shot 3/5 of a 300-second episode. Single continuous take. Total duration: 3.5 seconds. Real time. No cuts.",
+              "ACTIVE_REFERENCES": "@ling_xu — dark indigo robe, jade pin, hilt at left hip. @loc_snow_pavilion — cold ridge at dawn.",
+              "LOCATION_MAP": "LOCATION MAP — Snow pavilion, distant mountain ridge frame-BACK-CENTER, amber beam from frame-LEFT.",
+              "FIRST_FRAME_AND_SPATIAL_BLOCKING": "SHOT 43 (~1.0s) — Ling Xu at frame-center, profile visible from previous turn, held stillness.",
+              "FORMAT_MODE": "Single continuous take. 3.5 seconds. Real time. No cuts.",
+              "OPTICS": "100mm telephoto. Camera height 1.55m. Camera distance 8.0m.",
+              "CAMERA": "Locked-off tripod. Zero motion.",
+              "ACTION_TIMING": "Full apex sequence for C09 — the second, larger release: the mountain roar returns, the figure meets it.",
+              "PHYSICS": "Silk sleeve real-weight. Breath plume respects amber beam. Snow drift natural.",
+              "LIGHTING": "Cold amber sun frame-LEFT at 20° elevation. Rim light on jade pin.",
+              "AUDIO": "Diegetic only. Mountain roar sub-frequency at apex beats. No music.",
+              "CHARACTER_ACTING": "Ling Xu meets the roar this time — micro-tension, then release; no dialogue.",
+              "STYLE": "[STYLE] Classical xianxia. 100mm telephoto. Cold amber + cyan-teal shadow palette. No music.",
+              "QUALITY": "Photorealistic. 24fps. 2.39:1. Sharp silk detail. Rim light preserved.",
+              "POSITIVE_CONSTRAINTS": "No cuts. No music. No text. No modern elements."
+            }
+          }
+        },
+        {
+          "shot_id": "SH_44",
+          "L1_human_readable": {
+            "shot_no": "44/50",
+            "container": "@C09",
+            "container_role": "apex",
+            "mu_function": "aftermath",
+            "duration_s": 8.0,
+            "beat": "apex container shot 4/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_44]",
+            "container_ref": "@C09",
+            "mu_function": "aftermath"
+          },
+          "L2_render_prompt": {
+            "modules": {
+              "SCENE_CONTEXT": "EXACT 1 CHARACTER — Ling Xu at snow pavilion. Container @C09 [apex] — shot 4/5 of a 300-second episode. Single continuous take. Total duration: 8.0 seconds. Real time. No cuts.",
+              "ACTIVE_REFERENCES": "@ling_xu — dark indigo robe, jade pin, hilt at left hip. @loc_snow_pavilion — cold ridge at dawn.",
+              "LOCATION_MAP": "LOCATION MAP — Snow pavilion, distant mountain ridge frame-BACK-CENTER, amber beam from frame-LEFT.",
+              "FIRST_FRAME_AND_SPATIAL_BLOCKING": "SHOT 44 (~1.0s) — Ling Xu at frame-center, profile visible from previous turn, held stillness.",
+              "FORMAT_MODE": "Single continuous take. 8.0 seconds. Real time. No cuts.",
+              "OPTICS": "100mm telephoto. Camera height 1.55m. Camera distance 8.0m.",
+              "CAMERA": "Locked-off tripod. Zero motion.",
+              "ACTION_TIMING": "Full apex sequence for C09 — the second, larger release: the mountain roar returns, the figure meets it.",
+              "PHYSICS": "Silk sleeve real-weight. Breath plume respects amber beam. Snow drift natural.",
+              "LIGHTING": "Cold amber sun frame-LEFT at 20° elevation. Rim light on jade pin.",
+              "AUDIO": "Diegetic only. Mountain roar sub-frequency at apex beats. No music.",
+              "CHARACTER_ACTING": "Ling Xu meets the roar this time — micro-tension, then release; no dialogue.",
+              "STYLE": "[STYLE] Classical xianxia. 100mm telephoto. Cold amber + cyan-teal shadow palette. No music.",
+              "QUALITY": "Photorealistic. 24fps. 2.39:1. Sharp silk detail. Rim light preserved.",
+              "POSITIVE_CONSTRAINTS": "No cuts. No music. No text. No modern elements."
+            }
+          }
+        },
+        {
+          "shot_id": "SH_45",
+          "L1_human_readable": {
+            "shot_no": "45/50",
+            "container": "@C09",
+            "container_role": "apex",
+            "mu_function": "aftermath",
+            "duration_s": 7.0,
+            "beat": "apex container shot 5/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_45]",
+            "container_ref": "@C09",
+            "mu_function": "aftermath"
+          },
+          "L2_render_prompt": {
+            "modules": {
+              "SCENE_CONTEXT": "EXACT 1 CHARACTER — Ling Xu at snow pavilion. Container @C09 [apex] — shot 5/5 of a 300-second episode. Single continuous take. Total duration: 7.0 seconds. Real time. No cuts.",
+              "ACTIVE_REFERENCES": "@ling_xu — dark indigo robe, jade pin, hilt at left hip. @loc_snow_pavilion — cold ridge at dawn.",
+              "LOCATION_MAP": "LOCATION MAP — Snow pavilion, distant mountain ridge frame-BACK-CENTER, amber beam from frame-LEFT.",
+              "FIRST_FRAME_AND_SPATIAL_BLOCKING": "SHOT 45 (~1.0s) — Ling Xu at frame-center, profile visible from previous turn, held stillness.",
+              "FORMAT_MODE": "Single continuous take. 7.0 seconds. Real time. No cuts.",
+              "OPTICS": "100mm telephoto. Camera height 1.55m. Camera distance 8.0m.",
+              "CAMERA": "Locked-off tripod. Zero motion.",
+              "ACTION_TIMING": "Full apex sequence for C09 — the second, larger release: the mountain roar returns, the figure meets it.",
+              "PHYSICS": "Silk sleeve real-weight. Breath plume respects amber beam. Snow drift natural.",
+              "LIGHTING": "Cold amber sun frame-LEFT at 20° elevation. Rim light on jade pin.",
+              "AUDIO": "Diegetic only. Mountain roar sub-frequency at apex beats. No music.",
+              "CHARACTER_ACTING": "Ling Xu meets the roar this time — micro-tension, then release; no dialogue.",
+              "STYLE": "[STYLE] Classical xianxia. 100mm telephoto. Cold amber + cyan-teal shadow palette. No music.",
+              "QUALITY": "Photorealistic. 24fps. 2.39:1. Sharp silk detail. Rim light preserved.",
+              "POSITIVE_CONSTRAINTS": "No cuts. No music. No text. No modern elements."
+            }
+          }
+        },
+        {
+          "shot_id": "SH_46",
+          "L1_human_readable": {
+            "shot_no": "46/50",
+            "container": "@C10",
+            "container_role": "coda",
+            "mu_function": "aftermath",
+            "duration_s": 5.0,
+            "beat": "coda container shot 1/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_46]",
+            "container_ref": "@C10",
+            "mu_function": "aftermath"
+          }
+        },
+        {
+          "shot_id": "SH_47",
+          "L1_human_readable": {
+            "shot_no": "47/50",
+            "container": "@C10",
+            "container_role": "coda",
+            "mu_function": "aftermath",
+            "duration_s": 5.5,
+            "beat": "coda container shot 2/5 — aftermath"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_47]",
+            "container_ref": "@C10",
+            "mu_function": "aftermath"
+          }
+        },
+        {
+          "shot_id": "SH_48",
+          "L1_human_readable": {
+            "shot_no": "48/50",
+            "container": "@C10",
+            "container_role": "coda",
+            "mu_function": "silence_beat",
+            "duration_s": 6.0,
+            "beat": "coda container shot 3/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_48]",
+            "container_ref": "@C10",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_49",
+          "L1_human_readable": {
+            "shot_no": "49/50",
+            "container": "@C10",
+            "container_role": "coda",
+            "mu_function": "silence_beat",
+            "duration_s": 6.5,
+            "beat": "coda container shot 4/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_49]",
+            "container_ref": "@C10",
+            "mu_function": "silence_beat"
+          }
+        },
+        {
+          "shot_id": "SH_50",
+          "L1_human_readable": {
+            "shot_no": "50/50",
+            "container": "@C10",
+            "container_role": "coda",
+            "mu_function": "silence_beat",
+            "duration_s": 7.0,
+            "beat": "coda container shot 5/5 — silence beat"
+          },
+          "L3_full_ir_ref": {
+            "points_to": "stage_products.S3_IR.shots[shot_id=SH_50]",
+            "container_ref": "@C10",
+            "mu_function": "silence_beat"
+          }
+        }
+      ]
+    }
+  },
+  "error_handling": {
+    "S1-MUS_fail": "return story for rewrite with narrative_proportion hint",
+    "S2-MSSS_fail": "return MUS for re-partition with container_ref constraint",
+    "S2.5-DIR_fail": "return MSSS to human — vocabulary mismatch cannot be auto-repaired",
+    "S2.7-PERF_fail": "return MUS + preset to fall back to default_micro_life",
+    "S3-IR_fail": "return MSSS + intents for re-shotting or supplement cinematography parameters",
+    "S4-VERIFY_fail": {
+      "if_repairable_via_mus": "auto-rewrite decision atoms, re-verify in memory, emit repair with requires_signoff=true",
+      "if_all_explicit_mus": "escalate to ambiguity_registry, do NOT relax explicit atoms",
+      "if_not_repairable": "return S3-IR for human sign-off"
+    }
+  },
+  "version_history": {
+    "v2.1.0": "baseline schema",
+    "v2.1.1": "audio_beat_track, post_intent, retime_method, transition_duration_frames, montage scale_lock",
+    "v2.1.2": "episode + containers[] + beat.container_ref + cross-container montage groups + preset container_role_arc"
+  }
+}

@@ -1,0 +1,845 @@
+{
+  "$schema_ref": "./film-dsl-v2.1.schema.json",
+  "spec_id": "pipeline_stages_v2.1",
+  "description": "Authoritative stage list for film-generation-v2.1. Consumers embed the stages[] array under workflow.stages. verify_checks[] is the CENTRALIZED, canonical registry of all VERIFY rules across v2.1.0/v2.1.1/v2.1.2/v2.1.3 (each rule carries introduced_in for lineage tracking).",
+  "stages": [
+    {
+      "stage_id": "S1-MUS",
+      "name": "Meta Unit Segmentation",
+      "input": {
+        "type": "story",
+        "format": "text/markdown or structured narrative + optional NSA H1-H8 handoffs"
+      },
+      "process": {
+        "description": "Segment story into narrative meta units. Every value carries three-state provenance (explicit/inferred/decision).",
+        "rules": [
+          "each MU has unique mu_id",
+          "each MU MUST have function, emotion_intensity(0.0-1.0), entities, core_action, time_marker, world, _provenance",
+          "world in enum {modern, ancient, threshold, superimposed, both}",
+          "if narrative_proportion.visual >= narrative_proportion.dialogue then core_action MUST be visualizable — no dialogue-only MU allowed",
+          "if narrative_proportion.silence >= 0.15 then at least one MU per scene has function=silence_beat",
+          "unresolvable ambiguity from source → register in ambiguity_registry (AMB-nn), never silently pick"
+        ]
+      },
+      "output": {
+        "type": "MUS",
+        "schema_ref": "#/$defs/MUS"
+      },
+      "downstream": "S2-MSSS"
+    },
+    {
+      "stage_id": "S2-MSSS",
+      "name": "Meta Scene-Sequence Spec",
+      "input": {
+        "type": "MUS",
+        "from_stage": "S1-MUS"
+      },
+      "process": {
+        "description": "Map MU to scenes and sequences; allocate duration budgets; assign 30s containers.",
+        "rules": [
+          "each scene has unique scene_id, location, time, world, continuity_tags",
+          "each sequence has unique seq_id, seq_type, duration_budget_sec, maps_to_mu, container_ref",
+          "sum of sequences[].duration_budget_sec MUST equal total_duration_budget_sec",
+          "each container_ref MUST equal exactly 30.0s of sequences it contains",
+          "each container MUST contain exactly 5 shots after S3-IR expansion",
+          "container boundary MUST align with a narrative beat — never mid-action",
+          "transition_hint optional; used to indicate cross-scene method"
+        ]
+      },
+      "output": {
+        "type": "MSSS",
+        "schema_ref": "#/$defs/MSSS"
+      },
+      "downstream": "S2.5-DIR"
+    },
+    {
+      "stage_id": "S2.5-DIR",
+      "name": "Director Intent",
+      "input": {
+        "type": "MSSS",
+        "from_stage": "S2-MSSS"
+      },
+      "process": {
+        "description": "For each sequence, declare motion_reason and cut_reason from the direction_vocabulary. This DRIVES S3-IR camera_motion.type and rhythm_profile.cut_triggers but does NOT appear in the video model prompt.",
+        "rules": [
+          "each DirectionIntent references exactly one seq_id",
+          "motion_reason MUST come from MotionGrammar enum",
+          "cut_reason MUST come from CutGrammar enum",
+          "tension_arc_role MUST be assigned; sum of climb + break + reveal beats per act MUST be non-zero",
+          "silence_beats MUST be declared when narrative_proportion.silence >= 0.15",
+          "genre preset motion_grammar_defaults_by_beat provides fallback when a sequence's tension_arc_role is set but motion_reason is omitted"
+        ]
+      },
+      "output": {
+        "type": "DirectionIntentList",
+        "schema": {
+          "direction_intents": {
+            "type": "array",
+            "items_schema_ref": "#/$defs/DirectionIntent"
+          }
+        }
+      },
+      "downstream": "S2.7-PERF"
+    },
+    {
+      "stage_id": "S2.7-PERF",
+      "name": "Performance Intent",
+      "input": {
+        "type": [
+          "MUS",
+          "DirectionIntentList"
+        ],
+        "from_stages": [
+          "S1-MUS",
+          "S2.5-DIR"
+        ]
+      },
+      "process": {
+        "description": "For each MU with visible actor presence, declare inner_want, hidden, breakdown_moment, and micro_life_anchors. Drives Module 12 CHARACTER ACTING and IR talent_action.",
+        "rules": [
+          "each PerformanceIntent references exactly one mu_id and one actor_ref (from character_lock)",
+          "inner_want and hidden are always distinct sentences",
+          "micro_life_anchors chosen from MicroLifeAtom enum (extend via preset, not per-shot)",
+          "reaction_before=true implies the shot following this MU begins with the listener's face frame",
+          "if actor_ref has no dialogue in the mapped shot, all micro_life happens on face and hands, never invented vocalization"
+        ]
+      },
+      "output": {
+        "type": "PerformanceIntentList",
+        "schema": {
+          "performance_intents": {
+            "type": "array",
+            "items_schema_ref": "#/$defs/PerformanceIntent"
+          }
+        }
+      },
+      "downstream": "S3-IR"
+    },
+    {
+      "stage_id": "S3-IR",
+      "name": "Typed Intermediate Representation",
+      "input": {
+        "type": [
+          "MSSS",
+          "DirectionIntentList",
+          "PerformanceIntentList"
+        ],
+        "from_stages": [
+          "S2-MSSS",
+          "S2.5-DIR",
+          "S2.7-PERF"
+        ],
+        "context": [
+          "genre_lock",
+          "style_lock",
+          "character_lock",
+          "prop_lock",
+          "libraries"
+        ]
+      },
+      "process": {
+        "description": "Expand sequences into shots. Apply genre preset defaults first; then apply direction_intent and performance_intent as sequence/MU-scoped overrides; then apply preset_override; finally apply per-shot delta only where the shot deviates from all inherited defaults.",
+        "rules": [
+          "each shot has unique shot_id and seq_ref",
+          "first shot of each sequence MUST be FULL (no inherits)",
+          "subsequent shots in same sequence MAY use inherits + delta",
+          "shot_type derived from framing.shot_size + camera_motion.type",
+          "duration_frames = round(duration_sec * fps); MUST be integer",
+          "mise_en_scene_ref and sound_design_ref MUST resolve into libraries",
+          "talent_action derived from PerformanceIntent — must reflect inner_want without stating it verbatim",
+          "every hard-value field MUST carry _provenance entry (explicit/inferred/decision, with span or D-ID)",
+          "vibration.spectrum and motion_blur_samples are render_hint_only — MUST NOT appear in L2 render_prompt",
+          "cross-container shot MUST NOT exist — no shot spans two 30s containers"
+        ]
+      },
+      "output": {
+        "type": "Typed-IR-v2.1",
+        "schema_ref": "#/$defs/TypedIR"
+      },
+      "downstream": "S4-VERIFY"
+    },
+    {
+      "stage_id": "S4-VERIFY",
+      "name": "Verification",
+      "input": {
+        "type": "Typed-IR-v2.1",
+        "from_stage": "S3-IR"
+      },
+      "process": {
+        "description": "Multi-layer verification. On FAIL, compute MUS and either auto-repair via decision rewrite or return to S3-IR for human sign-off.",
+        "checks": [
+          {
+            "id": "duration.total",
+            "rule": "sum(shots[].temporal.duration_sec) == MSSS.total_duration_budget_sec ± 0.01"
+          },
+          {
+            "id": "duration.container",
+            "rule": "sum per container_ref == 30.0 exactly"
+          },
+          {
+            "id": "duration.shots_per_container",
+            "rule": "count per container_ref == 5"
+          },
+          {
+            "id": "aspect_ratio.consistent",
+            "rule": "all shots share aspect_ratio with workflow"
+          },
+          {
+            "id": "grammar.axis",
+            "rule": "adjacent shot camera_motion axis consistent OR jump signed by decision"
+          },
+          {
+            "id": "grammar.framing_progression",
+            "rule": "sequential framing follows narrative logic (no CU→ELS without motivation)"
+          },
+          {
+            "id": "continuity.character",
+            "rule": "character features anchor identical across all shots"
+          },
+          {
+            "id": "continuity.prop",
+            "rule": "prop presence and state consistent"
+          },
+          {
+            "id": "continuity.lighting",
+            "rule": "world lighting zone consistent; transition lighting matched"
+          },
+          {
+            "id": "montage.coherence",
+            "rule": "montage members unified by theme, rhythm, and visual thread"
+          },
+          {
+            "id": "match_cut.validity",
+            "rule": "match_cut elements visually correspondent"
+          },
+          {
+            "id": "narrative.alignment",
+            "rule": "every MU covered by at least one shot"
+          },
+          {
+            "id": "narrative.proportion_realized",
+            "rule": "measured narrative weight per shot within ±0.10 of workflow.narrative_proportion"
+          },
+          {
+            "id": "pacing.asl",
+            "rule": "measured avg_shot_length within ±20% of pacing_lock.avg_shot_length_sec"
+          },
+          {
+            "id": "pacing.silence_ratio",
+            "rule": "silence duration / total ≥ pacing_lock.silence_ratio_min"
+          },
+          {
+            "id": "pacing.hard_cut_ratio",
+            "rule": "hard_cut count / total_cuts within ±0.15 of pacing_lock.hard_cut_ratio_target"
+          },
+          {
+            "id": "sound.diegetic_consistency",
+            "rule": "diegetic sound consistent across world"
+          },
+          {
+            "id": "sound.no_music_in_prompt",
+            "rule": "no L2 module contains music/BGM/OST/score — enforced string scan"
+          },
+          {
+            "id": "world.transition_logic",
+            "rule": "world change follows narrative pass and uses declared world_transition_style"
+          },
+          {
+            "id": "cinematography.motion_feasible",
+            "rule": "distance/speed ≤ duration_frames/fps"
+          },
+          {
+            "id": "cinematography.focus_rack_valid",
+            "rule": "rack range within shot near_focus"
+          },
+          {
+            "id": "cinematography.lens_jump",
+            "rule": "adjacent shot focal_length_mm jump ≤ 2x unless signed"
+          },
+          {
+            "id": "cinematography.exposure_continuity",
+            "rule": "shutter angle jump ≤ 90° per cut"
+          },
+          {
+            "id": "temporal.frame_precision",
+            "rule": "duration_sec * fps == duration_frames exactly"
+          },
+          {
+            "id": "rhythm.cut_trigger_valid",
+            "rule": "cut_trigger_frame within [0, duration_frames]"
+          },
+          {
+            "id": "direction.intent_applied",
+            "rule": "every shot's camera_motion.type consistent with its seq's DirectionIntent.motion_reason (via mapping table)"
+          },
+          {
+            "id": "performance.intent_applied",
+            "rule": "every actor-present shot's talent_action references at least one MicroLifeAtom from its PerformanceIntent"
+          },
+          {
+            "id": "provenance.witness_present",
+            "rule": "every hard-value field has _provenance with span, d_id, or explicit witness"
+          },
+          {
+            "id": "render_hint_leak",
+            "rule": "L2 render_prompt contains no vibration.spectrum, no motion_blur_samples, no bezier control points, no numeric acceleration curves, no retime_method value, no post_intent values, no transition_duration_frames values"
+          },
+          {
+            "id": "pacing.duration_hint_respected",
+            "rule": "for each shot, temporal.duration_sec MUST fall within preset.duration_hint_by_function[shot._resolved_mu.function] ± 30% tolerance; miss → propose reallocation as decision, do NOT rewrite MU function"
+          },
+          {
+            "id": "transition.duration_defined",
+            "rule": "for every rhythm_profile.cut_triggers[] whose type in {dissolve, silk_dissolve, fade_to_black, wipe}: transition_duration_frames MUST be present OR preset.transition_duration_defaults_frames[type] MUST be non-zero; hard_cut/match_cut/smash_cut MUST have transition_duration_frames == 0 or omitted"
+          },
+          {
+            "id": "audio_beat_alignment",
+            "rule": "IF audio_beat_track present THEN every cut_triggers[].alignment matching /^@beat_/ AND every Temporal.cut_in_beat_ref / cut_out_beat_ref MUST resolve to some audio_beat_track.beats[].beat_id; unresolved @beat_ ref is a hard fail"
+          },
+          {
+            "id": "episode.container_layout",
+            "rule": "IF episode present THEN containers[] length == episode.container_count AND every container.time_start_sec == container.index * 30.0 AND sum(containers[].duration_sec) == episode.total_duration_sec == audio_beat_track.total_length_sec"
+          },
+          {
+            "id": "episode.beat_container_containment",
+            "rule": "IF audio_beat_track.beats[].container_ref present THEN container.time_start_sec <= beat.time_sec <= container.time_start_sec + container.duration_sec (30.0); every container.beat_range.first_beat_id / last_beat_id MUST exist in audio_beat_track.beats"
+          },
+          {
+            "id": "episode.tension_apex_alignment",
+            "rule": "IF episode.apex_container_ref present THEN the container it references MUST have the highest tension_peak among containers[]; episode.tension_arc_shape MUST be consistent with the tension_peak sequence (e.g. steady_climb = monotonic non-decreasing; double_peak = exactly two local maxima)"
+          }
+        ],
+        "on_fail": {
+          "compute": "MUS (Minimal Unsatisfiable Subset) — smallest set of decision atoms whose removal makes the check pass",
+          "if_mus_contains_only_decisions": "propose new decision values; re-run VERIFY in memory; if PASS emit repair with requires_signoff=true",
+          "if_mus_contains_explicit_atom": "escalate to ambiguity_registry (AMB-nn); do NOT relax explicit; return to human"
+        }
+      },
+      "output": {
+        "type": "VERIFY-Report",
+        "schema_ref": "#/$defs/VerifyReport"
+      },
+      "downstream": "S5-OUT"
+    },
+    {
+      "stage_id": "S5-OUT",
+      "name": "Canonical Output",
+      "input": {
+        "type": "Typed-IR-v2.1",
+        "from_stage": "S4-VERIFY",
+        "condition": "verdict == PASS"
+      },
+      "process": {
+        "description": "Emit three-tier canonical DSL. L1 for review, L2 for video model, L3 for post/audit.",
+        "rules": [
+          "L1_human_readable ~200 bytes per shot: shot_no, shot_size, motion, duration_s, one-sentence beat",
+          "L2_render_prompt renders Hell Grind 15 modules verbatim from IR + locks + libraries — Style Prefix and Closing Tag unmodified",
+          "L2 must NOT reference render_hint_only fields",
+          "L3_full_ir_ref is a pointer into the TypedIR document, NOT a copy",
+          "montage_groups, match_cut_pairs, world_timeline, world_transition_map, execution_order populated from IR",
+          "cinematography_summary aggregates lens_range, motion_types, longest_take, shortest_shot, avg_shutter, depth_layers_max"
+        ]
+      },
+      "output": {
+        "type": "Canonical-DSL-v2.1",
+        "schema_ref": "#/$defs/CanonicalDSL"
+      },
+      "downstream": "video_generation_engine (L2) + editor_timeline (L1+L3) + post_color_pipeline (L3)"
+    }
+  ],
+  "verify_checks": [
+    {
+      "check_id": "s1.ambiguity_registry.non_silent",
+      "stage": "S1-MUS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Unresolvable ambiguity from source text MUST be registered as AMB-nn in ambiguity_registry — never silently resolved.",
+      "logic": "for choice in inferred_choices: assert choice.registered_in_ambiguity_registry",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s1.mu.required_fields",
+      "stage": "S1-MUS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each MU has function, emotion_intensity in [0.0,1.0], entities, core_action, time_marker, world, _provenance.",
+      "logic": "for m in mus: assert all(f in m for f in required_mu_fields); assert 0<=m.emotion_intensity<=1",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s1.mu.silence_beat_coverage",
+      "stage": "S1-MUS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "If narrative_proportion.silence >= 0.15, at least one MU per scene must have function=silence_beat.",
+      "logic": "if silence>=0.15: for scene in scenes: assert any(mu.function=='silence_beat' for mu in mus_of(scene))",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s1.mu.visualizability",
+      "stage": "S1-MUS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "If narrative_proportion.visual >= narrative_proportion.dialogue, no dialogue-only MU allowed — every MU's core_action MUST be visualizable.",
+      "logic": "if visual>=dialogue: for m in mus: assert m.core_action.visualizable == True",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s1.mu.world_enum",
+      "stage": "S1-MUS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "MU.world MUST be one of {modern, ancient, threshold, superimposed, both}.",
+      "logic": "for m in mus: assert m.world in {'modern','ancient','threshold','superimposed','both'}",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s1.mu_id.unique",
+      "stage": "S1-MUS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each meta unit has a unique mu_id across the MUS.",
+      "logic": "assert len({m.mu_id for m in mus}) == len(mus)",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2.container.30s_exact",
+      "stage": "S2-MSSS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each container_ref MUST equal exactly 30.0s of sequences it contains.",
+      "logic": "for c in containers: assert sum(sq.duration_budget_sec for sq in c.sequences) == 30.0",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2.container.five_shots",
+      "stage": "S2-MSSS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each container MUST contain exactly 5 shots after S3-IR expansion.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2.container_boundary.on_beat",
+      "stage": "S2-MSSS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Container boundary MUST align with a narrative beat — never mid-action.",
+      "logic": "for b in container_boundaries: assert b.at_narrative_beat == True",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2.duration_budget_sum",
+      "stage": "S2-MSSS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Sum of sequences[].duration_budget_sec MUST equal total_duration_budget_sec.",
+      "logic": "assert sum(sq.duration_budget_sec for sq in sequences) == total_duration_budget_sec",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2.scene.required_fields",
+      "stage": "S2-MSSS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each scene has unique scene_id, location, time, world, continuity_tags.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2.sequence.required_fields",
+      "stage": "S2-MSSS",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each sequence has unique seq_id, seq_type, duration_budget_sec, maps_to_mu, container_ref.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_5.cut_reason.enum",
+      "stage": "S2.5-DIR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "cut_reason MUST come from the CutGrammar enum.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_5.direction_intent.per_seq",
+      "stage": "S2.5-DIR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each DirectionIntent references exactly one seq_id.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_5.motion_reason.enum",
+      "stage": "S2.5-DIR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "motion_reason MUST come from the MotionGrammar enum.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_5.silence_beats.declared_if_high_silence",
+      "stage": "S2.5-DIR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "silence_beats MUST be declared when narrative_proportion.silence >= 0.15.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_5.tension_arc_role.assigned",
+      "stage": "S2.5-DIR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "tension_arc_role MUST be assigned; sum of climb + break + reveal beats per act MUST be non-zero.",
+      "logic": "for act in acts: assert count(climb|break|reveal in act) > 0",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_7.inner_want_hidden.distinct",
+      "stage": "S2.7-PERF",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "inner_want and hidden MUST always be distinct sentences.",
+      "logic": "for p in performance_intents: assert p.inner_want != p.hidden",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_7.micro_life.from_enum",
+      "stage": "S2.7-PERF",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "micro_life_anchors chosen from MicroLifeAtom enum (extend via preset, not per-shot).",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_7.no_invented_vocalization",
+      "stage": "S2.7-PERF",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "If actor_ref has no dialogue in the mapped shot, all micro_life happens on face and hands — never invented vocalization.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_7.performance_intent.per_mu_actor",
+      "stage": "S2.7-PERF",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each PerformanceIntent references exactly one mu_id and one actor_ref (from character_lock).",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s2_7.reaction_before.face_frame",
+      "stage": "S2.7-PERF",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "reaction_before=true implies the shot following this MU begins with the listener's face frame.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.delta.only_after_first",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "Subsequent shots in same sequence MAY use inherits + delta.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.first_shot.full",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "First shot of each sequence MUST be FULL (no inherits).",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.frame_precision.integer",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "duration_frames = round(duration_sec * fps); MUST be integer.",
+      "logic": "for sh in shots: assert sh.temporal.duration_frames == round(sh.temporal.duration_sec * sh.temporal.fps)",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.libs.resolve",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "mise_en_scene_ref and sound_design_ref MUST resolve into libraries.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.no_cross_container_shot",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "No shot spans two 30s containers.",
+      "logic": "for sh in shots: assert sh.container_ref is not None and (sh.time_start, sh.time_end) within its container",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.provenance.on_every_hard_value",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Every hard-value field MUST carry a _provenance entry (explicit/inferred/decision, with span or D-ID).",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.render_hint_only.no_leak",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "vibration.spectrum and motion_blur_samples are render_hint_only — MUST NOT appear in L2 render_prompt.",
+      "logic": "for sh in shots_dsl: for m in sh.L2.modules.values(): assert 'vibration.spectrum' not in m and 'motion_blur_samples' not in m",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.shot_id.unique",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Each shot has a unique shot_id and a valid seq_ref.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.shot_type.derived",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "shot_type derived from framing.shot_size + camera_motion.type (not user-set).",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s3.talent_action.non_verbatim",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "talent_action derived from PerformanceIntent — MUST reflect inner_want without stating it verbatim.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s5.cinematography_summary.aggregated",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "cinematography_summary aggregates lens_range, motion_types, longest_take, shortest_shot, avg_shutter, depth_layers_max.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s5.l1.size",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "L1_human_readable ~200 bytes per shot: shot_no, shot_size, motion, duration_s, one-sentence beat.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s5.l2.hell_grind_15_modules",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "L2_render_prompt renders Hell Grind 15 modules verbatim from IR + locks + libraries. Style Prefix and Closing Tag unmodified.",
+      "logic": "for sh in shots_dsl: assert set(sh.L2.modules.keys()) == MODULE_ORDER_15",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s5.l2.no_render_hint_leak",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "L2 MUST NOT reference render_hint_only fields (retime_method, post_intent, transition_duration_frames, vibration.spectrum, motion_blur_samples, bezier).",
+      "logic": "banned = {'retime_method','post_intent','transition_duration_frames','vibration.spectrum','motion_blur_samples','bezier'}",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s5.l3.pointer_only",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "L3_full_ir_ref is a pointer into the TypedIR document, NOT a copy.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s5.montage_group.duration_sum",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "For each montage_group, the sum of member shots' duration_sec MUST equal group.total_duration_sec.",
+      "logic": "for g in montage_groups: assert sum(shot.duration_sec for shot in g.members) == g.total_duration_sec",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "s5.output_completeness",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "montage_groups, match_cut_pairs, world_timeline, world_transition_map, execution_order populated from IR.",
+      "introduced_in": "2.1.0"
+    },
+    {
+      "check_id": "audio_beat.track_declared",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "If any shot uses cut_in_beat_ref/cut_out_beat_ref/anchor_beat_ref, workflow MUST declare top-level audio_beat_track.",
+      "logic": "if any(sh.temporal.cut_in_beat_ref or sh.temporal.cut_out_beat_ref for sh in shots): assert 'audio_beat_track' in workflow",
+      "introduced_in": "2.1.1"
+    },
+    {
+      "check_id": "post_intent.render_hint_only",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Shot.post_intent (trim_priority/slip/slide/handle_frames/preferred_anchor) is post-layer hint. It MUST NOT leak into L2 render_prompt modules.",
+      "logic": "for sh_dsl in shots_dsl: for m in sh_dsl.L2.modules.values(): assert 'post_intent' not in m and 'trim_priority' not in m and 'handle_frames' not in m",
+      "introduced_in": "2.1.1"
+    },
+    {
+      "check_id": "retime_method.render_hint_only",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Temporal.retime_method is a post-layer hint (optical_flow/frame_blend/nearest/timewarp). It MUST NOT leak into L2 render_prompt modules.",
+      "logic": "for sh_dsl in shots_dsl: for m in sh_dsl.L2.modules.values(): assert 'retime_method' not in m",
+      "introduced_in": "2.1.1"
+    },
+    {
+      "check_id": "transition.duration_defined",
+      "stage": "S3-IR",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "For cut_triggers[].transition_type in {dissolve, silk_dissolve, fade_to_black, wipe} the transition_duration_frames MUST be > 0; for {hard_cut, match_cut, smash_cut} MUST be 0.",
+      "logic": "for sh in shots: for t in sh.rhythm_profile.cut_triggers: if t.type in NON_INSTANT: assert t.duration_frames>0 else: assert t.duration_frames==0",
+      "introduced_in": "2.1.1"
+    },
+    {
+      "check_id": "audio_beat_alignment",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "Every cut_triggers[].anchor_beat_ref, Temporal.cut_in_beat_ref, Temporal.cut_out_beat_ref MUST resolve to an existing beat_id in audio_beat_track.beats[].",
+      "logic": "beat_ids = {b.beat_id for b in audio_beat_track.beats}; for sh in shots: assert every beat_ref in sh in beat_ids",
+      "introduced_in": "2.1.1"
+    },
+    {
+      "check_id": "montage_group.scale_lock.consistent",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "When montage_group.scale_lock=true, retimes on members MUST preserve their relative duration ratios (all-or-nothing scaling).",
+      "introduced_in": "2.1.1"
+    },
+    {
+      "check_id": "pacing.duration_hint_respected",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "WARN",
+      "description": "For each shot, if genre_preset defines duration_hint_by_function[mu.function]=[lo,hi], shot.duration_sec MUST be within [lo*0.7, hi*1.3].",
+      "logic": "for sh in shots: hint = preset.duration_hint_by_function.get(mu_fn(sh)); if hint: lo,hi=hint; assert lo*0.7 <= sh.duration_sec <= hi*1.3",
+      "introduced_in": "2.1.1"
+    },
+    {
+      "check_id": "container.bridge_beat_reachable",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "container.bridge_to_next.beat_ref (when non-null) MUST resolve to a beat_id in audio_beat_track.beats[] with role in {cross_container_bridge, container_close, container_open}.",
+      "introduced_in": "2.1.2"
+    },
+    {
+      "check_id": "container.entry_transition.enum",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "container.entry_transition MUST be null (first container) or one of {hard_cut, match_cut, dissolve, silk_dissolve, smash_cut, fade_to_black, wipe}.",
+      "introduced_in": "2.1.2"
+    },
+    {
+      "check_id": "episode.beat_container_containment",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "For every beat with container_ref set: container.time_start_sec <= beat.time_sec <= container.time_start_sec+30.0. Every container MUST have at least one beat with role=container_open near its start and role=container_close near its end.",
+      "logic": "for b in beats where container_ref: c=containers[b.container_ref]; assert c.time_start_sec <= b.time_sec <= c.time_start_sec+30",
+      "introduced_in": "2.1.2"
+    },
+    {
+      "check_id": "episode.container_layout",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "For every container: time_start_sec MUST equal index*30.0 and duration_sec MUST be exactly 30.0. Sum of container durations MUST equal episode.total_duration_sec and audio_beat_track.total_length_sec.",
+      "logic": "for c in containers: assert c.time_start_sec == c.index*30.0 and c.duration_sec == 30.0; assert sum(c.duration_sec)==episode.total_duration_sec==audio_beat_track.total_length_sec",
+      "introduced_in": "2.1.2"
+    },
+    {
+      "check_id": "episode.shot_container_ref.match_by_time",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "For every shot: shot.container_ref MUST match the container whose (time_start_sec, time_start_sec+30) window contains the shot's cumulative timeline position.",
+      "logic": "for sh in shots: t0=cumulative_start(sh); assert containers_by_id[sh.container_ref].time_start_sec <= t0 < containers_by_id[sh.container_ref].time_start_sec+30",
+      "introduced_in": "2.1.2"
+    },
+    {
+      "check_id": "episode.tension_apex_alignment",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "severity": "ERROR",
+      "description": "episode.apex_container_ref MUST resolve to a container whose tension_peak is the maximum across containers (single-apex arcs) or one of the top-N peaks (multi-apex arcs). For arcs beginning with 'long_tail_late_break' the apex container index MUST be >=2 (late apex).",
+      "logic": "apex_c = containers[episode.apex_container_ref]; if 'long_tail' in arc: assert apex_c.index >= 2; if 'double' not in arc: assert apex_c.tension_peak == max(c.tension_peak)",
+      "introduced_in": "2.1.2"
+    },
+    {
+      "check_id": "episode.10container_arc_apex_count",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "description": "For 10-container episodes, count of 'apex' roles must match arc's apex profile (1 for single-apex arcs, 2 for double-peak arcs).",
+      "severity": "ERROR",
+      "logic": "if episode.container_count == 10: apex_n = sum(1 for c in containers if c.role == 'apex'); if arc.startswith('double_peak'): assert apex_n == 2 else: assert apex_n == 1",
+      "introduced_in": "2.1.3"
+    },
+    {
+      "check_id": "episode.cross_container_silence_pockets",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "description": "For 10-container episodes, at least 2 container boundaries must include a silence_pocket bridge to give the audience recovery between escalations.",
+      "severity": "WARN",
+      "logic": "if episode.container_count == 10: silence_n = sum(1 for c in containers if c.bridge_to_next.mode == 'silence_pocket'); assert silence_n >= 2",
+      "introduced_in": "2.1.3"
+    },
+    {
+      "check_id": "episode.inter_episode_boundary_dissolve",
+      "stage": "S5-OUT",
+      "layer": "VERIFY",
+      "description": "For any episode ≥ 5 containers, the final container's out-transition must be dissolve/silk_dissolve/fade_to_black — not a hard/match/smash cut.",
+      "severity": "ERROR",
+      "logic": "last = containers[-1]; last_shot = shots[last.container_id][-1]; out_type = last_shot.rhythm_profile.cut_triggers[-1].transition_type; assert out_type in ('dissolve', 'silk_dissolve', 'fade_to_black')",
+      "introduced_in": "2.1.3"
+    }
+  ],
+  "verify_check_count": 55,
+  "verify_checks_summary": {
+    "total": 55,
+    "by_version": {
+      "2.1.0": 39,
+      "2.1.1": 7,
+      "2.1.2": 6,
+      "2.1.3": 3
+    },
+    "by_stage": {
+      "S1-MUS": 6,
+      "S2-MSSS": 6,
+      "S2.5-DIR": 5,
+      "S2.7-PERF": 5,
+      "S3-IR": 14,
+      "S4-VERIFY": 0,
+      "S5-OUT": 19
+    },
+    "by_severity": {
+      "ERROR": 45,
+      "WARN": 10
+    }
+  }
+}

@@ -1,0 +1,2998 @@
+{
+  "$schema_ref": "../schema/film-dsl-v2.1.schema.json",
+  "workflow_id": "film-generation-v2.1.2",
+  "version": "2.1.2",
+  "description": "Xianxia 150s Episode — 5 containers × 30s, arc=long_tail_late_break. Standing figure at snow pavilion sees breath plume, feels off-screen chime, releases jaw, distant mountain roar, snow silence returns.",
+  "genre_lock": {
+    "primary": "classical_xianxia",
+    "secondary": [],
+    "medium": "short",
+    "cinematography_preset_ref": "@preset_classical_xianxia_v1",
+    "preset_override": {
+      "cinematography.lens.focal_length_mm.default": 100
+    }
+  },
+  "narrative_proportion": {
+    "visual": 0.55,
+    "silence": 0.25,
+    "sound": 0.12,
+    "action": 0.05,
+    "dialogue": 0.03
+  },
+  "pacing_lock": {
+    "avg_shot_length_sec": 6.0,
+    "longest_take_cap_sec": 14.0,
+    "shortest_shot_floor_sec": 1.5,
+    "silence_ratio_min": 0.25,
+    "hard_cut_ratio_target": 0.4,
+    "container_duration_sec": 30.0,
+    "shots_per_container": 5
+  },
+  "direction_lock": {
+    "default_motion_grammar": "hold_and_reveal",
+    "default_cut_grammar": "cut_on_qi_shift",
+    "tension_arc_shape": "long_tail_late_break",
+    "silence_policy": "silence_is_content"
+  },
+  "performance_lock": {
+    "default_micro_life": [
+      "sleeve_movement_before_hand",
+      "breath_visible_in_cold",
+      "eyes_before_head"
+    ],
+    "breath_rule": "visible white plume in cold dawn air; chest rise silent",
+    "breakdown_rule": "release of grip on hilt, sleeve lowers slowly — never facial contortion",
+    "hand_task_rule": "hand rests on sword hilt in formal placement",
+    "gaze_rule": "gaze lands on the fallen leaf one full second before it lifts to the horizon",
+    "transfer_rules_when_impossible": []
+  },
+  "style_lock": {
+    "lighting_base_modern": null,
+    "lighting_base_ancient": "dawn amber (2400K) angling in from frame-left, one hard source; ambient sky cool teal (6500K) at two stops under",
+    "lighting_threshold": "single beam of amber light through pine branches, mist visible in beam",
+    "lighting_superimposed": null,
+    "color_grade": "teal_and_amber, saturation -22, skin preserved",
+    "grain": "35mm 5219 500T medium mono",
+    "world_transition_style": "silk dissolve",
+    "style_prefix_verbatim": "Style: 8K IMAX. Photorealistic. Cinematography: telephoto compression from 100mm; painterly composed frames with strong negative space; silhouette against contre-jour backlight. Lighting: motivated dawn sun only, one hard source from frame-left, camera on shadow side, mist reads in the beam. Color: teal and amber, low saturation, skin preserved. Camera: cine lens with 1/8 diffusion and 2mm gold streak. 180° shutter motion blur. Skin: pore-level realism. Acting: sleeve moves before hand; breath visible as white plume. Physics: silk falls as silk; blade weight visible. Composition: golden ratio, negative space 60%. Continuity: identity holds across every cut. Technical: 24fps, 8K, no jitter. Audio: environmental SFX only. No music."
+  },
+  "character_lock": {
+    "modern_identity": null,
+    "ancient_identity": {
+      "name": "Ling Xu",
+      "wardrobe": "dark indigo robe with pale silver embroidery at collar and cuffs; wide sash tied left; long straight black hair tied high with a jade pin; leather-wrapped hilt visible at left hip",
+      "features": [
+        "androgynous fine features",
+        "one small mole below left corner of mouth",
+        "left ear-tip pierced with single silver stud",
+        "narrow calloused hands"
+      ],
+      "world": "ancient"
+    },
+    "continuity_anchor": "jade pin in hair — never removed, never repositioned, catches amber light in every shot",
+    "dual_body_sync_rules": []
+  },
+  "prop_lock": {
+    "sword_qingyun": "3.2ft straight jian, dark iron blade, jade pommel — resonates faintly when unsheathed; never drawn in this container",
+    "fallen_pine_leaf": "single amber-brown pine needle cluster on wet stone — rotates one full turn during the shot; never multiplied",
+    "jade_pin": "translucent pale green jade hairpin — catches amber rim light in every shot"
+  },
+  "sound_design_lock": {
+    "modern_signature": null,
+    "ancient_signature": "wind through bamboo at 0.5Hz, distant water drip on stone every 3-4s, silk sleeve friction on movement, breath work close mic",
+    "cross_world_marker": null,
+    "theme_motif": "guqin single pluck — POST ONLY, not in prompt",
+    "post_only_music": true
+  },
+  "libraries": {
+    "mise_en_scene_library": {
+      "@mes_bamboo_forest_dawn": {
+        "text": "vertical bamboo trunks in dawn mist; wet stone path underfoot; one shaft of amber light angling in from frame-left; a single fallen pine-needle cluster rotating slowly on still water in a stone basin at frame-right; negative space fills upper 60% of frame",
+        "world": "ancient",
+        "time_of_day": "dawn"
+      }
+    },
+    "sound_library": {
+      "@sound_ancient_bamboo_dawn": {
+        "diegetic": [
+          "bamboo trunks knocking hollowly at ~0.5Hz",
+          "distant water drip on stone every 3-4s",
+          "single crow call once at 22-24s",
+          "silk sleeve friction on Ling Xu's turn",
+          "breath work — visible plume in cold air"
+        ],
+        "non_diegetic": []
+      }
+    },
+    "location_library": {
+      "@loc_bamboo_grove_dawn": {
+        "descriptor_block": "bamboo grove at dawn: dense vertical trunks 3-5m spacing; wet flagstone path bisecting frame-center-to-back; stone basin at frame-right 1.2m from center; mist layer at knee height and again at 3m; hard amber key from frame-left 30° elevation; no fill from camera side; shadows fall frame-right",
+        "geo_map": "LOCATION MAP\nGEO SPATIAL LAYOUT (locked):\n— BAMBOO TRUNKS: vertical, spacing 3-5m, frame-fill both sides\n— STONE PATH: bisecting frame-center to back, wet flagstone\n— STONE BASIN: frame-RIGHT, 1.2m from center, holds the rotating pine needle\n— LING XU: standing on path, CENTER, facing frame-back (camera behind-shoulder)\n— 180° AXIS: camera stays on the path's LEFT side, never crosses\n— KEY LIGHT: hard amber sun from frame-LEFT at 30° elevation; mist reads in beam\n— SHADOWS: fall frame-RIGHT; no fill from camera side"
+      }
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "S1-MUS",
+      "name": "Meta Unit Segmentation",
+      "input": {
+        "type": "story"
+      },
+      "output": {
+        "type": "MUS"
+      },
+      "downstream": "S2-MSSS"
+    },
+    {
+      "stage_id": "S2-MSSS",
+      "name": "Meta Scene-Sequence Spec",
+      "input": {
+        "type": "MUS"
+      },
+      "output": {
+        "type": "MSSS"
+      },
+      "downstream": "S2.5-DIR"
+    },
+    {
+      "stage_id": "S2.5-DIR",
+      "name": "Director Intent",
+      "input": {
+        "type": "MSSS"
+      },
+      "output": {
+        "type": "DirectionIntentList"
+      },
+      "downstream": "S2.7-PERF"
+    },
+    {
+      "stage_id": "S2.7-PERF",
+      "name": "Performance Intent",
+      "input": {
+        "type": [
+          "MUS",
+          "DirectionIntentList"
+        ]
+      },
+      "output": {
+        "type": "PerformanceIntentList"
+      },
+      "downstream": "S3-IR"
+    },
+    {
+      "stage_id": "S3-IR",
+      "name": "Typed IR",
+      "input": {
+        "type": [
+          "MSSS",
+          "DirectionIntentList",
+          "PerformanceIntentList"
+        ]
+      },
+      "output": {
+        "type": "Typed-IR-v2.1"
+      },
+      "downstream": "S4-VERIFY"
+    },
+    {
+      "stage_id": "S4-VERIFY",
+      "name": "Verification",
+      "input": {
+        "type": "Typed-IR-v2.1"
+      },
+      "output": {
+        "type": "VERIFY-Report"
+      },
+      "downstream": "S5-OUT"
+    },
+    {
+      "stage_id": "S5-OUT",
+      "name": "Canonical Output",
+      "input": {
+        "type": "Typed-IR-v2.1"
+      },
+      "output": {
+        "type": "Canonical-DSL-v2.1"
+      },
+      "downstream": "video_generation_engine + editor_timeline + post_color_pipeline"
+    }
+  ],
+  "episode": {
+    "episode_id": "EP01",
+    "title": "冷雪见气 · 第一集",
+    "total_duration_sec": 150.0,
+    "container_count": 5,
+    "fps": 24,
+    "tension_arc_shape": "long_tail_late_break",
+    "apex_container_ref": "C4",
+    "cold_open": false,
+    "tag_out": true
+  },
+  "containers": [
+    {
+      "container_id": "C1",
+      "index": 0,
+      "time_start_sec": 0.0,
+      "duration_sec": 30.0,
+      "role": "setup",
+      "tension_peak": 0.18,
+      "asl_target_sec": 5.5,
+      "beat_range": {
+        "first_beat_id": "@beat_c1_open",
+        "last_beat_id": "@beat_c1_close"
+      },
+      "entry_transition": null,
+      "entry_transition_duration_frames": null,
+      "bridge_to_next": {
+        "beat_ref": "@beat_c1_bridge",
+        "mode": "silence_pocket",
+        "notes": "first stillness under pavilion; breath meets cold"
+      }
+    },
+    {
+      "container_id": "C2",
+      "index": 1,
+      "time_start_sec": 30.0,
+      "duration_sec": 30.0,
+      "role": "escalation",
+      "tension_peak": 0.42,
+      "asl_target_sec": 4.5,
+      "beat_range": {
+        "first_beat_id": "@beat_c2_open",
+        "last_beat_id": "@beat_c2_close"
+      },
+      "entry_transition": "silk_dissolve",
+      "entry_transition_duration_frames": 36,
+      "bridge_to_next": {
+        "beat_ref": "@beat_c2_bridge",
+        "mode": "emotion_carry",
+        "notes": "environmental witness; wind, snow layering; internal press begins"
+      }
+    },
+    {
+      "container_id": "C3",
+      "index": 2,
+      "time_start_sec": 60.0,
+      "duration_sec": 30.0,
+      "role": "turn",
+      "tension_peak": 0.58,
+      "asl_target_sec": 5.0,
+      "beat_range": {
+        "first_beat_id": "@beat_c3_open",
+        "last_beat_id": "@beat_c3_close"
+      },
+      "entry_transition": "match_cut",
+      "entry_transition_duration_frames": 0,
+      "bridge_to_next": {
+        "beat_ref": "@beat_c3_bridge",
+        "mode": "match_action",
+        "notes": "attention shifts to off-screen faint bell; head begins to move"
+      }
+    },
+    {
+      "container_id": "C4",
+      "index": 3,
+      "time_start_sec": 90.0,
+      "duration_sec": 30.0,
+      "role": "apex",
+      "tension_peak": 0.9,
+      "asl_target_sec": 3.5,
+      "beat_range": {
+        "first_beat_id": "@beat_c4_open",
+        "last_beat_id": "@beat_c4_close"
+      },
+      "entry_transition": "match_cut",
+      "entry_transition_duration_frames": 0,
+      "bridge_to_next": {
+        "beat_ref": "@beat_c4_bridge",
+        "mode": "beat_anchored",
+        "notes": "long exhale + inner realization; distant mountain roar carried on wind"
+      }
+    },
+    {
+      "container_id": "C5",
+      "index": 4,
+      "time_start_sec": 120.0,
+      "duration_sec": 30.0,
+      "role": "coda",
+      "tension_peak": 0.2,
+      "asl_target_sec": 7.0,
+      "beat_range": {
+        "first_beat_id": "@beat_c5_open",
+        "last_beat_id": "@beat_c5_close"
+      },
+      "entry_transition": "silk_dissolve",
+      "entry_transition_duration_frames": 36,
+      "bridge_to_next": null
+    }
+  ],
+  "audio_beat_track": {
+    "track_id": "ep01_diegetic_beat_v1",
+    "bpm": null,
+    "source_kind": "diegetic",
+    "total_length_sec": 150.0,
+    "beats": [
+      {
+        "beat_id": "@beat_c1_open",
+        "time_sec": 0.5,
+        "strength": 0.2,
+        "container_ref": "C1",
+        "role": "container_open",
+        "label": "snow-cover shot opens"
+      },
+      {
+        "beat_id": "@beat_arrival_land",
+        "time_sec": 1.2,
+        "strength": 0.35,
+        "container_ref": "C1",
+        "role": "internal",
+        "label": "sword tip touches snow"
+      },
+      {
+        "beat_id": "@beat_first_exhale",
+        "time_sec": 5.4,
+        "strength": 0.55,
+        "container_ref": "C1",
+        "role": "container_peak",
+        "label": "first long visible breath plume peaks"
+      },
+      {
+        "beat_id": "@beat_c1_bridge",
+        "time_sec": 23.8,
+        "strength": 0.3,
+        "container_ref": "C1",
+        "role": "cross_container_bridge",
+        "label": "silence deepens; carries into C2"
+      },
+      {
+        "beat_id": "@beat_c1_close",
+        "time_sec": 29.6,
+        "strength": 0.28,
+        "container_ref": "C1",
+        "role": "container_close",
+        "label": "container ends on held breath"
+      },
+      {
+        "beat_id": "@beat_c2_open",
+        "time_sec": 30.4,
+        "strength": 0.3,
+        "container_ref": "C2",
+        "role": "container_open",
+        "label": "wind picks up thread of snow"
+      },
+      {
+        "beat_id": "@beat_environmental_press",
+        "time_sec": 38.2,
+        "strength": 0.48,
+        "container_ref": "C2",
+        "role": "internal",
+        "label": "trees creak; environment layers in"
+      },
+      {
+        "beat_id": "@beat_wind_settle",
+        "time_sec": 42.8,
+        "strength": 0.42,
+        "container_ref": "C2",
+        "role": "container_peak",
+        "label": "wind settles into silence pocket"
+      },
+      {
+        "beat_id": "@beat_c2_bridge",
+        "time_sec": 56.4,
+        "strength": 0.5,
+        "container_ref": "C2",
+        "role": "cross_container_bridge",
+        "label": "off-screen faint chime enters"
+      },
+      {
+        "beat_id": "@beat_c2_close",
+        "time_sec": 59.7,
+        "strength": 0.45,
+        "container_ref": "C2",
+        "role": "container_close",
+        "label": "the chime hangs"
+      },
+      {
+        "beat_id": "@beat_c3_open",
+        "time_sec": 60.6,
+        "strength": 0.5,
+        "container_ref": "C3",
+        "role": "container_open",
+        "label": "chime resolves; head not yet moved"
+      },
+      {
+        "beat_id": "@beat_attention_shift",
+        "time_sec": 68.6,
+        "strength": 0.6,
+        "container_ref": "C3",
+        "role": "container_peak",
+        "label": "head begins slow turn"
+      },
+      {
+        "beat_id": "@beat_gaze_landing",
+        "time_sec": 76.4,
+        "strength": 0.58,
+        "container_ref": "C3",
+        "role": "internal",
+        "label": "gaze lands off-frame"
+      },
+      {
+        "beat_id": "@beat_c3_bridge",
+        "time_sec": 86.8,
+        "strength": 0.62,
+        "container_ref": "C3",
+        "role": "cross_container_bridge",
+        "label": "inhale before the release"
+      },
+      {
+        "beat_id": "@beat_c3_close",
+        "time_sec": 89.5,
+        "strength": 0.58,
+        "container_ref": "C3",
+        "role": "container_close",
+        "label": "inhale peaks, silence again"
+      },
+      {
+        "beat_id": "@beat_c4_open",
+        "time_sec": 90.3,
+        "strength": 0.65,
+        "container_ref": "C4",
+        "role": "container_open",
+        "label": "held silence at apex boundary"
+      },
+      {
+        "beat_id": "@beat_realization_release",
+        "time_sec": 96.2,
+        "strength": 0.9,
+        "container_ref": "C4",
+        "role": "container_peak",
+        "label": "jaw releases after long exhale"
+      },
+      {
+        "beat_id": "@beat_mountain_roar_far",
+        "time_sec": 104.8,
+        "strength": 0.95,
+        "container_ref": "C4",
+        "role": "episode_apex",
+        "label": "distant mountain roar carried on wind"
+      },
+      {
+        "beat_id": "@beat_c4_bridge",
+        "time_sec": 115.2,
+        "strength": 0.72,
+        "container_ref": "C4",
+        "role": "cross_container_bridge",
+        "label": "roar decays; silence carries into coda"
+      },
+      {
+        "beat_id": "@beat_c4_close",
+        "time_sec": 119.4,
+        "strength": 0.6,
+        "container_ref": "C4",
+        "role": "container_close",
+        "label": "silence at end of apex"
+      },
+      {
+        "beat_id": "@beat_c5_open",
+        "time_sec": 120.5,
+        "strength": 0.3,
+        "container_ref": "C5",
+        "role": "container_open",
+        "label": "snow returns to falling"
+      },
+      {
+        "beat_id": "@beat_wide_snow_return",
+        "time_sec": 128.8,
+        "strength": 0.22,
+        "container_ref": "C5",
+        "role": "internal",
+        "label": "wide of pavilion, snow layering"
+      },
+      {
+        "beat_id": "@beat_final_breath",
+        "time_sec": 138.2,
+        "strength": 0.25,
+        "container_ref": "C5",
+        "role": "container_peak",
+        "label": "last visible breath plume, soft"
+      },
+      {
+        "beat_id": "@beat_c5_bridge",
+        "time_sec": 145.0,
+        "strength": 0.15,
+        "container_ref": "C5",
+        "role": "internal",
+        "label": "framing settles into wide"
+      },
+      {
+        "beat_id": "@beat_c5_close",
+        "time_sec": 149.2,
+        "strength": 0.1,
+        "container_ref": "C5",
+        "role": "container_close",
+        "label": "silk_dissolve begins"
+      }
+    ]
+  },
+  "stage_products": {
+    "S1_MUS": {
+      "meta_units": [
+        {
+          "mu_id": "MU_01",
+          "container_ref": "C1",
+          "function": "arrival_stillness",
+          "emotion_intensity": 0.14,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[arrival_stillness] within The Stillness",
+          "time_marker": "container:C1:slot_0",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-01-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_02",
+          "container_ref": "C1",
+          "function": "arrival_stillness",
+          "emotion_intensity": 0.16,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[arrival_stillness] within The Stillness",
+          "time_marker": "container:C1:slot_1",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-02-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_03",
+          "container_ref": "C1",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.18,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[environmental_witness] within The Stillness",
+          "time_marker": "container:C1:slot_2",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-03-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_04",
+          "container_ref": "C1",
+          "function": "silence_beat",
+          "emotion_intensity": 0.2,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[silence_beat] within The Stillness",
+          "time_marker": "container:C1:slot_3",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-04-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_05",
+          "container_ref": "C1",
+          "function": "silence_beat",
+          "emotion_intensity": 0.22,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[silence_beat] within The Stillness",
+          "time_marker": "container:C1:slot_4",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-05-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_06",
+          "container_ref": "C2",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.34,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[environmental_witness] within The Witness",
+          "time_marker": "container:C2:slot_0",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-06-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_07",
+          "container_ref": "C2",
+          "function": "environmental_witness",
+          "emotion_intensity": 0.38,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[environmental_witness] within The Witness",
+          "time_marker": "container:C2:slot_1",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-07-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_08",
+          "container_ref": "C2",
+          "function": "silence_beat",
+          "emotion_intensity": 0.42,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[silence_beat] within The Witness",
+          "time_marker": "container:C2:slot_2",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-08-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_09",
+          "container_ref": "C2",
+          "function": "attention_shift",
+          "emotion_intensity": 0.46,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[attention_shift] within The Witness",
+          "time_marker": "container:C2:slot_3",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-09-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_10",
+          "container_ref": "C2",
+          "function": "attention_shift",
+          "emotion_intensity": 0.5,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[attention_shift] within The Witness",
+          "time_marker": "container:C2:slot_4",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-10-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_11",
+          "container_ref": "C3",
+          "function": "attention_shift",
+          "emotion_intensity": 0.46,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[attention_shift] within The Turn",
+          "time_marker": "container:C3:slot_0",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-11-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_12",
+          "container_ref": "C3",
+          "function": "attention_shift",
+          "emotion_intensity": 0.52,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[attention_shift] within The Turn",
+          "time_marker": "container:C3:slot_1",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-12-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_13",
+          "container_ref": "C3",
+          "function": "realization_release",
+          "emotion_intensity": 0.58,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[realization_release] within The Turn",
+          "time_marker": "container:C3:slot_2",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-13-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_14",
+          "container_ref": "C3",
+          "function": "silence_beat",
+          "emotion_intensity": 0.64,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[silence_beat] within The Turn",
+          "time_marker": "container:C3:slot_3",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-14-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_15",
+          "container_ref": "C3",
+          "function": "climb",
+          "emotion_intensity": 0.7,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[climb] within The Turn",
+          "time_marker": "container:C3:slot_4",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-15-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_16",
+          "container_ref": "C4",
+          "function": "climb",
+          "emotion_intensity": 0.72,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[climb] within The Release",
+          "time_marker": "container:C4:slot_0",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-16-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_17",
+          "container_ref": "C4",
+          "function": "realization_release",
+          "emotion_intensity": 0.81,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[realization_release] within The Release",
+          "time_marker": "container:C4:slot_1",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-17-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_18",
+          "container_ref": "C4",
+          "function": "climb",
+          "emotion_intensity": 0.9,
+          "entities": [
+            "protagonist",
+            "distant_mountain"
+          ],
+          "core_action": "[break] within The Release",
+          "time_marker": "container:C4:slot_2",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-18-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_19",
+          "container_ref": "C4",
+          "function": "aftermath",
+          "emotion_intensity": 0.99,
+          "entities": [
+            "protagonist",
+            "distant_mountain"
+          ],
+          "core_action": "[break] within The Release",
+          "time_marker": "container:C4:slot_3",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-19-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_20",
+          "container_ref": "C4",
+          "function": "aftermath",
+          "emotion_intensity": 1.0,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[aftermath] within The Release",
+          "time_marker": "container:C4:slot_4",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-20-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_21",
+          "container_ref": "C5",
+          "function": "aftermath",
+          "emotion_intensity": 0.16,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[aftermath] within The Return",
+          "time_marker": "container:C5:slot_0",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-21-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_22",
+          "container_ref": "C5",
+          "function": "aftermath",
+          "emotion_intensity": 0.18,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[coda] within The Return",
+          "time_marker": "container:C5:slot_1",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-22-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_23",
+          "container_ref": "C5",
+          "function": "coda",
+          "emotion_intensity": 0.2,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[coda] within The Return",
+          "time_marker": "container:C5:slot_2",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-23-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_24",
+          "container_ref": "C5",
+          "function": "coda",
+          "emotion_intensity": 0.22,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[coda] within The Return",
+          "time_marker": "container:C5:slot_3",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-24-fn"
+            }
+          }
+        },
+        {
+          "mu_id": "MU_25",
+          "container_ref": "C5",
+          "function": "coda",
+          "emotion_intensity": 0.24,
+          "entities": [
+            "protagonist"
+          ],
+          "core_action": "[coda] within The Return",
+          "time_marker": "container:C5:slot_4",
+          "world": "ancient",
+          "_provenance": {
+            "function": {
+              "kind": "decision",
+              "d_id": "D-EP01-25-fn"
+            }
+          }
+        }
+      ]
+    },
+    "S2_MSSS": {
+      "total_duration_budget_sec": 150.0,
+      "scenes": [
+        {
+          "scene_id": "SC_1",
+          "location": "snow_pavilion_high_altitude",
+          "time": "dawn_cold",
+          "world": "ancient",
+          "continuity_tags": [
+            "snow_layer",
+            "breath_plume_visible"
+          ],
+          "sequences": [
+            {
+              "seq_id": "SEQ_01",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_01",
+              "container_ref": "C1"
+            },
+            {
+              "seq_id": "SEQ_02",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_02",
+              "container_ref": "C1"
+            },
+            {
+              "seq_id": "SEQ_03",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_03",
+              "container_ref": "C1"
+            },
+            {
+              "seq_id": "SEQ_04",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_04",
+              "container_ref": "C1"
+            },
+            {
+              "seq_id": "SEQ_05",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_05",
+              "container_ref": "C1"
+            }
+          ]
+        },
+        {
+          "scene_id": "SC_2",
+          "location": "snow_pavilion_high_altitude",
+          "time": "dawn_cold",
+          "world": "ancient",
+          "continuity_tags": [
+            "snow_layer",
+            "breath_plume_visible"
+          ],
+          "sequences": [
+            {
+              "seq_id": "SEQ_06",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_06",
+              "container_ref": "C2"
+            },
+            {
+              "seq_id": "SEQ_07",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_07",
+              "container_ref": "C2"
+            },
+            {
+              "seq_id": "SEQ_08",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_08",
+              "container_ref": "C2"
+            },
+            {
+              "seq_id": "SEQ_09",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_09",
+              "container_ref": "C2"
+            },
+            {
+              "seq_id": "SEQ_10",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_10",
+              "container_ref": "C2"
+            }
+          ]
+        },
+        {
+          "scene_id": "SC_3",
+          "location": "snow_pavilion_high_altitude",
+          "time": "dawn_cold",
+          "world": "ancient",
+          "continuity_tags": [
+            "snow_layer",
+            "breath_plume_visible"
+          ],
+          "sequences": [
+            {
+              "seq_id": "SEQ_11",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_11",
+              "container_ref": "C3"
+            },
+            {
+              "seq_id": "SEQ_12",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_12",
+              "container_ref": "C3"
+            },
+            {
+              "seq_id": "SEQ_13",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_13",
+              "container_ref": "C3"
+            },
+            {
+              "seq_id": "SEQ_14",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_14",
+              "container_ref": "C3"
+            },
+            {
+              "seq_id": "SEQ_15",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_15",
+              "container_ref": "C3"
+            }
+          ]
+        },
+        {
+          "scene_id": "SC_4",
+          "location": "snow_pavilion_high_altitude",
+          "time": "dawn_cold",
+          "world": "ancient",
+          "continuity_tags": [
+            "snow_layer",
+            "breath_plume_visible"
+          ],
+          "sequences": [
+            {
+              "seq_id": "SEQ_16",
+              "seq_type": "action_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_16",
+              "container_ref": "C4"
+            },
+            {
+              "seq_id": "SEQ_17",
+              "seq_type": "action_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_17",
+              "container_ref": "C4"
+            },
+            {
+              "seq_id": "SEQ_18",
+              "seq_type": "action_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_18",
+              "container_ref": "C4"
+            },
+            {
+              "seq_id": "SEQ_19",
+              "seq_type": "action_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_19",
+              "container_ref": "C4"
+            },
+            {
+              "seq_id": "SEQ_20",
+              "seq_type": "action_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_20",
+              "container_ref": "C4"
+            }
+          ]
+        },
+        {
+          "scene_id": "SC_5",
+          "location": "snow_pavilion_high_altitude",
+          "time": "dawn_cold",
+          "world": "ancient",
+          "continuity_tags": [
+            "snow_layer",
+            "breath_plume_visible"
+          ],
+          "sequences": [
+            {
+              "seq_id": "SEQ_21",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_21",
+              "container_ref": "C5"
+            },
+            {
+              "seq_id": "SEQ_22",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_22",
+              "container_ref": "C5"
+            },
+            {
+              "seq_id": "SEQ_23",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_23",
+              "container_ref": "C5"
+            },
+            {
+              "seq_id": "SEQ_24",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_24",
+              "container_ref": "C5"
+            },
+            {
+              "seq_id": "SEQ_25",
+              "seq_type": "observation_beat",
+              "duration_budget_sec": 6.0,
+              "maps_to_mu": "MU_25",
+              "container_ref": "C5"
+            }
+          ]
+        }
+      ]
+    },
+    "S2_5_DIR": {
+      "direction_intents": [
+        {
+          "seq_ref": "SEQ_01",
+          "motion_reason": "hold_and_reveal",
+          "cut_reason": "cut_on_qi_shift",
+          "tension_arc_role": "setup",
+          "reveal_beat_frame": null,
+          "silence_beats": []
+        },
+        {
+          "seq_ref": "SEQ_02",
+          "motion_reason": "hold_on_silence",
+          "cut_reason": "match_cut_on_form",
+          "tension_arc_role": "setup",
+          "reveal_beat_frame": null,
+          "silence_beats": [
+            {
+              "start_sec": 0.0,
+              "length_sec": 7.0
+            }
+          ]
+        },
+        {
+          "seq_ref": "SEQ_03",
+          "motion_reason": "hold_on_silence",
+          "cut_reason": "cut_on_qi_shift",
+          "tension_arc_role": "false_peak",
+          "reveal_beat_frame": null,
+          "silence_beats": [
+            {
+              "start_sec": 0.0,
+              "length_sec": 6.5
+            }
+          ]
+        },
+        {
+          "seq_ref": "SEQ_04",
+          "motion_reason": "rack_on_shift_of_attention",
+          "cut_reason": "cut_on_gaze_landing",
+          "tension_arc_role": "reveal",
+          "reveal_beat_frame": 48,
+          "silence_beats": []
+        },
+        {
+          "seq_ref": "SEQ_05",
+          "motion_reason": "pull_out_on_isolation",
+          "cut_reason": "silk_dissolve_on_world_shift",
+          "tension_arc_role": "coda",
+          "reveal_beat_frame": null,
+          "silence_beats": []
+        }
+      ]
+    },
+    "S2_7_PERF": {
+      "performance_intents": [
+        {
+          "mu_ref": "MU_01",
+          "actor_ref": "ancient_identity",
+          "inner_want": "hold the ground of a decision already made",
+          "hidden": "the decision was made against a teacher's wish",
+          "breakdown_moment": null,
+          "micro_life_anchors": [
+            "breath_visible_in_cold",
+            "sleeve_movement_before_hand"
+          ],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_03",
+          "actor_ref": "ancient_identity",
+          "inner_want": "let the silence do the work of speech",
+          "hidden": "afraid the silence will crack her resolve",
+          "breakdown_moment": null,
+          "micro_life_anchors": [
+            "breath_visible_in_cold",
+            "long_exhale_jaw_set_release"
+          ],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_04",
+          "actor_ref": "ancient_identity",
+          "inner_want": "let the leaf be the reason to stay still one second longer",
+          "hidden": "using the leaf to postpone the turn toward the road",
+          "breakdown_moment": null,
+          "micro_life_anchors": [
+            "eyes_before_head"
+          ],
+          "reaction_before": false
+        },
+        {
+          "mu_ref": "MU_05",
+          "actor_ref": "ancient_identity",
+          "inner_want": "release the grip and accept the leaving",
+          "hidden": "the release is the actual grief",
+          "breakdown_moment": "sleeve lowers 1cm on the hilt at T+27.5s",
+          "micro_life_anchors": [
+            "long_exhale_jaw_set_release",
+            "sleeve_movement_before_hand"
+          ],
+          "reaction_before": false
+        }
+      ]
+    },
+    "S3_IR": {
+      "shots": [
+        {
+          "shot_id": "SH_01",
+          "seq_ref": "SEQ_01",
+          "shot_type": "FS_static",
+          "cinematography": {
+            "lens": {
+              "focal_length_mm": 100,
+              "aperture_f": 2.0,
+              "lens_type": "spherical",
+              "anamorphic_squeeze": null,
+              "near_focus_m": 1.2,
+              "filter_stack": [
+                "soft_diffusion_1/8",
+                "gold_streak_2mm",
+                "black_promist_1/4"
+              ]
+            },
+            "framing": {
+              "shot_size": "FS",
+              "subject_height_in_frame": 0.55,
+              "headroom_ratio": 0.35,
+              "looking_space": "center",
+              "composition_rule": "golden_spiral",
+              "frame_within_frame": "bamboo trunks flanking Ling Xu at 1/3 and 2/3"
+            },
+            "camera_motion": {
+              "type": "static",
+              "start_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "end_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "trajectory": "linear",
+              "speed_profile": {
+                "peak_speed_m_s": 0,
+                "acceleration_curve": "linear",
+                "ease_in_frames": 0,
+                "ease_out_frames": 0
+              },
+              "vibration": {
+                "enabled": false,
+                "spectrum": [],
+                "random_seed": 0,
+                "sync_to": "none"
+              }
+            },
+            "focus": {
+              "mode": "single",
+              "distance_m": 6.5,
+              "rack_to_m": null,
+              "rack_trigger_frame": null,
+              "duration_frames": null,
+              "bokeh_shape": "circular",
+              "bokeh_character": "creamy",
+              "breathing_compensation": true
+            },
+            "exposure": {
+              "shutter_angle_degrees": 180,
+              "iso": 800,
+              "motion_blur_samples": 32,
+              "temporal_noise_profile": "film_grain_35mm"
+            },
+            "depth_composition": {
+              "foreground": {
+                "element": "single out-of-focus bamboo trunk at frame-right",
+                "distance_m": 1.5,
+                "blur_stops": 2.5,
+                "opacity": 0.7
+              },
+              "midground": {
+                "element": "Ling Xu standing on stone path, back to camera",
+                "distance_m": 6.5
+              },
+              "background": {
+                "element": "layered bamboo receding into mist",
+                "distance_m": 15.0,
+                "haze_density": 0.4,
+                "color_shift": "teal",
+                "atmospheric_perspective": true
+              }
+            }
+          },
+          "temporal": {
+            "duration_sec": 7.0,
+            "duration_frames": 168,
+            "fps": 24,
+            "cut_in_point": "first_frame",
+            "cut_out_point": "last_frame",
+            "cut_in_beat_ref": "@beat_c1_open",
+            "speed_ramp": [],
+            "retime_method": null
+          },
+          "rhythm_profile": {
+            "tension_curve": [
+              {
+                "frame": 0,
+                "value": 0.2,
+                "marker": "hold"
+              },
+              {
+                "frame": 168,
+                "value": 0.25,
+                "marker": "hold_end"
+              }
+            ],
+            "cut_triggers": [
+              {
+                "frame": 168,
+                "type": "match_cut",
+                "alignment": "shape:c1_form",
+                "transition_duration_frames": 0
+              }
+            ],
+            "speed_correlation": {
+              "high_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              },
+              "low_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              }
+            }
+          },
+          "mise_en_scene_ref": "@mes_bamboo_forest_dawn",
+          "sound_design_ref": "@sound_ancient_bamboo_dawn",
+          "talent_action": "Ling Xu stands motionless, back to camera; one breath cycle visible as white plume; sleeve hangs from left wrist to knee, no sway",
+          "editing_style": "long-take stillness",
+          "clip_transition": null,
+          "match_cut_ref": "SH_02",
+          "match_cut_element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "montage_member": false,
+          "_direction_intent_ref": "SEQ_01",
+          "_performance_intent_ref": "MU_01",
+          "_provenance": {
+            "cinematography.lens.focal_length_mm": {
+              "kind": "decision",
+              "d_id": "D-001",
+              "evidence": [
+                "genre_lock.preset_override sets 100mm"
+              ]
+            },
+            "temporal.duration_sec": {
+              "kind": "explicit",
+              "span": "MSSS:SEQ_01.duration_budget_sec"
+            },
+            "talent_action": {
+              "kind": "inferred",
+              "span": "MU_01.core_action + PERF_MU_01.inner_want"
+            }
+          },
+          "post_intent": {
+            "trim_priority": "trim_tail",
+            "slip_allowed": false,
+            "slide_allowed": true,
+            "handle_frames_head": 6,
+            "handle_frames_tail": 12,
+            "preferred_anchor": "beat"
+          }
+        },
+        {
+          "shot_id": "SH_02",
+          "seq_ref": "SEQ_02",
+          "inherits": "SH_01",
+          "delta": {
+            "temporal.duration_sec": 6.5,
+            "temporal.duration_frames": 156,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 156,
+                "type": "match_cut",
+                "alignment": "motion:c1_slot_1",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[setup slot_1] refined micro-life beat",
+            "_direction_intent_ref": "DIR_02",
+            "_performance_intent_ref": "PERF_02",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_03",
+          "seq_ref": "SEQ_03",
+          "inherits": "SH_01",
+          "delta": {
+            "temporal.duration_sec": 6.0,
+            "temporal.duration_frames": 144,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "motion:c1_slot_2",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[setup slot_2] refined micro-life beat",
+            "_direction_intent_ref": "DIR_03",
+            "_performance_intent_ref": "PERF_03",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_04",
+          "seq_ref": "SEQ_04",
+          "inherits": "SH_01",
+          "delta": {
+            "temporal.duration_sec": 5.5,
+            "temporal.duration_frames": 132,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 132,
+                "type": "match_cut",
+                "alignment": "motion:c1_slot_3",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[setup slot_3] refined micro-life beat",
+            "_direction_intent_ref": "DIR_04",
+            "_performance_intent_ref": "PERF_04",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_05",
+          "seq_ref": "SEQ_05",
+          "inherits": "SH_01",
+          "delta": {
+            "temporal.duration_sec": 5.0,
+            "temporal.duration_frames": 120,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 120,
+                "type": "match_cut",
+                "alignment": "motion:c1_slot_4",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[setup slot_4] refined micro-life beat",
+            "_direction_intent_ref": "DIR_05",
+            "_performance_intent_ref": "PERF_05",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_06",
+          "seq_ref": "SEQ_06",
+          "shot_type": "FS_static",
+          "cinematography": {
+            "lens": {
+              "focal_length_mm": 100,
+              "aperture_f": 2.0,
+              "lens_type": "spherical",
+              "anamorphic_squeeze": null,
+              "near_focus_m": 1.2,
+              "filter_stack": [
+                "soft_diffusion_1/8",
+                "gold_streak_2mm",
+                "black_promist_1/4"
+              ]
+            },
+            "framing": {
+              "shot_size": "FS",
+              "subject_height_in_frame": 0.55,
+              "headroom_ratio": 0.35,
+              "looking_space": "center",
+              "composition_rule": "golden_spiral",
+              "frame_within_frame": "bamboo trunks flanking Ling Xu at 1/3 and 2/3"
+            },
+            "camera_motion": {
+              "type": "static",
+              "start_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "end_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "trajectory": "linear",
+              "speed_profile": {
+                "peak_speed_m_s": 0,
+                "acceleration_curve": "linear",
+                "ease_in_frames": 0,
+                "ease_out_frames": 0
+              },
+              "vibration": {
+                "enabled": false,
+                "spectrum": [],
+                "random_seed": 0,
+                "sync_to": "none"
+              }
+            },
+            "focus": {
+              "mode": "single",
+              "distance_m": 6.5,
+              "rack_to_m": null,
+              "rack_trigger_frame": null,
+              "duration_frames": null,
+              "bokeh_shape": "circular",
+              "bokeh_character": "creamy",
+              "breathing_compensation": true
+            },
+            "exposure": {
+              "shutter_angle_degrees": 180,
+              "iso": 800,
+              "motion_blur_samples": 32,
+              "temporal_noise_profile": "film_grain_35mm"
+            },
+            "depth_composition": {
+              "foreground": {
+                "element": "single out-of-focus bamboo trunk at frame-right",
+                "distance_m": 1.5,
+                "blur_stops": 2.5,
+                "opacity": 0.7
+              },
+              "midground": {
+                "element": "Ling Xu standing on stone path, back to camera",
+                "distance_m": 6.5
+              },
+              "background": {
+                "element": "layered bamboo receding into mist",
+                "distance_m": 15.0,
+                "haze_density": 0.4,
+                "color_shift": "teal",
+                "atmospheric_perspective": true
+              }
+            }
+          },
+          "temporal": {
+            "duration_sec": 6.5,
+            "duration_frames": 156,
+            "fps": 24,
+            "cut_in_point": "sound_cue",
+            "cut_out_point": "last_frame",
+            "cut_in_beat_ref": "@beat_c2_open",
+            "speed_ramp": [],
+            "retime_method": null
+          },
+          "rhythm_profile": {
+            "tension_curve": [
+              {
+                "frame": 0,
+                "value": 0.2,
+                "marker": "hold"
+              },
+              {
+                "frame": 168,
+                "value": 0.25,
+                "marker": "hold_end"
+              }
+            ],
+            "cut_triggers": [
+              {
+                "frame": 156,
+                "type": "match_cut",
+                "alignment": "shape:c2_form",
+                "transition_duration_frames": 0
+              }
+            ],
+            "speed_correlation": {
+              "high_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              },
+              "low_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              }
+            }
+          },
+          "mise_en_scene_ref": "@mes_bamboo_forest_dawn",
+          "sound_design_ref": "@sound_ancient_bamboo_dawn",
+          "talent_action": "Ling Xu stands motionless, back to camera; one breath cycle visible as white plume; sleeve hangs from left wrist to knee, no sway",
+          "editing_style": "long-take stillness",
+          "clip_transition": null,
+          "match_cut_ref": "SH_02",
+          "match_cut_element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "montage_member": false,
+          "_direction_intent_ref": "SEQ_01",
+          "_performance_intent_ref": "MU_01",
+          "_provenance": {
+            "cinematography.lens.focal_length_mm": {
+              "kind": "decision",
+              "d_id": "D-001",
+              "evidence": [
+                "genre_lock.preset_override sets 100mm"
+              ]
+            },
+            "temporal.duration_sec": {
+              "kind": "explicit",
+              "span": "MSSS:SEQ_01.duration_budget_sec"
+            },
+            "talent_action": {
+              "kind": "inferred",
+              "span": "MU_01.core_action + PERF_MU_01.inner_want"
+            }
+          },
+          "post_intent": {
+            "trim_priority": "trim_tail",
+            "slip_allowed": false,
+            "slide_allowed": true,
+            "handle_frames_head": 6,
+            "handle_frames_tail": 12,
+            "preferred_anchor": "beat"
+          }
+        },
+        {
+          "shot_id": "SH_07",
+          "seq_ref": "SEQ_07",
+          "inherits": "SH_06",
+          "delta": {
+            "temporal.duration_sec": 6.0,
+            "temporal.duration_frames": 144,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "motion:c2_slot_1",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[escalation slot_1] refined micro-life beat",
+            "_direction_intent_ref": "DIR_07",
+            "_performance_intent_ref": "PERF_07",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_08",
+          "seq_ref": "SEQ_08",
+          "inherits": "SH_06",
+          "delta": {
+            "temporal.duration_sec": 6.0,
+            "temporal.duration_frames": 144,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "motion:c2_slot_2",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[escalation slot_2] refined micro-life beat",
+            "_direction_intent_ref": "DIR_08",
+            "_performance_intent_ref": "PERF_08",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_09",
+          "seq_ref": "SEQ_09",
+          "inherits": "SH_06",
+          "delta": {
+            "temporal.duration_sec": 6.0,
+            "temporal.duration_frames": 144,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "motion:c2_slot_3",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[escalation slot_3] refined micro-life beat",
+            "_direction_intent_ref": "DIR_09",
+            "_performance_intent_ref": "PERF_09",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_10",
+          "seq_ref": "SEQ_10",
+          "inherits": "SH_06",
+          "delta": {
+            "temporal.duration_sec": 5.5,
+            "temporal.duration_frames": 132,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 132,
+                "type": "match_cut",
+                "alignment": "motion:c2_slot_4",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[escalation slot_4] refined micro-life beat",
+            "_direction_intent_ref": "DIR_10",
+            "_performance_intent_ref": "PERF_10",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "action_start"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_11",
+          "seq_ref": "SEQ_11",
+          "shot_type": "FS_static",
+          "cinematography": {
+            "lens": {
+              "focal_length_mm": 100,
+              "aperture_f": 2.0,
+              "lens_type": "spherical",
+              "anamorphic_squeeze": null,
+              "near_focus_m": 1.2,
+              "filter_stack": [
+                "soft_diffusion_1/8",
+                "gold_streak_2mm",
+                "black_promist_1/4"
+              ]
+            },
+            "framing": {
+              "shot_size": "FS",
+              "subject_height_in_frame": 0.55,
+              "headroom_ratio": 0.35,
+              "looking_space": "center",
+              "composition_rule": "golden_spiral",
+              "frame_within_frame": "bamboo trunks flanking Ling Xu at 1/3 and 2/3"
+            },
+            "camera_motion": {
+              "type": "static",
+              "start_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "end_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "trajectory": "linear",
+              "speed_profile": {
+                "peak_speed_m_s": 0,
+                "acceleration_curve": "linear",
+                "ease_in_frames": 0,
+                "ease_out_frames": 0
+              },
+              "vibration": {
+                "enabled": false,
+                "spectrum": [],
+                "random_seed": 0,
+                "sync_to": "none"
+              }
+            },
+            "focus": {
+              "mode": "single",
+              "distance_m": 6.5,
+              "rack_to_m": null,
+              "rack_trigger_frame": null,
+              "duration_frames": null,
+              "bokeh_shape": "circular",
+              "bokeh_character": "creamy",
+              "breathing_compensation": true
+            },
+            "exposure": {
+              "shutter_angle_degrees": 180,
+              "iso": 800,
+              "motion_blur_samples": 32,
+              "temporal_noise_profile": "film_grain_35mm"
+            },
+            "depth_composition": {
+              "foreground": {
+                "element": "single out-of-focus bamboo trunk at frame-right",
+                "distance_m": 1.5,
+                "blur_stops": 2.5,
+                "opacity": 0.7
+              },
+              "midground": {
+                "element": "Ling Xu standing on stone path, back to camera",
+                "distance_m": 6.5
+              },
+              "background": {
+                "element": "layered bamboo receding into mist",
+                "distance_m": 15.0,
+                "haze_density": 0.4,
+                "color_shift": "teal",
+                "atmospheric_perspective": true
+              }
+            }
+          },
+          "temporal": {
+            "duration_sec": 6.0,
+            "duration_frames": 144,
+            "fps": 24,
+            "cut_in_point": "sound_cue",
+            "cut_out_point": "last_frame",
+            "cut_in_beat_ref": "@beat_c3_open",
+            "speed_ramp": [],
+            "retime_method": null
+          },
+          "rhythm_profile": {
+            "tension_curve": [
+              {
+                "frame": 0,
+                "value": 0.2,
+                "marker": "hold"
+              },
+              {
+                "frame": 168,
+                "value": 0.25,
+                "marker": "hold_end"
+              }
+            ],
+            "cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "shape:c3_form",
+                "transition_duration_frames": 0
+              }
+            ],
+            "speed_correlation": {
+              "high_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              },
+              "low_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              }
+            }
+          },
+          "mise_en_scene_ref": "@mes_bamboo_forest_dawn",
+          "sound_design_ref": "@sound_ancient_bamboo_dawn",
+          "talent_action": "Ling Xu stands motionless, back to camera; one breath cycle visible as white plume; sleeve hangs from left wrist to knee, no sway",
+          "editing_style": "long-take stillness",
+          "clip_transition": null,
+          "match_cut_ref": "SH_02",
+          "match_cut_element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "montage_member": false,
+          "_direction_intent_ref": "SEQ_01",
+          "_performance_intent_ref": "MU_01",
+          "_provenance": {
+            "cinematography.lens.focal_length_mm": {
+              "kind": "decision",
+              "d_id": "D-001",
+              "evidence": [
+                "genre_lock.preset_override sets 100mm"
+              ]
+            },
+            "temporal.duration_sec": {
+              "kind": "explicit",
+              "span": "MSSS:SEQ_01.duration_budget_sec"
+            },
+            "talent_action": {
+              "kind": "inferred",
+              "span": "MU_01.core_action + PERF_MU_01.inner_want"
+            }
+          },
+          "post_intent": {
+            "trim_priority": "trim_tail",
+            "slip_allowed": false,
+            "slide_allowed": true,
+            "handle_frames_head": 6,
+            "handle_frames_tail": 12,
+            "preferred_anchor": "beat"
+          }
+        },
+        {
+          "shot_id": "SH_12",
+          "seq_ref": "SEQ_12",
+          "inherits": "SH_11",
+          "delta": {
+            "temporal.duration_sec": 5.5,
+            "temporal.duration_frames": 132,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 132,
+                "type": "match_cut",
+                "alignment": "motion:c3_slot_1",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[turn slot_1] refined micro-life beat",
+            "_direction_intent_ref": "DIR_12",
+            "_performance_intent_ref": "PERF_12",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_13",
+          "seq_ref": "SEQ_13",
+          "inherits": "SH_11",
+          "delta": {
+            "temporal.duration_sec": 6.0,
+            "temporal.duration_frames": 144,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "motion:c3_slot_2",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[turn slot_2] refined micro-life beat",
+            "_direction_intent_ref": "DIR_13",
+            "_performance_intent_ref": "PERF_13",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_14",
+          "seq_ref": "SEQ_14",
+          "inherits": "SH_11",
+          "delta": {
+            "temporal.duration_sec": 6.5,
+            "temporal.duration_frames": 156,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 156,
+                "type": "match_cut",
+                "alignment": "motion:c3_slot_3",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[turn slot_3] refined micro-life beat",
+            "_direction_intent_ref": "DIR_14",
+            "_performance_intent_ref": "PERF_14",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_15",
+          "seq_ref": "SEQ_15",
+          "inherits": "SH_11",
+          "delta": {
+            "temporal.duration_sec": 6.0,
+            "temporal.duration_frames": 144,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "motion:c3_slot_4",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[turn slot_4] refined micro-life beat",
+            "_direction_intent_ref": "DIR_15",
+            "_performance_intent_ref": "PERF_15",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_16",
+          "seq_ref": "SEQ_16",
+          "shot_type": "FS_static",
+          "cinematography": {
+            "lens": {
+              "focal_length_mm": 100,
+              "aperture_f": 2.0,
+              "lens_type": "spherical",
+              "anamorphic_squeeze": null,
+              "near_focus_m": 1.2,
+              "filter_stack": [
+                "soft_diffusion_1/8",
+                "gold_streak_2mm",
+                "black_promist_1/4"
+              ]
+            },
+            "framing": {
+              "shot_size": "FS",
+              "subject_height_in_frame": 0.55,
+              "headroom_ratio": 0.35,
+              "looking_space": "center",
+              "composition_rule": "golden_spiral",
+              "frame_within_frame": "bamboo trunks flanking Ling Xu at 1/3 and 2/3"
+            },
+            "camera_motion": {
+              "type": "static",
+              "start_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "end_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "trajectory": "linear",
+              "speed_profile": {
+                "peak_speed_m_s": 0,
+                "acceleration_curve": "linear",
+                "ease_in_frames": 0,
+                "ease_out_frames": 0
+              },
+              "vibration": {
+                "enabled": false,
+                "spectrum": [],
+                "random_seed": 0,
+                "sync_to": "none"
+              }
+            },
+            "focus": {
+              "mode": "single",
+              "distance_m": 6.5,
+              "rack_to_m": null,
+              "rack_trigger_frame": null,
+              "duration_frames": null,
+              "bokeh_shape": "circular",
+              "bokeh_character": "creamy",
+              "breathing_compensation": true
+            },
+            "exposure": {
+              "shutter_angle_degrees": 180,
+              "iso": 800,
+              "motion_blur_samples": 32,
+              "temporal_noise_profile": "film_grain_35mm"
+            },
+            "depth_composition": {
+              "foreground": {
+                "element": "single out-of-focus bamboo trunk at frame-right",
+                "distance_m": 1.5,
+                "blur_stops": 2.5,
+                "opacity": 0.7
+              },
+              "midground": {
+                "element": "Ling Xu standing on stone path, back to camera",
+                "distance_m": 6.5
+              },
+              "background": {
+                "element": "layered bamboo receding into mist",
+                "distance_m": 15.0,
+                "haze_density": 0.4,
+                "color_shift": "teal",
+                "atmospheric_perspective": true
+              }
+            }
+          },
+          "temporal": {
+            "duration_sec": 7.5,
+            "duration_frames": 180,
+            "fps": 24,
+            "cut_in_point": "sound_cue",
+            "cut_out_point": "last_frame",
+            "cut_in_beat_ref": "@beat_c4_open",
+            "speed_ramp": [],
+            "retime_method": null
+          },
+          "rhythm_profile": {
+            "tension_curve": [
+              {
+                "frame": 0,
+                "value": 0.2,
+                "marker": "hold"
+              },
+              {
+                "frame": 168,
+                "value": 0.25,
+                "marker": "hold_end"
+              }
+            ],
+            "cut_triggers": [
+              {
+                "frame": 180,
+                "type": "match_cut",
+                "alignment": "shape:c4_form",
+                "transition_duration_frames": 0
+              }
+            ],
+            "speed_correlation": {
+              "high_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              },
+              "low_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              }
+            }
+          },
+          "mise_en_scene_ref": "@mes_bamboo_forest_dawn",
+          "sound_design_ref": "@sound_ancient_bamboo_dawn",
+          "talent_action": "Ling Xu stands motionless, back to camera; one breath cycle visible as white plume; sleeve hangs from left wrist to knee, no sway",
+          "editing_style": "long-take stillness",
+          "clip_transition": null,
+          "match_cut_ref": "SH_02",
+          "match_cut_element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "montage_member": false,
+          "_direction_intent_ref": "SEQ_01",
+          "_performance_intent_ref": "MU_01",
+          "_provenance": {
+            "cinematography.lens.focal_length_mm": {
+              "kind": "decision",
+              "d_id": "D-001",
+              "evidence": [
+                "genre_lock.preset_override sets 100mm"
+              ]
+            },
+            "temporal.duration_sec": {
+              "kind": "explicit",
+              "span": "MSSS:SEQ_01.duration_budget_sec"
+            },
+            "talent_action": {
+              "kind": "inferred",
+              "span": "MU_01.core_action + PERF_MU_01.inner_want"
+            }
+          },
+          "post_intent": {
+            "trim_priority": "trim_tail",
+            "slip_allowed": false,
+            "slide_allowed": true,
+            "handle_frames_head": 6,
+            "handle_frames_tail": 12,
+            "preferred_anchor": "beat"
+          }
+        },
+        {
+          "shot_id": "SH_17",
+          "seq_ref": "SEQ_17",
+          "inherits": "SH_16",
+          "delta": {
+            "temporal.duration_sec": 4.0,
+            "temporal.duration_frames": 96,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 96,
+                "type": "hard_cut",
+                "alignment": "motion:c4_slot_1",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[apex slot_1] refined micro-life beat",
+            "_direction_intent_ref": "DIR_17",
+            "_performance_intent_ref": "PERF_17",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_18",
+          "seq_ref": "SEQ_18",
+          "inherits": "SH_16",
+          "delta": {
+            "temporal.duration_sec": 3.5,
+            "temporal.duration_frames": 84,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 84,
+                "type": "smash_cut",
+                "alignment": "@beat_mountain_roar_far",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[apex slot_2] refined micro-life beat",
+            "_direction_intent_ref": "DIR_18",
+            "_performance_intent_ref": "PERF_18",
+            "temporal.cut_out_beat_ref": "@beat_mountain_roar_far",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_19",
+          "seq_ref": "SEQ_19",
+          "inherits": "SH_16",
+          "delta": {
+            "temporal.duration_sec": 8.0,
+            "temporal.duration_frames": 192,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 192,
+                "type": "hard_cut",
+                "alignment": "motion:c4_slot_3",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[apex slot_3] refined micro-life beat",
+            "_direction_intent_ref": "DIR_19",
+            "_performance_intent_ref": "PERF_19",
+            "temporal.speed_ramp": [
+              {
+                "frame": 24,
+                "speed_multiplier": 0.75,
+                "curve": "smooth"
+              },
+              {
+                "frame": 96,
+                "speed_multiplier": 1.0,
+                "curve": "smooth"
+              }
+            ],
+            "temporal.retime_method": "optical_flow",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_20",
+          "seq_ref": "SEQ_20",
+          "inherits": "SH_16",
+          "delta": {
+            "temporal.duration_sec": 7.0,
+            "temporal.duration_frames": 168,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 168,
+                "type": "hard_cut",
+                "alignment": "motion:c4_slot_4",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[apex slot_4] refined micro-life beat",
+            "_direction_intent_ref": "DIR_20",
+            "_performance_intent_ref": "PERF_20",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_21",
+          "seq_ref": "SEQ_21",
+          "shot_type": "FS_static",
+          "cinematography": {
+            "lens": {
+              "focal_length_mm": 100,
+              "aperture_f": 2.0,
+              "lens_type": "spherical",
+              "anamorphic_squeeze": null,
+              "near_focus_m": 1.2,
+              "filter_stack": [
+                "soft_diffusion_1/8",
+                "gold_streak_2mm",
+                "black_promist_1/4"
+              ]
+            },
+            "framing": {
+              "shot_size": "FS",
+              "subject_height_in_frame": 0.55,
+              "headroom_ratio": 0.35,
+              "looking_space": "center",
+              "composition_rule": "golden_spiral",
+              "frame_within_frame": "bamboo trunks flanking Ling Xu at 1/3 and 2/3"
+            },
+            "camera_motion": {
+              "type": "static",
+              "start_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "end_position": {
+                "x": 0,
+                "y": 1.6,
+                "z": -6.5
+              },
+              "trajectory": "linear",
+              "speed_profile": {
+                "peak_speed_m_s": 0,
+                "acceleration_curve": "linear",
+                "ease_in_frames": 0,
+                "ease_out_frames": 0
+              },
+              "vibration": {
+                "enabled": false,
+                "spectrum": [],
+                "random_seed": 0,
+                "sync_to": "none"
+              }
+            },
+            "focus": {
+              "mode": "single",
+              "distance_m": 6.5,
+              "rack_to_m": null,
+              "rack_trigger_frame": null,
+              "duration_frames": null,
+              "bokeh_shape": "circular",
+              "bokeh_character": "creamy",
+              "breathing_compensation": true
+            },
+            "exposure": {
+              "shutter_angle_degrees": 180,
+              "iso": 800,
+              "motion_blur_samples": 32,
+              "temporal_noise_profile": "film_grain_35mm"
+            },
+            "depth_composition": {
+              "foreground": {
+                "element": "single out-of-focus bamboo trunk at frame-right",
+                "distance_m": 1.5,
+                "blur_stops": 2.5,
+                "opacity": 0.7
+              },
+              "midground": {
+                "element": "Ling Xu standing on stone path, back to camera",
+                "distance_m": 6.5
+              },
+              "background": {
+                "element": "layered bamboo receding into mist",
+                "distance_m": 15.0,
+                "haze_density": 0.4,
+                "color_shift": "teal",
+                "atmospheric_perspective": true
+              }
+            }
+          },
+          "temporal": {
+            "duration_sec": 5.0,
+            "duration_frames": 120,
+            "fps": 24,
+            "cut_in_point": "sound_cue",
+            "cut_out_point": "last_frame",
+            "cut_in_beat_ref": "@beat_c5_open",
+            "speed_ramp": [],
+            "retime_method": null
+          },
+          "rhythm_profile": {
+            "tension_curve": [
+              {
+                "frame": 0,
+                "value": 0.2,
+                "marker": "hold"
+              },
+              {
+                "frame": 168,
+                "value": 0.25,
+                "marker": "hold_end"
+              }
+            ],
+            "cut_triggers": [
+              {
+                "frame": 120,
+                "type": "match_cut",
+                "alignment": "shape:c5_form",
+                "transition_duration_frames": 0
+              }
+            ],
+            "speed_correlation": {
+              "high_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              },
+              "low_tension": {
+                "shutter_angle": 180,
+                "vibration_amplitude": 0
+              }
+            }
+          },
+          "mise_en_scene_ref": "@mes_bamboo_forest_dawn",
+          "sound_design_ref": "@sound_ancient_bamboo_dawn",
+          "talent_action": "Ling Xu stands motionless, back to camera; one breath cycle visible as white plume; sleeve hangs from left wrist to knee, no sway",
+          "editing_style": "long-take stillness",
+          "clip_transition": null,
+          "match_cut_ref": "SH_02",
+          "match_cut_element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "montage_member": false,
+          "_direction_intent_ref": "SEQ_01",
+          "_performance_intent_ref": "MU_01",
+          "_provenance": {
+            "cinematography.lens.focal_length_mm": {
+              "kind": "decision",
+              "d_id": "D-001",
+              "evidence": [
+                "genre_lock.preset_override sets 100mm"
+              ]
+            },
+            "temporal.duration_sec": {
+              "kind": "explicit",
+              "span": "MSSS:SEQ_01.duration_budget_sec"
+            },
+            "talent_action": {
+              "kind": "inferred",
+              "span": "MU_01.core_action + PERF_MU_01.inner_want"
+            }
+          },
+          "post_intent": {
+            "trim_priority": "trim_tail",
+            "slip_allowed": false,
+            "slide_allowed": true,
+            "handle_frames_head": 6,
+            "handle_frames_tail": 12,
+            "preferred_anchor": "beat"
+          }
+        },
+        {
+          "shot_id": "SH_22",
+          "seq_ref": "SEQ_22",
+          "inherits": "SH_21",
+          "delta": {
+            "temporal.duration_sec": 5.5,
+            "temporal.duration_frames": 132,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 132,
+                "type": "match_cut",
+                "alignment": "motion:c5_slot_1",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[coda slot_1] refined micro-life beat",
+            "_direction_intent_ref": "DIR_22",
+            "_performance_intent_ref": "PERF_22",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_23",
+          "seq_ref": "SEQ_23",
+          "inherits": "SH_21",
+          "delta": {
+            "temporal.duration_sec": 6.0,
+            "temporal.duration_frames": 144,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 144,
+                "type": "match_cut",
+                "alignment": "motion:c5_slot_2",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[coda slot_2] refined micro-life beat",
+            "_direction_intent_ref": "DIR_23",
+            "_performance_intent_ref": "PERF_23",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_24",
+          "seq_ref": "SEQ_24",
+          "inherits": "SH_21",
+          "delta": {
+            "temporal.duration_sec": 6.5,
+            "temporal.duration_frames": 156,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 156,
+                "type": "match_cut",
+                "alignment": "motion:c5_slot_3",
+                "transition_duration_frames": 0
+              }
+            ],
+            "talent_action": "[coda slot_3] refined micro-life beat",
+            "_direction_intent_ref": "DIR_24",
+            "_performance_intent_ref": "PERF_24",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        },
+        {
+          "shot_id": "SH_25",
+          "seq_ref": "SEQ_25",
+          "inherits": "SH_21",
+          "delta": {
+            "temporal.duration_sec": 7.0,
+            "temporal.duration_frames": 168,
+            "rhythm_profile.cut_triggers": [
+              {
+                "frame": 168,
+                "type": "silk_dissolve",
+                "alignment": "@beat_c5_close",
+                "transition_duration_frames": 36
+              }
+            ],
+            "talent_action": "[coda slot_4] refined micro-life beat",
+            "_direction_intent_ref": "DIR_25",
+            "_performance_intent_ref": "PERF_25",
+            "temporal.cut_out_beat_ref": "@beat_c5_close",
+            "post_intent": {
+              "trim_priority": "trim_both",
+              "slip_allowed": true,
+              "slide_allowed": true,
+              "handle_frames_head": 6,
+              "handle_frames_tail": 6,
+              "preferred_anchor": "beat"
+            }
+          }
+        }
+      ]
+    },
+    "S4_VERIFY": {
+      "verdict": "PASS",
+      "failed_checks": [],
+      "passed_checks_count": 34
+    },
+    "S5_OUT": {
+      "canonical_id": "ep01_150s_canonical_v1",
+      "format": "film-dsl-v2.1",
+      "title": "冷雪见气 · 第一集",
+      "aspect_ratio": "2.39:1",
+      "total_duration_sec": 150.0,
+      "total_frames": 3600,
+      "fps": 24,
+      "shot_count": 25,
+      "world_timeline": [
+        {
+          "shot": "SH_01",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_02",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_03",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_04",
+          "world": "ancient"
+        },
+        {
+          "shot": "SH_05",
+          "world": "ancient"
+        }
+      ],
+      "match_cut_pairs": [
+        {
+          "from": "SH_01",
+          "to": "SH_02",
+          "element": "rotational form (Ling Xu's stillness → the leaf's slow turn)",
+          "function": "carry the container of stillness across the cut"
+        }
+      ],
+      "montage_groups": [
+        {
+          "group_id": "MG_setup_witness",
+          "container": null,
+          "members": [
+            "SH_01",
+            "SH_02",
+            "SH_03",
+            "SH_04",
+            "SH_05",
+            "SH_06",
+            "SH_07",
+            "SH_08",
+            "SH_09",
+            "SH_10"
+          ],
+          "type": "thematic_witness",
+          "total_duration_sec": 60.0,
+          "scale_lock": true,
+          "rhythm_signature": "stillness_layers_environment_press"
+        },
+        {
+          "group_id": "MG_apex_break",
+          "container": "C4",
+          "members": [
+            "SH_16",
+            "SH_17",
+            "SH_18",
+            "SH_19",
+            "SH_20"
+          ],
+          "type": "apex_climb_break",
+          "total_duration_sec": 30.0,
+          "scale_lock": true,
+          "rhythm_signature": "hold_release_smash_hold_recovery"
+        },
+        {
+          "group_id": "MG_coda_return",
+          "container": "C5",
+          "members": [
+            "SH_21",
+            "SH_22",
+            "SH_23",
+            "SH_24",
+            "SH_25"
+          ],
+          "type": "silence_return",
+          "total_duration_sec": 30.0,
+          "scale_lock": true,
+          "rhythm_signature": "gradual_wide_release"
+        }
+      ],
+      "world_transition_map": [
+        {
+          "from_container": "C3",
+          "to_container": "C4",
+          "at_time_sec": 90.0,
+          "type": "silk_dissolve",
+          "beat_ref": "@beat_c4_open"
+        },
+        {
+          "from_container": "C4",
+          "to_container": "C5",
+          "at_time_sec": 120.0,
+          "type": "match_cut",
+          "beat_ref": "@beat_c5_open"
+        }
+      ],
+      "cinematography_summary": {
+        "lens_range_mm": [
+          100,
+          100
+        ],
+        "motion_types_used": [
+          "static",
+          "crane"
+        ],
+        "longest_take_frames": 168,
+        "shortest_shot_frames": 96,
+        "average_shutter_angle": 180,
+        "depth_layers_max": 3
+      },
+      "execution_order": [
+        "SH_01",
+        "SH_02",
+        "SH_03",
+        "SH_04",
+        "SH_05",
+        "SH_06",
+        "SH_07",
+        "SH_08",
+        "SH_09",
+        "SH_10",
+        "SH_11",
+        "SH_12",
+        "SH_13",
+        "SH_14",
+        "SH_15",
+        "SH_16",
+        "SH_17",
+        "SH_18",
+        "SH_19",
+        "SH_20",
+        "SH_21",
+        "SH_22",
+        "SH_23",
+        "SH_24",
+        "SH_25"
+      ],
+      "downstream_target": "video_generation_engine (L2) + editor_timeline (L1+L3) + post_color_pipeline (L3)",
+      "shots_dsl": [
+        {
+          "shot_id": "SH_01",
+          "container_ref": "C1"
+        },
+        {
+          "shot_id": "SH_02",
+          "container_ref": "C1"
+        },
+        {
+          "shot_id": "SH_03",
+          "container_ref": "C1"
+        },
+        {
+          "shot_id": "SH_04",
+          "container_ref": "C1"
+        },
+        {
+          "shot_id": "SH_05",
+          "container_ref": "C1"
+        },
+        {
+          "shot_id": "SH_06",
+          "container_ref": "C2"
+        },
+        {
+          "shot_id": "SH_07",
+          "container_ref": "C2"
+        },
+        {
+          "shot_id": "SH_08",
+          "container_ref": "C2"
+        },
+        {
+          "shot_id": "SH_09",
+          "container_ref": "C2"
+        },
+        {
+          "shot_id": "SH_10",
+          "container_ref": "C2"
+        },
+        {
+          "shot_id": "SH_11",
+          "container_ref": "C3"
+        },
+        {
+          "shot_id": "SH_12",
+          "container_ref": "C3"
+        },
+        {
+          "shot_id": "SH_13",
+          "container_ref": "C3"
+        },
+        {
+          "shot_id": "SH_14",
+          "container_ref": "C3"
+        },
+        {
+          "shot_id": "SH_15",
+          "container_ref": "C3"
+        },
+        {
+          "shot_id": "SH_16",
+          "container_ref": "C4"
+        },
+        {
+          "shot_id": "SH_17",
+          "container_ref": "C4"
+        },
+        {
+          "shot_id": "SH_18",
+          "container_ref": "C4"
+        },
+        {
+          "shot_id": "SH_19",
+          "container_ref": "C4"
+        },
+        {
+          "shot_id": "SH_20",
+          "container_ref": "C4"
+        },
+        {
+          "shot_id": "SH_21",
+          "container_ref": "C5"
+        },
+        {
+          "shot_id": "SH_22",
+          "container_ref": "C5"
+        },
+        {
+          "shot_id": "SH_23",
+          "container_ref": "C5"
+        },
+        {
+          "shot_id": "SH_24",
+          "container_ref": "C5"
+        },
+        {
+          "shot_id": "SH_25",
+          "container_ref": "C5"
+        }
+      ]
+    }
+  },
+  "error_handling": {
+    "S1-MUS_fail": "return story for rewrite with narrative_proportion hint",
+    "S2-MSSS_fail": "return MUS for re-partition with container_ref constraint",
+    "S2.5-DIR_fail": "return MSSS to human — vocabulary mismatch cannot be auto-repaired",
+    "S2.7-PERF_fail": "return MUS + preset to fall back to default_micro_life",
+    "S3-IR_fail": "return MSSS + intents for re-shotting or supplement cinematography parameters",
+    "S4-VERIFY_fail": {
+      "if_repairable_via_mus": "auto-rewrite decision atoms, re-verify in memory, emit repair with requires_signoff=true",
+      "if_all_explicit_mus": "escalate to ambiguity_registry, do NOT relax explicit atoms",
+      "if_not_repairable": "return S3-IR for human sign-off"
+    }
+  },
+  "version_history": {
+    "v2.1.0": "baseline schema",
+    "v2.1.1": "audio_beat_track, post_intent, retime_method, transition_duration_frames, montage scale_lock",
+    "v2.1.2": "episode + containers[] + beat.container_ref + cross-container montage groups + preset container_role_arc"
+  }
+}
