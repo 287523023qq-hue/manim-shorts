@@ -7,10 +7,42 @@
   <img src="https://img.shields.io/badge/Architecture-CSCA_World_Model-green.svg" alt="Architecture">
   <img src="https://img.shields.io/badge/Format-9%3A16_Vertical_Mobile-red.svg" alt="Format">
   <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License">
+  <a href="https://github.com/287523023qq-hue/manim-shorts"><img src="https://img.shields.io/github/stars/287523023qq-hue/manim-shorts?style=social" alt="GitHub Stars"></a>
 </p>
 
 > **面向移动端（抖音、小红书、微信视频号、YouTube Shorts、TikTok）的下一代智能短视频全栈创作系统。**  
 > 融合 **CSCA 世界模型第一原则**、**Hell Grind 15 模块影视工业级提示词**、**ComfyUI 6 大岛链可视化画布** 与 **Manim 9:16 安全区数学/逻辑动画双层混合压制**。
+
+<div align="center">
+  <a href="https://github.com/287523023qq-hue/manim-shorts">
+    <img src="assets/demo_cinematic_fast.gif" alt="Manim Shorts Full Pipeline Demo" width="100%" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);" />
+  </a>
+  <p align="center">
+    <strong>⚡ 广播级双层混合渲染成片演示 (ComfyUI 电影级底图 + Manim 9:16 严谨数理几何前景)</strong><br>
+    <em>从自然语言需求到因果状态机推演，毫秒级时间轴对齐压制，告别五毛特效与逻辑崩塌</em>
+  </p>
+</div>
+
+---
+
+## ⚡ 30 秒极速体验 (30s Quickstart)
+
+无需繁琐配置，一条命令直接跑通从分镜到渲染的全流程：
+
+```bash
+# 1. 克隆代码并进入目录
+git clone https://github.com/287523023qq-hue/manim-shorts.git
+cd manim-shorts
+
+# 2. 一键秒级草稿预览 (540x960 20fps 极速调试)
+./run.py preview EulerShortScene
+
+# 3. 对话式一键推演与生成 (输入一句话直接推演、编译并派发)
+./run.py generate "修仙剑修在暴风雪山巅拔剑，剑气化作金龙冲天而起，镜头慢速推近，6秒"
+
+# 4. 广播级母带压制输出 (1080x1920 60fps)
+./run.py render BinarySearchScene
+```
 
 ---
 
